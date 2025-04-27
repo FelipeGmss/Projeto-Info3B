@@ -12,32 +12,30 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#4caf50',
-                        'primary-dark': '#43a047',
-                        secondary: '#ff6f61',
-                        'secondary-dark': '#e66255',
-                        tertiary: '#ff9800',
-                        'tertiary-dark': '#f57c00',
+                        primary: '#007A33',
+                        'primary-dark': '#00662a',
+                        secondary: '#FF8C00',
+                        'secondary-dark': '#e67e00',
                     }
                 }
             }
         }
     </script>
 </head>
-<body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+<body class="bg-gradient-to-br from-[#005A24] to-[#FF8C00] min-h-screen">
     <!-- Cabeçalho -->
-    <header class="bg-white shadow-lg sticky top-0 z-10">
+    <header class="bg-[#F5F5F5]/90 backdrop-blur-sm shadow-lg sticky top-0 z-10">
         <div class="container mx-auto px-4 py-4">
             <div class="flex flex-col sm:flex-row justify-between items-center">
                 <div class="flex items-center space-x-4 mb-4 sm:mb-0">
                     <div class="bg-primary/10 p-2 rounded-xl">
-                        <img src="https://cdn-icons-png.flaticon.com/128/308/308833.png" alt="Logo" class="h-8 w-8 sm:h-10 sm:w-10">
+                        <img src="../views/logo_Salaberga-removebg-preview.png" alt="Logo" class="h-8 w-8 sm:h-10 sm:w-10">
                     </div>
                     <h1 class="text-2xl sm:text-3xl font-bold text-gray-800">Sistema de Gestão de Estágio</h1>
                 </div>
                 <div class="flex items-center space-x-4">
                     <span class="text-gray-600 text-sm sm:text-base hidden sm:inline">Bem-vindo, Professor</span>
-                    <button class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-xl text-gray-700 transition-all duration-300 transform hover:scale-105 flex items-center gap-2">
+                    <button class="px-4 py-2 bg-gradient-to-r from-[#007A33] to-[#FF8C00] hover:from-[#FF8C00] hover:to-[#007A33] rounded-xl text-white transition-all duration-300 transform hover:scale-105 flex items-center gap-2">
                         <img src="https://cdn-icons-png.flaticon.com/128/1077/1077114.png" alt="Perfil" class="h-5 w-5 sm:h-6 sm:w-6">
                         <span class="hidden sm:inline">Meu Perfil</span>
                     </button>
@@ -50,7 +48,7 @@
     <main class="container mx-auto px-4 py-8">
         <!-- Seção de Estatísticas (Visível apenas em mobile) -->
         <div class="grid grid-cols-2 sm:hidden gap-4 mb-8">
-            <div class="bg-white rounded-2xl shadow-lg p-4 hover:shadow-xl transition-all duration-300">
+            <div class="bg-[#F5F5F5] rounded-2xl shadow-lg p-4 hover:shadow-xl transition-all duration-300">
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-gray-500 text-xs">Alunos</p>
@@ -61,7 +59,7 @@
                     </div>
                 </div>
             </div>
-            <div class="bg-white rounded-2xl shadow-lg p-4 hover:shadow-xl transition-all duration-300">
+            <div class="bg-[#F5F5F5] rounded-2xl shadow-lg p-4 hover:shadow-xl transition-all duration-300">
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-gray-500 text-xs">Empresas</p>
@@ -76,7 +74,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <!-- Seção de Relatórios -->
-            <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300">
+            <div class="bg-[#F5F5F5] rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300">
                 <div class="flex items-center mb-6">
                     <div class="bg-secondary/10 p-3 rounded-xl mr-4">
                         <i class="fas fa-chart-bar text-secondary text-xl"></i>
@@ -84,11 +82,11 @@
                     <h2 class="text-xl font-bold text-gray-800">Relatórios</h2>
                 </div>
                 <div class="space-y-4">
-                    <a href="../views/relatorios.php" class="block w-full py-3 px-4 bg-secondary hover:bg-secondary-dark text-white font-medium rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
+                    <a href="../views/relatorios.php" class="block w-full py-3 px-4 bg-gradient-to-r from-[#007A33] to-[#FF8C00] hover:from-[#FF8C00] hover:to-[#007A33] text-white font-medium rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
                         <i class="fas fa-file-alt"></i>
                         Gerar Relatório
                     </a>
-                    <a href="../views/processoseletivo.php" class="block w-full py-3 px-4 border-2 border-secondary text-secondary hover:bg-secondary hover:text-white font-medium rounded-xl transition-all duration-300 flex items-center justify-center gap-2">
+                    <a href="../views/processoseletivo.php" class="block w-full py-3 px-4 border-2 border-[#007A33] text-[#007A33] hover:bg-gradient-to-r hover:from-[#007A33] hover:to-[#FF8C00] hover:text-white font-medium rounded-xl transition-all duration-300 flex items-center justify-center gap-2">
                         <i class="fas fa-clipboard-list"></i>
                         Processo Seletivo
                     </a>
@@ -96,7 +94,7 @@
             </div>
 
             <!-- Seção de Alunos -->
-            <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300">
+            <div class="bg-[#F5F5F5] rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300">
                 <div class="flex items-center mb-6">
                     <div class="bg-primary/10 p-3 rounded-xl mr-4">
                         <i class="fas fa-user-graduate text-primary text-xl"></i>
@@ -104,11 +102,11 @@
                     <h2 class="text-xl font-bold text-gray-800">Alunos</h2>
                 </div>
                 <div class="space-y-4">
-                    <a href="../views/cadastroaluno.php" class="block w-full py-3 px-4 bg-primary hover:bg-primary-dark text-white font-medium rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
+                    <a href="../views/cadastroaluno.php" class="block w-full py-3 px-4 bg-gradient-to-r from-[#007A33] to-[#FF8C00] hover:from-[#FF8C00] hover:to-[#007A33] text-white font-medium rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
                         <i class="fas fa-user-plus"></i>
                         Cadastrar Aluno
                     </a>
-                    <a href="../views/perfildoaluno.php" class="block w-full py-3 px-4 border-2 border-primary text-primary hover:bg-primary hover:text-white font-medium rounded-xl transition-all duration-300 flex items-center justify-center gap-2">
+                    <a href="../views/perfildoaluno.php" class="block w-full py-3 px-4 border-2 border-[#007A33] text-[#007A33] hover:bg-gradient-to-r hover:from-[#007A33] hover:to-[#FF8C00] hover:text-white font-medium rounded-xl transition-all duration-300 flex items-center justify-center gap-2">
                         <i class="fas fa-user-circle"></i>
                         Ver Perfil do Aluno
                     </a>
@@ -116,7 +114,7 @@
             </div>
 
             <!-- Seção de Empresa -->
-            <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300">
+            <div class="bg-[#F5F5F5] rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300">
                 <div class="flex items-center mb-6">
                     <div class="bg-tertiary/10 p-3 rounded-xl mr-4">
                         <i class="fas fa-building text-tertiary text-xl"></i>
@@ -124,11 +122,11 @@
                     <h2 class="text-xl font-bold text-gray-800">Empresa</h2>
                 </div>
                 <div class="space-y-4">
-                    <a href="../views/cadastrodaempresa.php" class="block w-full py-3 px-4 bg-tertiary hover:bg-tertiary-dark text-white font-medium rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
+                    <a href="../views/cadastrodaempresa.php" class="block w-full py-3 px-4 bg-gradient-to-r from-[#007A33] to-[#FF8C00] hover:from-[#FF8C00] hover:to-[#007A33] text-white font-medium rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
                         <i class="fas fa-plus"></i>
                         Nova Empresa
                     </a>
-                    <a href="../views/dadosempresa.php" class="block w-full py-3 px-4 border-2 border-tertiary text-tertiary hover:bg-tertiary hover:text-white font-medium rounded-xl transition-all duration-300 flex items-center justify-center gap-2">
+                    <a href="../views/dadosempresa.php" class="block w-full py-3 px-4 border-2 border-[#007A33] text-[#007A33] hover:bg-gradient-to-r hover:from-[#007A33] hover:to-[#FF8C00] hover:text-white font-medium rounded-xl transition-all duration-300 flex items-center justify-center gap-2">
                         <i class="fas fa-edit"></i>
                         Editar Empresa
                     </a>
@@ -138,7 +136,7 @@
 
         <!-- Seção de Estatísticas (Visível apenas em desktop) -->
         <div class="hidden sm:grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-            <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300">
+            <div class="bg-[#F5F5F5] rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300">
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-gray-500 text-sm">Total de Alunos</p>
@@ -149,7 +147,7 @@
                     </div>
                 </div>
             </div>
-            <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300">
+            <div class="bg-[#F5F5F5] rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300">
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-gray-500 text-sm">Empresas Parceiras</p>
@@ -160,7 +158,7 @@
                     </div>
                 </div>
             </div>
-            <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300">
+            <div class="bg-[#F5F5F5] rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300">
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-gray-500 text-sm">Estágios Ativos</p>
@@ -175,7 +173,7 @@
     </main>
 
     <!-- Rodapé -->
-    <footer class="bg-white shadow-lg mt-12">
+    <footer class="bg-[#F5F5F5] shadow-lg mt-12">
         <div class="container mx-auto px-4 py-6">
             <div class="flex flex-col sm:flex-row justify-between items-center">
                 <p class="text-gray-600 text-sm sm:text-base mb-4 sm:mb-0">© 2023 Sistema de Gestão de Estágio. Todos os direitos reservados.</p>

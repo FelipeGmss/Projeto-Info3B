@@ -12,22 +12,28 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#4caf50',
-                        'primary-dark': '#43a047',
-                        secondary: '#2196f3',
-                        'secondary-dark': '#1976d2',
-                        accent: '#ff9800',
-                        'accent-dark': '#f57c00',
+                        primary: '#005A24',
+                        'primary-dark': '#004a1d',
+                        secondary: '#FF8C00',
+                        'secondary-dark': '#e67e00',
                     }
                 }
             }
         }
     </script>
 </head>
-<body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen font-['Roboto']">
+<body class="bg-gradient-to-br from-[#005A24] to-[#FF8C00] min-h-screen font-['Roboto']">
     <div class="container mx-auto px-4 py-8 max-w-7xl">
+        <!-- Botão Voltar -->
+        <div class="mb-6">
+            <a href="../views/paginainical.php" class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#005A24] to-[#FF8C00] hover:from-[#FF8C00] hover:to-[#005A24] text-white rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg">
+                <i class="fas fa-arrow-left"></i>
+                Voltar para Página Inicial
+            </a>
+        </div>
+
         <!-- Header Section -->
-        <div class="bg-white rounded-2xl shadow-xl p-8 mb-8">
+        <div class="bg-[#F5F5F5] rounded-2xl shadow-xl p-8 mb-8">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
                     <h1 class="text-4xl font-bold text-gray-800 mb-2">Gestão de Vagas</h1>
@@ -40,7 +46,7 @@
                                placeholder="Pesquisar vagas...">
                         <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                     </div>
-                    <button class="bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center gap-2">
+                    <button class="bg-gradient-to-r from-[#005A24] to-[#FF8C00] hover:from-[#FF8C00] hover:to-[#005A24] text-white px-6 py-3 rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center gap-2">
                         <i class="fas fa-plus"></i>
                         Nova Vaga
                     </button>
@@ -52,7 +58,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
             <!-- Left Sidebar -->
             <div class="lg:col-span-1">
-                <div class="bg-white rounded-2xl shadow-xl p-6 sticky top-8">
+                <div class="bg-[#F5F5F5] rounded-2xl shadow-xl p-6 sticky top-8">
                     <h2 class="text-xl font-bold text-gray-800 mb-6">Filtros</h2>
                     <div class="space-y-6">
                         <div>
@@ -129,26 +135,26 @@
                                         <i class="fas fa-user-friends mr-1"></i>
                                         5 vagas disponíveis
                                     </span>
-                                    <span class="px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
+                                    <span class="px-4 py-2 bg-[#333333]/10 text-[#333333] rounded-full text-sm font-medium">
                                         <i class="fas fa-clock mr-1"></i>
                                         Inscrições abertas
                                     </span>
-                                    <span class="px-4 py-2 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">
+                                    <span class="px-4 py-2 bg-[#333333]/10 text-[#333333] rounded-full text-sm font-medium">
                                         <i class="fas fa-users mr-1"></i>
                                         12 inscritos
                                     </span>
                                 </div>
                             </div>
                             <div class="flex gap-3">
-                                <button class="px-4 py-2 bg-secondary hover:bg-secondary-dark text-white rounded-xl transition-colors flex items-center gap-2">
+                                <button class="px-4 py-2 bg-gradient-to-r from-[#005A24] to-[#FF8C00] hover:from-[#FF8C00] hover:to-[#005A24] text-white rounded-xl transition-colors flex items-center gap-2">
                                     <i class="fas fa-edit"></i>
                                     Editar
                                 </button>
-                                <button class="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-xl transition-colors flex items-center gap-2">
+                                <button class="px-4 py-2 bg-[#FF6347] hover:bg-[#FF6347]/90 text-white rounded-xl transition-colors flex items-center gap-2">
                                     <i class="fas fa-times"></i>
                                     Encerrar
                                 </button>
-                                <button class="px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-xl transition-colors flex items-center gap-2">
+                                <button class="px-4 py-2 bg-[#333333] hover:bg-[#333333]/90 text-white rounded-xl transition-colors flex items-center gap-2">
                                     <i class="fas fa-eye"></i>
                                     Ver Inscritos
                                 </button>
@@ -174,26 +180,26 @@
                                         <i class="fas fa-user-friends mr-1"></i>
                                         3 vagas disponíveis
                                     </span>
-                                    <span class="px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
+                                    <span class="px-4 py-2 bg-[#333333]/10 text-[#333333] rounded-full text-sm font-medium">
                                         <i class="fas fa-clock mr-1"></i>
                                         Inscrições abertas
                                     </span>
-                                    <span class="px-4 py-2 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">
+                                    <span class="px-4 py-2 bg-[#333333]/10 text-[#333333] rounded-full text-sm font-medium">
                                         <i class="fas fa-users mr-1"></i>
                                         8 inscritos
                                     </span>
                                 </div>
                             </div>
                             <div class="flex gap-3">
-                                <button class="px-4 py-2 bg-secondary hover:bg-secondary-dark text-white rounded-xl transition-colors flex items-center gap-2">
+                                <button class="px-4 py-2 bg-gradient-to-r from-[#005A24] to-[#FF8C00] hover:from-[#FF8C00] hover:to-[#005A24] text-white rounded-xl transition-colors flex items-center gap-2">
                                     <i class="fas fa-edit"></i>
                                     Editar
                                 </button>
-                                <button class="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-xl transition-colors flex items-center gap-2">
+                                <button class="px-4 py-2 bg-[#FF6347] hover:bg-[#FF6347]/90 text-white rounded-xl transition-colors flex items-center gap-2">
                                     <i class="fas fa-times"></i>
                                     Encerrar
                                 </button>
-                                <button class="px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-xl transition-colors flex items-center gap-2">
+                                <button class="px-4 py-2 bg-[#333333] hover:bg-[#333333]/90 text-white rounded-xl transition-colors flex items-center gap-2">
                                     <i class="fas fa-eye"></i>
                                     Ver Inscritos
                                 </button>
@@ -206,7 +212,7 @@
                 <div class="mt-12">
                     <div class="flex justify-between items-center mb-8">
                         <h2 class="text-2xl font-bold text-gray-800">Gerenciamento de Formulários</h2>
-                        <button class="px-6 py-3 bg-primary hover:bg-primary-dark text-white rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center gap-2">
+                        <button class="px-6 py-3 bg-gradient-to-r from-[#005A24] to-[#FF8C00] hover:from-[#FF8C00] hover:to-[#005A24] text-white rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center gap-2">
                             <i class="fas fa-plus"></i>
                             Criar Novo Formulário
                         </button>
@@ -222,18 +228,18 @@
                                     </div>
                                     <h3 class="text-xl font-bold text-gray-800">Formulário Padrão</h3>
                                 </div>
-                                <span class="px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium">
+                                <span class="px-4 py-2 bg-[#333333]/10 text-[#333333] rounded-full text-sm font-medium">
                                     <i class="fas fa-check-circle mr-1"></i>
                                     20 respostas
                                 </span>
                             </div>
                             <p class="text-gray-600 mb-6">Formulário básico para coleta de informações dos candidatos</p>
                             <div class="flex gap-3">
-                                <button class="px-4 py-2 bg-secondary hover:bg-secondary-dark text-white rounded-xl transition-colors flex items-center gap-2">
+                                <button class="px-4 py-2 bg-gradient-to-r from-[#005A24] to-[#FF8C00] hover:from-[#FF8C00] hover:to-[#005A24] text-white rounded-xl transition-colors flex items-center gap-2">
                                     <i class="fas fa-edit"></i>
                                     Editar
                                 </button>
-                                <button class="px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-xl transition-colors flex items-center gap-2">
+                                <button class="px-4 py-2 bg-[#FF6347] hover:bg-[#FF6347]/90 text-white rounded-xl transition-colors flex items-center gap-2">
                                     <i class="fas fa-eye"></i>
                                     Ver Respostas
                                 </button>
@@ -249,18 +255,18 @@
                                     </div>
                                     <h3 class="text-xl font-bold text-gray-800">Formulário Técnico</h3>
                                 </div>
-                                <span class="px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium">
+                                <span class="px-4 py-2 bg-[#333333]/10 text-[#333333] rounded-full text-sm font-medium">
                                     <i class="fas fa-check-circle mr-1"></i>
                                     15 respostas
                                 </span>
                             </div>
                             <p class="text-gray-600 mb-6">Formulário específico para vagas técnicas com avaliação de habilidades</p>
                             <div class="flex gap-3">
-                                <button class="px-4 py-2 bg-secondary hover:bg-secondary-dark text-white rounded-xl transition-colors flex items-center gap-2">
+                                <button class="px-4 py-2 bg-gradient-to-r from-[#005A24] to-[#FF8C00] hover:from-[#FF8C00] hover:to-[#005A24] text-white rounded-xl transition-colors flex items-center gap-2">
                                     <i class="fas fa-edit"></i>
                                     Editar
                                 </button>
-                                <button class="px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-xl transition-colors flex items-center gap-2">
+                                <button class="px-4 py-2 bg-[#FF6347] hover:bg-[#FF6347]/90 text-white rounded-xl transition-colors flex items-center gap-2">
                                     <i class="fas fa-eye"></i>
                                     Ver Respostas
                                 </button>
@@ -272,7 +278,7 @@
                 <!-- Student Registrations Section -->
                 <div class="mt-12">
                     <h2 class="text-2xl font-bold text-gray-800 mb-8">Inscrições dos Alunos</h2>
-                    <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                    <div class="bg-[#F5F5F5] rounded-2xl shadow-xl overflow-hidden">
                         <div class="overflow-x-auto">
                             <table class="min-w-full">
                                 <thead class="bg-gray-50">
@@ -303,16 +309,16 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">15/03/2024</td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                            <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-[#333333]/10 text-[#333333]">
                                                 Em Análise
                                             </span>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                            <button class="text-secondary hover:text-secondary-dark mr-4">
+                                            <button class="text-[#005A24] hover:text-[#FF8C00] mr-4">
                                                 <i class="fas fa-file-alt"></i>
                                                 Ver Formulário
                                             </button>
-                                            <button class="text-green-600 hover:text-green-800">
+                                            <button class="text-[#005A24] hover:text-[#FF8C00]">
                                                 <i class="fas fa-check"></i>
                                                 Aprovar
                                             </button>
@@ -336,16 +342,16 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">16/03/2024</td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                            <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-[#333333]/10 text-[#333333]">
                                                 Aprovado
                                             </span>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                            <button class="text-secondary hover:text-secondary-dark mr-4">
+                                            <button class="text-[#005A24] hover:text-[#FF8C00] mr-4">
                                                 <i class="fas fa-file-alt"></i>
                                                 Ver Formulário
                                             </button>
-                                            <button class="text-red-600 hover:text-red-800">
+                                            <button class="text-[#005A24] hover:text-[#FF8C00]">
                                                 <i class="fas fa-times"></i>
                                                 Reprovar
                                             </button>

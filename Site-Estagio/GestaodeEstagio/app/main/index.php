@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Professores e Alunos</title>
-    <link rel="icon" type="image/x-icon" href="views/logo_Salaberga.jpg">
+    <link rel="icon" type="image/x-icon" href="views/logo_Salaberga-removebg-preview.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,6 +13,10 @@
     <style>
         body {
             font-family: 'Nunito', sans-serif;
+            background: linear-gradient(45deg, #007A33, #FF8C00);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
         }
 
         .rotate-scale {
@@ -42,7 +46,7 @@
         }
 
         .gradient-bg {
-            background: linear-gradient(45deg, #667eea, #764ba2);
+            background: linear-gradient(45deg, #007A33, #FF8C00);
         }
 
         .shadow-glow {
@@ -58,6 +62,16 @@
             position: relative;
             z-index: 1;
         }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #007A33, #FF8C00);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(45deg, #FF8C00, #007A33);
+            transform: scale(1.05);
+        }
     </style>
 </head>
 
@@ -66,7 +80,7 @@
         <!-- Left Side: Phrase and Logo -->
         <div id="phraseSection" class="swap-animation">
             <div class="w-full max-w-md flex flex-col items-center">
-                <img src="views/nome_Salaberga.jpg" alt="Logo" class="mb-6 rounded-full shadow-md w-64 h-auto">
+                <img src="views/nome_Salaberga2.jpg" alt="Logo" class="mb-6 rounded-full shadow-md w-80 h-auto">
                 <h2 id="phraseText" class="text-3xl font-bold text-gray-800 mb-4">Bem-vindo, Aluno!</h2>
                 <p class="text-gray-600 text-lg">Acesse sua área e comece a aprender!</p>
             </div>
@@ -91,11 +105,11 @@
                     </div>
                     <input type="hidden" id="userType" name="userType" value="student">
                     <input type="submit" id="loginBtn" name="btn"
-                        class="w-full bg-indigo-600 text-white py-3 px-6 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-300 font-semibold">
+                        class="w-full btn-primary text-white py-3 px-6 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#007A33] transition-all duration-300 font-semibold">
                 </form>
                 <div class="flex justify-center mt-8">
                     <button id="toggleBtn" type="button"
-                        class="px-6 py-3 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-300 font-semibold rotate-scale">Professor</button>
+                        class="px-6 py-3 btn-primary text-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#007A33] transition-all duration-300 font-semibold rotate-scale">Professor</button>
                 </div>
             </div>
         </div>
