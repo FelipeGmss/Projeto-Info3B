@@ -9,18 +9,18 @@ if (isset($_POST['email']) && !empty($_POST['email']) && isset($_POST['senha']) 
     $senha = addslashes($_POST['senha']);
 
     $x = new Usuarios();
-    if($x->Login_aluno($email, $senha) == true) {
+    if($x->Login_professor($email, $senha) == true) {
         if(isset($_SESSION['idUser'])) {
             header("Location: ../views/paginainical.php");
         }else {
-            header("Location: ../index.php");
+            header("Location: ../views/Login_Professor.php");
         }
     }else {
-        header("Location: ../index.php");
+        header("Location: ../views/Login_Professor.php");
     }
 
 } else {
-    header("Location: ../index.php");
+    header("Location: ../views/Login_Professor.php");
 }
 
 
