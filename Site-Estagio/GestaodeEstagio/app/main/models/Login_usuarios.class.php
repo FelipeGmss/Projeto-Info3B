@@ -83,6 +83,20 @@ Class Usuarios {
              return false;
             }
      } 
+
+     public function listar(){
+        $pdo = new PDO("mysql:host=localhost;dbname=teste","root","");
+        $consulta = 'select * from cadastro_emp;';
+        $query = $pdo->prepare($consulta);
+        $query->execute();
+        $result = $query->rowCount();
+
+        if ($result > 0) {
+            foreach ($query as $value) {
+                echo (" | nome: ". $value['nome'] ." | contato: ". $value['contato']." | endereco: ". $value['endereco']." | cidade: ". $value['cidade']." | vagas: ". $value['vagas']);
+            }
+        }
+    }
 }
 
 
