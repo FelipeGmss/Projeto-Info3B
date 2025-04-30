@@ -97,6 +97,14 @@ Class Usuarios {
             }
         }
     }
+
+    public function excluir($id){
+        $pdo = new PDO("mysql:host=localhost;dbname=teste","root","");
+        $consulta = 'delete from cadastro_emp where id = :id;';
+        $query = $pdo->prepare($consulta);
+        $query->bindValue(":id", $id);
+        $query->execute();
+     }
 }
 
 

@@ -258,8 +258,19 @@
                         echo "<td class='px-5 py-5 border-b border-gray-200 bg-white text-sm'>" . $value['vagas'] . "</td>";
                         echo "<td class='px-5 py-5 border-b border-gray-200 bg-white text-sm'>";
                         echo "<div class='action-buttons'>";
-                        echo "<a href='editar_empresa.php?id=" . $value['id'] . "' class='action-btn edit-btn'><i class='fas fa-edit'></i></a>";
-                        echo "<button onclick='confirmDelete(" . $value['id'] . ")' class='action-btn delete-btn'><i class='fas fa-trash'></i></button>";
+                        
+                        // Form para editar
+                        echo "<form action='editar_empresa.php;;' method='GET' style='display: inline;'>";
+                        echo "<input type='hidden' name='btn' value='" . $value['id'] . "'>";
+                        echo "<button type='submit' class='action-btn edit-btn'><i class='fas fa-edit'></i></button>";
+                        echo "</form>";
+                        
+                        // Form para excluir
+                        echo "<form action='../controllers/Controller-excluir_empresa.php' method='POST' style='display: inline;' onsubmit='return confirm(\"Tem certeza que deseja excluir esta empresa?\");'>";
+                        echo "<input type='hidden' name='btn' value='" . $value['id'] . "'>";
+                        echo "<button type='submit' class='action-btn delete-btn'><i class='fas fa-trash'></i></button>";
+                        echo "</form>";
+                        
                         echo "</div>";
                         echo "</td>";
                         echo "</tr>";
