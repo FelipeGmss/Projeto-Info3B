@@ -47,7 +47,7 @@
             background-color: var(--white);
             border-radius: 24px;
             box-shadow: var(--shadow);
-            padding: 40px;
+            padding: 30px;
             margin: 20px;
             position: relative;
             overflow: hidden;
@@ -56,7 +56,7 @@
         /* Cabeçalho */
         .header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             position: relative;
         }
 
@@ -76,20 +76,20 @@
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            gap: 15px;
         }
 
         /* Campos do Formulário */
         .form-group {
-            margin-bottom: 25px;
+            margin-bottom: 15px;
             position: relative;
         }
 
         .form-group label {
             display: block;
-            font-size: 16px;
+            font-size: 15px;
             color: var(--text-color);
-            margin-bottom: 8px;
+            margin-bottom: 5px;
             font-weight: 500;
         }
 
@@ -100,10 +100,10 @@
         .form-group input,
         .form-group select {
             width: 100%;
-            padding: 14px 16px;
+            padding: 12px 14px;
             border: 2px solid var(--border-color);
-            border-radius: 12px;
-            font-size: 16px;
+            border-radius: 10px;
+            font-size: 15px;
             transition: all 0.3s ease;
             background-color: var(--light-bg);
         }
@@ -132,7 +132,7 @@
         /* Botão de Envio */
         .submit-button {
             width: 100%;
-            padding: 16px;
+            padding: 14px;
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             color: var(--white);
             border: none;
@@ -140,7 +140,7 @@
             font-size: 18px;
             font-weight: 600;
             cursor: pointer;
-            margin-top: 20px;
+            margin-top: 15px;
             transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -165,16 +165,21 @@
         /* Responsividade */
         @media (max-width: 768px) {
             .container {
-                padding: 30px 20px;
+                padding: 25px 20px;
                 margin: 10px;
             }
 
             .form-grid {
                 grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .header {
+                margin-bottom: 25px;
             }
 
             .header h1 {
-                font-size: 28px;
+                font-size: 26px;
             }
         }
 
@@ -204,7 +209,7 @@
     <div class="container">
         <div class="header">
             <h1>Cadastro de Aluno</h1>
-            <p>Preencha seus dados para começar</p>
+            <p>Preencha os dados para começar</p>
         </div>
 
         <form action="../controllers/Controller-cadastro_aluno.php" method="POST" autocomplete="off" aria-label="Formulário de cadastro de aluno">
