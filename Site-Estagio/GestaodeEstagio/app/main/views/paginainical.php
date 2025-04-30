@@ -23,173 +23,107 @@
     </script>
 </head>
 <body class="bg-gradient-to-br from-[#005A24] to-[#FF8C00] min-h-screen">
-    <!-- Cabeçalho -->
-    <header class="bg-[#F5F5F5]/90 backdrop-blur-sm shadow-lg sticky top-0 z-10">
-        <div class="container mx-auto px-4 py-4">
-            <div class="flex flex-col sm:flex-row justify-between items-center">
-                <div class="flex items-center space-x-4 mb-4 sm:mb-0">
-                    <div class="bg-primary/10 p-2 rounded-xl">
-                        <img src="../views/logo_Salaberga-removebg-preview.png" alt="Logo" class="h-8 w-8 sm:h-10 sm:w-10">
+    <div class="min-h-screen flex flex-col">
+        <!-- Cabeçalho -->
+        <header class="bg-[#F5F5F5]/90 backdrop-blur-sm shadow-lg sticky top-0 z-10">
+            <div class="container mx-auto px-4 py-4">
+                <div class="flex flex-col sm:flex-row justify-between items-center">
+                    <div class="flex items-center space-x-4 mb-4 sm:mb-0">
+                        <div class="bg-primary/10 p-2 rounded-xl">
+                            <img src="../views/logo_Salaberga-removebg-preview.png" alt="Logo" class="h-8 w-8 sm:h-10 sm:w-10">
+                        </div>
+                        <h1 class="text-2xl sm:text-3xl font-bold text-gray-800">Sistema de Gestão de Estágio</h1>
                     </div>
-                    <h1 class="text-2xl sm:text-3xl font-bold text-gray-800">Sistema de Gestão de Estágio</h1>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <span class="text-gray-600 text-sm sm:text-base hidden sm:inline">Bem-vindo, Professor</span>
-                    <button class="px-4 py-2 bg-gradient-to-r from-[#007A33] to-[#FF8C00] hover:from-[#FF8C00] hover:to-[#007A33] rounded-xl text-white transition-all duration-300 transform hover:scale-105 flex items-center gap-2">
-                        <img src="https://cdn-icons-png.flaticon.com/128/1077/1077114.png" alt="Perfil" class="h-5 w-5 sm:h-6 sm:w-6">
-                        <span class="hidden sm:inline">Meu Perfil</span>
-                    </button>
                 </div>
             </div>
-        </div>
-    </header>
+        </header>
 
-    <!-- Conteúdo Principal -->
-    <main class="container mx-auto px-4 py-8">
-        <!-- Seção de Estatísticas (Visível apenas em mobile) -->
-        <div class="grid grid-cols-2 sm:hidden gap-4 mb-8">
-            <div class="bg-[#F5F5F5] rounded-2xl shadow-lg p-4 hover:shadow-xl transition-all duration-300">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-gray-500 text-xs">Alunos</p>
-                        <h3 class="text-lg font-bold text-gray-800">124</h3>
+        <!-- Conteúdo Principal -->
+        <main class="flex-grow container mx-auto px-4 py-8">
+            <div class="w-full max-w-7xl mx-auto bg-white/90 backdrop-blur-sm rounded-3xl shadow-xl p-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Seção de Relatórios -->
+                    <div class="bg-[#F5F5F5] rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300">
+                        <div class="flex items-center mb-6">
+                            <div class="bg-secondary/10 p-3 rounded-xl mr-4">
+                                <i class="fas fa-chart-bar text-secondary text-xl"></i>
+                            </div>
+                            <h2 class="text-xl font-bold text-gray-800">Relatórios</h2>
+                        </div>
+                        <div class="space-y-4">
+                            <a href="../views/relatorios.php" class="block w-full py-3 px-4 bg-gradient-to-r from-[#007A33] to-[#FF8C00] hover:from-[#FF8C00] hover:to-[#007A33] text-white font-medium rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
+                                <i class="fas fa-file-alt"></i>
+                                Gerar Relatório
+                            </a>
+                            <a href="../views/processoseletivo.php" class="block w-full py-3 px-4 border-2 border-[#007A33] text-[#007A33] hover:bg-gradient-to-r hover:from-[#007A33] hover:to-[#FF8C00] hover:text-white font-medium rounded-xl transition-all duration-300 flex items-center justify-center gap-2">
+                                <i class="fas fa-clipboard-list"></i>
+                                Processo Seletivo
+                            </a>
+                        </div>
                     </div>
-                    <div class="bg-green-100 p-2 rounded-xl">
-                        <i class="fas fa-users text-green-500 text-lg"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="bg-[#F5F5F5] rounded-2xl shadow-lg p-4 hover:shadow-xl transition-all duration-300">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-gray-500 text-xs">Empresas</p>
-                        <h3 class="text-lg font-bold text-gray-800">45</h3>
-                    </div>
-                    <div class="bg-orange-100 p-2 rounded-xl">
-                        <i class="fas fa-building text-orange-500 text-lg"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Seção de Relatórios -->
-            <div class="bg-[#F5F5F5] rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300">
-                <div class="flex items-center mb-6">
-                    <div class="bg-secondary/10 p-3 rounded-xl mr-4">
-                        <i class="fas fa-chart-bar text-secondary text-xl"></i>
+                    <!-- Seção de Alunos -->
+                    <div class="bg-[#F5F5F5] rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300">
+                        <div class="flex items-center mb-6">
+                            <div class="bg-primary/10 p-3 rounded-xl mr-4">
+                                <i class="fas fa-user-graduate text-primary text-xl"></i>
+                            </div>
+                            <h2 class="text-xl font-bold text-gray-800">Alunos</h2>
+                        </div>
+                        <div class="space-y-4">
+                            <a href="../views/cadastroaluno.php" class="block w-full py-3 px-4 bg-gradient-to-r from-[#007A33] to-[#FF8C00] hover:from-[#FF8C00] hover:to-[#007A33] text-white font-medium rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
+                                <i class="fas fa-user-plus"></i>
+                                Cadastrar Aluno
+                            </a>
+                            <a href="../views/perfildoaluno.php" class="block w-full py-3 px-4 border-2 border-[#007A33] text-[#007A33] hover:bg-gradient-to-r hover:from-[#007A33] hover:to-[#FF8C00] hover:text-white font-medium rounded-xl transition-all duration-300 flex items-center justify-center gap-2">
+                                <i class="fas fa-user-circle"></i>
+                                Ver Perfil do Aluno
+                            </a>
+                        </div>
                     </div>
-                    <h2 class="text-xl font-bold text-gray-800">Relatórios</h2>
-                </div>
-                <div class="space-y-4">
-                    <a href="../views/relatorios.php" class="block w-full py-3 px-4 bg-gradient-to-r from-[#007A33] to-[#FF8C00] hover:from-[#FF8C00] hover:to-[#007A33] text-white font-medium rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
-                        <i class="fas fa-file-alt"></i>
-                        Gerar Relatório
-                    </a>
-                    <a href="../views/processoseletivo.php" class="block w-full py-3 px-4 border-2 border-[#007A33] text-[#007A33] hover:bg-gradient-to-r hover:from-[#007A33] hover:to-[#FF8C00] hover:text-white font-medium rounded-xl transition-all duration-300 flex items-center justify-center gap-2">
-                        <i class="fas fa-clipboard-list"></i>
-                        Processo Seletivo
-                    </a>
-                </div>
-            </div>
 
-            <!-- Seção de Alunos -->
-            <div class="bg-[#F5F5F5] rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300">
-                <div class="flex items-center mb-6">
-                    <div class="bg-primary/10 p-3 rounded-xl mr-4">
-                        <i class="fas fa-user-graduate text-primary text-xl"></i>
+                    <!-- Seção de Empresa -->
+                    <div class="bg-[#F5F5F5] rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300">
+                        <div class="flex items-center mb-6">
+                            <div class="bg-tertiary/10 p-3 rounded-xl mr-4">
+                                <i class="fas fa-building text-tertiary text-xl"></i>
+                            </div>
+                            <h2 class="text-xl font-bold text-gray-800">Empresa</h2>
+                        </div>
+                        <div class="space-y-4">
+                            <a href="../views/cadastrodaempresa.php" class="block w-full py-3 px-4 bg-gradient-to-r from-[#007A33] to-[#FF8C00] hover:from-[#FF8C00] hover:to-[#007A33] text-white font-medium rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
+                                <i class="fas fa-plus"></i>
+                                Nova Empresa
+                            </a>
+                            <a href="../views/dadosempresa.php" class="block w-full py-3 px-4 border-2 border-[#007A33] text-[#007A33] hover:bg-gradient-to-r hover:from-[#007A33] hover:to-[#FF8C00] hover:text-white font-medium rounded-xl transition-all duration-300 flex items-center justify-center gap-2">
+                                <i class="fas fa-edit"></i>
+                                Editar Empresa
+                            </a>
+                        </div>
                     </div>
-                    <h2 class="text-xl font-bold text-gray-800">Alunos</h2>
-                </div>
-                <div class="space-y-4">
-                    <a href="../views/cadastroaluno.php" class="block w-full py-3 px-4 bg-gradient-to-r from-[#007A33] to-[#FF8C00] hover:from-[#FF8C00] hover:to-[#007A33] text-white font-medium rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
-                        <i class="fas fa-user-plus"></i>
-                        Cadastrar Aluno
-                    </a>
-                    <a href="../views/perfildoaluno.php" class="block w-full py-3 px-4 border-2 border-[#007A33] text-[#007A33] hover:bg-gradient-to-r hover:from-[#007A33] hover:to-[#FF8C00] hover:text-white font-medium rounded-xl transition-all duration-300 flex items-center justify-center gap-2">
-                        <i class="fas fa-user-circle"></i>
-                        Ver Perfil do Aluno
-                    </a>
                 </div>
             </div>
+        </main>
 
-            <!-- Seção de Empresa -->
-            <div class="bg-[#F5F5F5] rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300">
-                <div class="flex items-center mb-6">
-                    <div class="bg-tertiary/10 p-3 rounded-xl mr-4">
-                        <i class="fas fa-building text-tertiary text-xl"></i>
-                    </div>
-                    <h2 class="text-xl font-bold text-gray-800">Empresa</h2>
-                </div>
-                <div class="space-y-4">
-                    <a href="../views/cadastrodaempresa.php" class="block w-full py-3 px-4 bg-gradient-to-r from-[#007A33] to-[#FF8C00] hover:from-[#FF8C00] hover:to-[#007A33] text-white font-medium rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
-                        <i class="fas fa-plus"></i>
-                        Nova Empresa
-                    </a>
-                    <a href="../views/dadosempresa.php" class="block w-full py-3 px-4 border-2 border-[#007A33] text-[#007A33] hover:bg-gradient-to-r hover:from-[#007A33] hover:to-[#FF8C00] hover:text-white font-medium rounded-xl transition-all duration-300 flex items-center justify-center gap-2">
-                        <i class="fas fa-edit"></i>
-                        Editar Empresa
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Seção de Estatísticas (Visível apenas em desktop) -->
-        <div class="hidden sm:grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-            <div class="bg-[#F5F5F5] rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-gray-500 text-sm">Total de Alunos</p>
-                        <h3 class="text-3xl font-bold text-gray-800">124</h3>
-                    </div>
-                    <div class="bg-green-100 p-3 rounded-xl">
-                        <i class="fas fa-users text-green-500 text-2xl"></i>
+        <!-- Rodapé -->
+        <footer class="bg-[#F5F5F5] shadow-lg mt-12">
+            <div class="container mx-auto px-4 py-6">
+                <div class="flex flex-col sm:flex-row justify-between items-center">
+                    <p class="text-gray-600 text-sm sm:text-base mb-4 sm:mb-0">© 2023 Sistema de Gestão de Estágio. Todos os direitos reservados.</p>
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-gray-500 hover:text-gray-700 transition-colors">
+                            <i class="fab fa-facebook text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-500 hover:text-gray-700 transition-colors">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-500 hover:text-gray-700 transition-colors">
+                            <i class="fab fa-linkedin text-xl"></i>
+                        </a>
                     </div>
                 </div>
             </div>
-            <div class="bg-[#F5F5F5] rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-gray-500 text-sm">Empresas Parceiras</p>
-                        <h3 class="text-3xl font-bold text-gray-800">45</h3>
-                    </div>
-                    <div class="bg-orange-100 p-3 rounded-xl">
-                        <i class="fas fa-building text-orange-500 text-2xl"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="bg-[#F5F5F5] rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-gray-500 text-sm">Estágios Ativos</p>
-                        <h3 class="text-3xl font-bold text-gray-800">89</h3>
-                    </div>
-                    <div class="bg-blue-100 p-3 rounded-xl">
-                        <i class="fas fa-briefcase text-blue-500 text-2xl"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- Rodapé -->
-    <footer class="bg-[#F5F5F5] shadow-lg mt-12">
-        <div class="container mx-auto px-4 py-6">
-            <div class="flex flex-col sm:flex-row justify-between items-center">
-                <p class="text-gray-600 text-sm sm:text-base mb-4 sm:mb-0">© 2023 Sistema de Gestão de Estágio. Todos os direitos reservados.</p>
-                <div class="flex space-x-6">
-                    <a href="#" class="text-gray-500 hover:text-gray-700 transition-colors">
-                        <i class="fab fa-facebook text-xl"></i>
-                    </a>
-                    <a href="#" class="text-gray-500 hover:text-gray-700 transition-colors">
-                        <i class="fab fa-twitter text-xl"></i>
-                    </a>
-                    <a href="#" class="text-gray-500 hover:text-gray-700 transition-colors">
-                        <i class="fab fa-linkedin text-xl"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </footer>
+        </footer>
+    </div>
 </body>
 </html>
