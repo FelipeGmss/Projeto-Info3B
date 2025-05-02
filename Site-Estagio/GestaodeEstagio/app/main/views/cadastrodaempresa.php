@@ -324,16 +324,30 @@
                     </div>
                 </div>
                 
-                <div class="form-group full-width">
-                    <label for="areas-atuacao">Áreas de Atuação</label>
+                <div class="form-group">
+                    <label for="perfil">Perfil da Empresa</label>
                     <div class="input-wrapper">
-                        <input type="text" id="areas-atuacao" name="vagas" 
-                               placeholder="Digite as áreas de atuação"
-                               aria-label="Áreas de atuação da empresa" required>
+                        <input type="text" id="perfil" name="perfil" 
+                               placeholder="Descreva o perfil da empresa"
+                               required
+                               aria-required="true"
+                               minlength="3"
+                               maxlength="200">
                     </div>
-                    <span class="help-text">Digite as principais áreas de atuação da empresa</span>
-                </div>
-            </div>
+               </div>
+
+                <div class="form-group">
+                    <label for="vagas">Número de Vagas</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="vagas" name="numero_vagas" 
+                               placeholder="Quantidade de vagas disponíveis"
+                               required
+                               aria-required="true"
+                               min="1"
+                               max="100">
+                    </div>
+                    </div>
+             </div>
 
             <input type="submit" class="submit-button" name="btn" 
                    value="Cadastrar Empresa"

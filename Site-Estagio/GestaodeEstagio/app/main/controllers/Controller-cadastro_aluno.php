@@ -1,17 +1,17 @@
 
 <?php 
 session_start();
-require("../models/Login_usuarios.class.php");
+require("../models/cadastros.class.php");
 
 if (isset($_POST["btn"])) {
    $nome = $_POST['nome'];
-   $email = $_POST['email'];
-   $telefone = $_POST['telefone'];
+   $matricula = $_POST['matricula'];
+   $contato = $_POST['contato'];
    $curso = $_POST['curso'];
-   $perfil = $_POST['perfil'];
 
-   $x = new Usuarios();
-   $x->Cadastrar_alunos($nome, $email, $telefone, $curso, $perfil);
+   
+   $x = new Cadastro();
+   $x->Cadastrar_alunos($nome, $matricula, $contato, $curso);
    header("Location: ../views/cadastroaluno.php");
 }
 

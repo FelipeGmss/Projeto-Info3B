@@ -1,17 +1,17 @@
 
 <?php 
 session_start();
-require("../models/Login_usuarios.class.php");
+require("../models/cadastros.class.php");
 
 if (isset($_POST["btn"])) {
    $nome = $_POST['nome'];
    $contato = $_POST['contato'];
    $endereco = $_POST['endereco'];
-   $cidade = $_POST['cidade'];
+   $perfil = $_POST['perfil'];
    $vagas = $_POST['vagas'];
 
-   $x = new Usuarios();
-   $x->Cadastrar_empresa($nome, $contato, $endereco, $cidade, $vagas);
+   $x = new Cadastro();
+   $x->Cadastrar_empresa($nome, $contato, $endereco, $perfil, $vagas);
    header("Location: ../views/cadastrodaempresa.php");
 }
 
