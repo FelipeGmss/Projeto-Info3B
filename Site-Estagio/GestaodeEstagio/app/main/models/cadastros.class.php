@@ -45,23 +45,18 @@ Class Cadastro{
             }
      } 
 
-     public function listar(){
-        $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
-        $consulta = 'select * from concedentes;';
-        $query = $pdo->prepare($consulta);
-        $query->execute();
-        $result = $query->rowCount();
 
-        if ($result > 0) {
-            foreach ($query as $value) {
-                echo (" | nome: ". $value['nome'] ." | contato: ". $value['contato']." | endereco: ". $value['endereco']." | perfil: ". $value['perfil']." | numero_vagas: ". $value['numero_vagas']);
-            }
-        }
-    } 
-
-    public function excluir($id){
+    public function excluir_empresa($id){
         $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
         $consulta = 'delete from concedentes where id = :id;';
+        $query = $pdo->prepare($consulta);
+        $query->bindValue(":id", $id);
+        $query->execute();
+    }
+
+    public function excluir_aluno($id){
+        $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
+        $consulta = 'delete from aluno where id = :id;';
         $query = $pdo->prepare($consulta);
         $query->bindValue(":id", $id);
         $query->execute();

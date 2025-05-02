@@ -314,15 +314,6 @@
                                aria-label="Endereço da empresa">
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <label for="cidade">Cidade</label>
-                    <div class="input-wrapper">
-                        <input type="text" id="cidade" name="cidade" 
-                               placeholder="Cidade onde está localizada"
-                               aria-label="Cidade da empresa">
-                    </div>
-                </div>
                 
                 <div class="form-group">
                     <label for="perfil">Perfil da Empresa</label>

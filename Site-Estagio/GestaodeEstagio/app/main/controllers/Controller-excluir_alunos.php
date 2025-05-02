@@ -7,7 +7,7 @@ if (isset($_POST['btn'])) {
 
 
    $x = new Cadastro();
-   $x->excluir_empresa($id);
-header('location:../views/dadosempresa.php?resultado=excluir');
+   $x->excluir_aluno($id);
+header('location:../views/perfildoaluno.php?resultado=excluir');
 }
 ?>

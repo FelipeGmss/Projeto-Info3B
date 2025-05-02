@@ -1,4 +1,3 @@
-
 <?php 
 session_start();
 require("../models/cadastros.class.php");
@@ -8,7 +7,7 @@ if (isset($_POST["btn"])) {
    $contato = $_POST['contato'];
    $endereco = $_POST['endereco'];
    $perfil = $_POST['perfil'];
-   $vagas = $_POST['vagas'];
+   $vagas = $_POST['numero_vagas'];
 
    $x = new Cadastro();
    $x->Cadastrar_empresa($nome, $contato, $endereco, $perfil, $vagas);
