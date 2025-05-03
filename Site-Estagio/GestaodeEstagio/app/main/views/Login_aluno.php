@@ -99,18 +99,13 @@
                          <input type="checkbox" id="lembrar" name="lembrar" class="h-4 w-4 text-[#005A24] focus:ring-[#005A24] border-gray-300 rounded">
                          <label for="lembrar" class="ml-2 block text-sm text-gray-700">Lembrar-me</label>
                      </div>
-                     <a href="#" class="text-sm text-[#005A24] hover:text-[#004A1D]">Esqueceu a senha?</a>
+                     <a href="../views/Recuperar_senha.php" class="text-sm text-[#005A24] hover:text-[#004A1D]">Esqueceu a senha?</a>
                  </div>
                  <input type="hidden" name="userType" value="student">
                  <input type="submit" name="btn" value="Entrar"
                      class="w-full bg-[#005A24] hover:bg-[#004A1D] text-white py-3 px-6 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#005A24] transition-all duration-300 font-semibold text-lg">
              </form>
 
-            <div class="mt-6 text-center">
-                <p class="text-sm text-gray-600">
-                    Precisa de ajuda? <a href="#" class="text-green-600 hover:text-green-700">Entre em contato</a>
-                </p>
-            </div>
         </div>
     </div>
 

@@ -127,10 +127,6 @@
                        class="w-full bg-gradient-to-r from-green-600 to-green-500 text-white py-3 px-4 rounded-xl font-semibold hover:from-green-700 hover:to-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all duration-300 btn-submit">
             </form>
 
-            <div class="mt-6 text-center">
-                <p class="text-sm text-gray-600">
-                    Precisa de ajuda? <a href="#" class="text-green-600 hover:text-green-700">Entre em contato</a>
-                </p>
             </div>
         </div>
     </div>

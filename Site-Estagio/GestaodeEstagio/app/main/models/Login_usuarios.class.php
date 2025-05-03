@@ -1,7 +1,8 @@
 <?php 
 
+// Alunos
 Class Usuarios {
-        public function Login_aluno($email, $senha) {
+    public function Login_aluno ($email, $senha) {
         $pdo = new PDO("mysql:host=localhost;dbname=teste","root","");
         $consulta = 'SELECT * FROM usuario WHERE email_aluno = :email AND senha_aluno = :senha';
         $query = $pdo->prepare($consulta);
@@ -20,6 +21,18 @@ Class Usuarios {
             }
     }
 
+    public function Recuperar_senha($email) {
+        $pdo = new PDO("mysql:host=localhost;dbname=teste","root","");
+        $consulta = 'SELECT * FROM usuario WHERE email_aluno = :email';
+        $query = $pdo->prepare($consulta);
+        $query->bindValue(":email", $email);
+        $query->execute();
+    }
+
+
+
+
+    // Professores
 
     public function Login_professor($email, $senha) {
         $pdo = new PDO("mysql:host=localhost;dbname=teste","root","");
@@ -40,6 +53,7 @@ Class Usuarios {
             }
     }
    
+
 }
 
 

@@ -166,16 +166,16 @@
 
                                 if ($result > 0) {
                                     foreach ($query as $value) {
-                                        echo "<tr class='hover:bg-gray-50 transition-colors cursor-pointer' onclick='showStudentDetails(" . json_encode($value) . ")' role='row'>";
+                                        echo "<tr class='hover:bg-gray-50 transition-colors cursor-pointer' role='row'>";
                                         echo "<td class='px-4 md:px-6 py-3 md:py-4 whitespace-nowrap' role='cell'>";
-                                        echo "<div class='flex items-center'>";
+                                        echo "<a href='../views/detalhes_aluno.php?id=" . htmlspecialchars($value['id']) . "' class='flex items-center'>";
                                         echo "<div class='flex-shrink-0 h-8 w-8 md:h-10 md:w-10'>";
                                         echo "<img class='h-8 w-8 md:h-10 md:w-10 rounded-full' src='https://ui-avatars.com/api/?name=" . urlencode($value['nome']) . "' alt='Foto do aluno " . htmlspecialchars($value['nome']) . "'>";
                                         echo "</div>";
                                         echo "<div class='ml-2 md:ml-4'>";
                                         echo "<div class='text-sm font-medium text-gray-900'>" . htmlspecialchars($value['nome']) . "</div>";
                                         echo "</div>";
-                                        echo "</div>";
+                                        echo "</a>";
                                         echo "</td>";
                                         echo "<td class='px-4 md:px-6 py-3 md:py-4 whitespace-nowrap' role='cell'>";
                                         echo "<div class='text-sm text-gray-900'>" . htmlspecialchars($value['matricula']) . "</div>";
@@ -213,63 +213,7 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Student Details Sidebar -->
-            <div class="lg:col-span-1">
-                <div id="studentDetails" class="bg-white rounded-2xl shadow-lg p-4 md:p-6 sticky top-4 md:top-8 hidden" role="complementary" aria-label="Detalhes do aluno">
-                    <div class="flex justify-between items-center mb-4 md:mb-6">
-                        <h2 class="text-lg md:text-xl font-bold text-gray-800">Detalhes do Aluno</h2>
-                        <button onclick="closeDetails()" class="text-gray-500 hover:text-gray-700" aria-label="Fechar detalhes">
-                            <i class="fas fa-times" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                    <div class="space-y-4 md:space-y-6">
-                        <div class="flex justify-center">
-                            <img id="studentImage" class="h-16 w-16 md:h-24 md:w-24 rounded-full" src="" alt="" role="img">
-                        </div>
-                        <div>
-                            <h3 id="studentName" class="text-base md:text-lg font-semibold text-gray-800 mb-2"></h3>
-                            <p id="studentCourse" class="text-sm md:text-base text-gray-600"></p>
-                        </div>
-                        <div class="space-y-3 md:space-y-4">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-500">Matrícula</label>
-                                <p id="studentRegistration" class="mt-1 text-sm text-gray-900"></p>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-500">Contato</label>
-                                <p id="studentContato" class="mt-1 text-sm text-gray-900"></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
-
-    <script>
-        function showStudentDetails(student) {
-            const detailsDiv = document.getElementById('studentDetails');
-            detailsDiv.classList.remove('hidden');
-            
-            document.getElementById('studentImage').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(student.nome)}`;
-            document.getElementById('studentImage').alt = `Foto do aluno ${student.nome}`;
-            document.getElementById('studentName').textContent = student.nome;
-            document.getElementById('studentCourse').textContent = student.curso;
-            document.getElementById('studentRegistration').textContent = student.matricula;
-            document.getElementById('studentContato').textContent = student.contato;
-        }
-
-        function closeDetails() {
-            document.getElementById('studentDetails').classList.add('hidden');
-        }
-
-        // Adiciona suporte a teclado para navegação
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeDetails();
-            }
-        });
-    </script>
 </body>
 </html>

@@ -11,10 +11,11 @@ if (isset($_POST['email']) && !empty($_POST['email']) && isset($_POST['senha']) 
     $x = new Usuarios();
     if($x->Login_aluno($email, $senha) == true) {
         if(isset($_SESSION['idUser'])) {
-            header("Location: ../views/perfildoaluno.php");
+            header("Location: ../views/detalhes_aluno.php");
         }else {
             header("Location: ../views/Login_aluno.php");
         }
+        //  header("Location: ../views/detalhes_aluno.php");
     }else {
         header("Location: ../views/Login_aluno.php");
     }
