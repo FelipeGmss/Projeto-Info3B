@@ -25,12 +25,6 @@
 <body class="bg-gray-50 min-h-screen font-['Roboto']">
     <div class="container mx-auto px-4 py-8">
         <!-- Botão Voltar -->
-        <div class="mb-6">
-            <a href="../controllers/Controller-listar_alunos.php" class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#005A24] to-[#FF8C00] hover:from-[#FF8C00] hover:to-[#005A24] text-white rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg">
-                <i class="fas fa-arrow-left"></i>
-                Voltar para Lista de Alunos
-            </a>
-        </div>
 
         <!-- Detalhes do Aluno -->
         <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
