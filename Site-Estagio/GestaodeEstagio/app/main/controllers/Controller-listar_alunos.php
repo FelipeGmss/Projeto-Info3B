@@ -142,6 +142,8 @@
                                     <th scope="col" class="px-4 md:px-6 py-3 md:py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Matrícula</th>
                                     <th scope="col" class="px-4 md:px-6 py-3 md:py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contato</th>
                                     <th scope="col" class="px-4 md:px-6 py-3 md:py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Curso</th>
+                                    <th scope="col" class="px-4 md:px-6 py-3 md:py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">E-mail</th>
+                                    <th scope="col" class="px-4 md:px-6 py-3 md:py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Endereço</th>
                                     <th scope="col" class="px-4 md:px-6 py-3 md:py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
                                 </tr>
                             </thead>
@@ -185,6 +187,12 @@
                                         echo "</td>";
                                         echo "<td class='px-4 md:px-6 py-3 md:py-4 whitespace-nowrap' role='cell'>";
                                         echo "<div class='text-sm text-gray-900'>" . htmlspecialchars($value['curso']) . "</div>";
+                                        echo "</td>";
+                                        echo "<td class='px-4 md:px-6 py-3 md:py-4 whitespace-nowrap' role='cell'>";
+                                        echo "<div class='text-sm text-gray-900'>" . htmlspecialchars($value['email']) . "</div>";
+                                        echo "</td>";
+                                        echo "<td class='px-4 md:px-6 py-3 md:py-4 whitespace-nowrap' role='cell'>";
+                                        echo "<div class='text-sm text-gray-900'>" . htmlspecialchars($value['endereco']) . "</div>";
                                         echo "</td>";
                                         echo "<td class='px-4 md:px-6 py-3 md:py-4 whitespace-nowrap text-sm font-medium' role='cell'>";
                                         echo "<div class='flex items-center gap-2'>";

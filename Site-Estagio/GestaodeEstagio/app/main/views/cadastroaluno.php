@@ -326,6 +326,45 @@
                     </div>
                     <span class="error-message" id="cursoError">Por favor, insira um curso válido</span>
                 </div>
+
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <div class="input-wrapper">
+                        <input type="email" id="email" name="email" 
+                               placeholder="Digite seu e-mail"
+                               required
+                               aria-required="true"
+                               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                    </div>
+                    <span class="error-message" id="emailError">Por favor, insira um e-mail válido</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="endereco">Endereço</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="endereco" name="endereco" 
+                               placeholder="Digite seu endereço completo"
+                               required
+                               aria-required="true"
+                               minlength="5"
+                               maxlength="200">
+                    </div>
+                    <span class="error-message" id="enderecoError">Por favor, insira um endereço válido</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="senha">Senha</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="senha" name="senha" 
+                               placeholder="Digite sua senha"
+                               required
+                               aria-required="true"
+                               minlength="6"
+                               maxlength="20">
+                    </div>
+                    <span class="help-text">A senha deve ter entre 6 e 20 caracteres</span>
+                    <span class="error-message" id="senhaError">Por favor, insira uma senha válida</span>
+                </div>
             </div>
 
             <input type="submit" name="btn" class="submit-button" id="submitButton" value="Cadastrar Aluno">

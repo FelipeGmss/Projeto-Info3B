@@ -24,14 +24,17 @@ Class Cadastro{
             }
      } 
 
-     public function Cadastrar_alunos($nome, $matricula, $contato, $curso){
+     public function Cadastrar_alunos($nome, $matricula, $contato, $curso, $email, $endereco, $senha){
         $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
-        $consulta = 'INSERT INTO aluno VALUES (null,:nome,:matricula,:contato,:curso)';
+        $consulta = 'INSERT INTO aluno VALUES (null,:nome,:matricula,:contato,:curso,:email,:endereco,:senha)';
         $query = $pdo->prepare($consulta);
         $query->bindValue(":nome", $nome);
         $query->bindValue(":matricula", $matricula);
         $query->bindValue(":contato", $contato);
         $query->bindValue(":curso", $curso);
+        $query->bindValue(":email", $email);
+        $query->bindValue(":endereco", $endereco);
+        $query->bindValue(":senha", $senha);
         $query->execute();
 
         if ($query->rowCount() > 0) {

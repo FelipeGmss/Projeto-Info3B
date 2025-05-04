@@ -21,10 +21,51 @@
             }
         }
     </script>
+    <style>
+        /* Melhorias de Acessibilidade */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+
+        @media (prefers-contrast: high) {
+            :root {
+                --text-color: #000;
+                --border-color: #000;
+            }
+        }
+
+        /* Estilos para foco visível */
+        *:focus {
+            outline: 3px solid #005A24;
+            outline-offset: 2px;
+        }
+
+        /* Melhor contraste para leitores de tela */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+    </style>
 </head>
 <body class="bg-gray-50 min-h-screen font-['Roboto']">
     <div class="container mx-auto px-4 py-8">
         <!-- Botão Voltar -->
+        <a href="javascript:history.back()" 
+           class="inline-flex items-center text-primary hover:text-primary-dark mb-6 transition-colors duration-300"
+           aria-label="Voltar para a página anterior">
+            <i class="fas fa-arrow-left mr-2" aria-hidden="true"></i>
+            Voltar
+        </a>
 
         <!-- Detalhes do Aluno -->
         <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
@@ -57,7 +98,8 @@
                         <!-- Informações Detalhadas -->
                         <div class="md:w-2/3">
                             <div class="space-y-6">
-                                <div>
+                                <!-- Informações Pessoais -->
+                                <div class="bg-gray-50 rounded-xl p-6">
                                     <h2 class="text-xl font-semibold text-gray-800 mb-4">Informações Pessoais</h2>
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <div>
@@ -68,73 +110,91 @@
                                             <label class="block text-sm font-medium text-gray-500">Contato</label>
                                             <p class="mt-1 text-gray-900"><?php echo htmlspecialchars($aluno['contato']); ?></p>
                                         </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-500">E-mail</label>
+                                            <p class="mt-1 text-gray-900">
+                                                <a href="mailto:<?php echo htmlspecialchars($aluno['email']); ?>" 
+                                                   class="text-primary hover:text-primary-dark transition-colors duration-300">
+                                                    <?php echo htmlspecialchars($aluno['email']); ?>
+                                                </a>
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-500">Endereço</label>
+                                            <p class="mt-1 text-gray-900"><?php echo htmlspecialchars($aluno['endereco']); ?></p>
+                                        </div>
                                     </div>
                                 </div>
 
                                 <!-- Marcação de Tempo -->
-                                <div>
+                                <div class="bg-gray-50 rounded-xl p-6">
                                     <h2 class="text-xl font-semibold text-gray-800 mb-4">Tempo de Estágio</h2>
-                                    <div class="bg-white rounded-xl border border-gray-200 p-6">
-                                        <div class="mb-6">
-                                            <div class="flex justify-between mb-2">
-                                                <span class="text-sm font-medium text-gray-700">Horas Cumpridas</span>
-                                                <span class="text-sm font-medium text-gray-700">0/400 horas</span>
+                                    <div class="mb-6">
+                                        <div class="flex justify-between mb-2">
+                                            <span class="text-sm font-medium text-gray-700">Horas Cumpridas</span>
+                                            <span class="text-sm font-medium text-gray-700">0/400 horas</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="bg-gradient-to-r from-primary to-secondary h-2 rounded-full" 
+                                                 style="width: 0%"></div>
+                                        </div>
+                                    </div>
+
+                                    <form class="space-y-4">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">
+                                                Registro de Horário
+                                            </label>
+                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                                <div>
+                                                    <label class="block text-xs text-gray-500 mb-1">Início</label>
+                                                    <input type="time" 
+                                                           id="hora_inicio" 
+                                                           class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                                           aria-label="Horário de início">
+                                                </div>
+                                                <div>
+                                                    <label class="block text-xs text-gray-500 mb-1">Término</label>
+                                                    <input type="time" 
+                                                           id="hora_fim" 
+                                                           class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                                           aria-label="Horário de término">
+                                                </div>
                                             </div>
-                                            <div class="w-full bg-gray-200 rounded-full h-2">
-                                                <div class="bg-gradient-to-r from-[#005A24] to-[#FF8C00] h-2 rounded-full" 
-                                                     style="width: 0%"></div>
+                                            <div class="flex gap-2">
+                                                <button type="button" 
+                                                        onclick="adicionarHoras()"
+                                                        class="flex-1 px-4 py-2 bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-white rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
+                                                    <i class="fas fa-plus" aria-hidden="true"></i>
+                                                    Adicionar
+                                                </button>
+                                                <button type="button" 
+                                                        onclick="removerHoras()"
+                                                        class="flex-1 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
+                                                    <i class="fas fa-minus" aria-hidden="true"></i>
+                                                    Remover
+                                                </button>
                                             </div>
                                         </div>
-
-                                        <form class="space-y-4">
-                                            <div>
-                                                <label class="block text-sm font-medium text-gray-700 mb-1">
-                                                    Registro de Horário
-                                                </label>
-                                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                                                    <div>
-                                                        <label class="block text-xs text-gray-500 mb-1">Início</label>
-                                                        <input type="time" 
-                                                               id="hora_inicio" 
-                                                               class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
-                                                    </div>
-                                                    <div>
-                                                        <label class="block text-xs text-gray-500 mb-1">Término</label>
-                                                        <input type="time" 
-                                                               id="hora_fim" 
-                                                               class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
-                                                    </div>
-                                                </div>
-                                                <div class="flex gap-2">
-                                                    <button type="button" 
-                                                            onclick="adicionarHoras()"
-                                                            class="flex-1 px-4 py-2 bg-gradient-to-r from-[#005A24] to-[#FF8C00] hover:from-[#FF8C00] hover:to-[#005A24] text-white rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
-                                                        <i class="fas fa-plus"></i>
-                                                        Adicionar
-                                                    </button>
-                                                    <button type="button" 
-                                                            onclick="removerHoras()"
-                                                            class="flex-1 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
-                                                        <i class="fas fa-minus"></i>
-                                                        Remover
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
+                                    </form>
                                 </div>
 
                                 <!-- Botões de Ação -->
-                                <div class="flex gap-4">
+                                <div class="flex flex-col sm:flex-row gap-4">
                                     <a href="editar_aluno.php?btn=<?php echo htmlspecialchars($aluno['id']); ?>" 
-                                       class="px-4 py-2 bg-primary hover:bg-primary-dark text-white rounded-xl transition-all duration-300 flex items-center gap-2">
-                                        <i class="fas fa-edit"></i>
+                                       class="px-4 py-2 bg-primary hover:bg-primary-dark text-white rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2"
+                                       aria-label="Editar informações do aluno">
+                                        <i class="fas fa-edit" aria-hidden="true"></i>
                                         Editar Aluno
                                     </a>
-                                    <form action="../controllers/Controller-excluir_alunos.php" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este aluno?');">
+                                    <form action="../controllers/Controller-excluir_alunos.php" method="POST" 
+                                          onsubmit="return confirm('Tem certeza que deseja excluir este aluno?');"
+                                          class="w-full sm:w-auto">
                                         <input type="hidden" name="btn" value="<?php echo htmlspecialchars($aluno['id']); ?>">
-                                        <button type="submit" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl transition-all duration-300 flex items-center gap-2">
-                                            <i class="fas fa-trash"></i>
+                                        <button type="submit" 
+                                                class="w-full px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2"
+                                                aria-label="Excluir aluno">
+                                            <i class="fas fa-trash" aria-hidden="true"></i>
                                             Excluir Aluno
                                         </button>
                                     </form>

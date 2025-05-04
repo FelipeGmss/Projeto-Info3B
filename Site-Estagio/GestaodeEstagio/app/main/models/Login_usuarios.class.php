@@ -2,9 +2,9 @@
 
 // Alunos
 Class Usuarios {
-    public function Login_aluno ($email, $senha) {
-        $pdo = new PDO("mysql:host=localhost;dbname=teste","root","");
-        $consulta = 'SELECT * FROM usuario WHERE email_aluno = :email AND senha_aluno = :senha';
+    public function Login_aluno($email, $senha) {
+        $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
+        $consulta = 'SELECT * FROM aluno WHERE email = :email AND senha = :senha';
         $query = $pdo->prepare($consulta);
         $query->bindValue(":email", $email);
         $query->bindValue(":senha", $senha);
