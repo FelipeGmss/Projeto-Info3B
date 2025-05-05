@@ -111,7 +111,7 @@
                 <div class="flex flex-col sm:flex-row justify-between items-center">
                     <p class="text-gray-600 text-sm sm:text-base mb-4 sm:mb-0">© 2023 Sistema de Gestão de Estágio. Todos os direitos reservados.</p>
                     <div class="flex space-x-6">
-                        <a href="https://www.instagram.com/felipe.gm__/" class="text-gray-500 hover:text-gray-700 transition-colors">
+                        <a href="https://www.instagram.com/eeepsalabergampe/" class="text-gray-500 hover:text-gray-700 transition-colors">
                             <i class="fab fa-instagram text-xl"></i>
                         </a>
                     </div>

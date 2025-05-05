@@ -2,8 +2,8 @@
 
 require("../models/cadastros.class.php");
 
-if (isset($_POST['btn'])) {
-   $id = $_POST['btn'];
+if (isset($_POST['btn-excluir'])) {
+   $id = $_POST['btn-excluir'];
 
 
    $x = new Cadastro();

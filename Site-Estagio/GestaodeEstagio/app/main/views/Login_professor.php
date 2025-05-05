@@ -114,15 +114,6 @@
                     <span class="error-message" id="senhaError"></span>
                 </div>
 
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center">
-                        <input type="checkbox" id="lembrar" name="lembrar" 
-                               class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded-lg checkbox-container">
-                        <label for="lembrar" class="ml-2 block text-sm text-gray-700">Lembrar-me</label>
-                    </div>
-                    <a href="#" class="text-sm text-green-600 hover:text-green-700">Esqueceu a senha?</a>
-                </div>
-
                 <input type="submit" name="btn" value="Entrar" 
                        class="w-full bg-gradient-to-r from-green-600 to-green-500 text-white py-3 px-4 rounded-xl font-semibold hover:from-green-700 hover:to-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all duration-300 btn-submit">
             </form>

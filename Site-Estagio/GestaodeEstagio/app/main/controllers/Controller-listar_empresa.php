@@ -192,14 +192,14 @@
                                         echo "</td>";
                                         echo "<td class='px-4 md:px-6 py-3 md:py-4 whitespace-nowrap text-sm font-medium' role='cell'>";
                                         echo "<div class='flex items-center gap-2'>";
-                                        echo "<form action='editar_empresa.php' method='GET' style='display: inline;'>";
-                                        echo "<input type='hidden' name='btn' value='" . htmlspecialchars($value['id']) . "'>";
+                                        echo "<form action='../controllers/Controller-botao_acao.php' method='GET' style='display: inline;'>";
+                                        echo "<input type='hidden' name='btn-editar' value='" . htmlspecialchars($value['id']) . "'>";
                                         echo "<button type='submit' class='text-secondary hover:text-secondary-dark' aria-label='Editar empresa " . htmlspecialchars($value['nome']) . "'>";
                                         echo "<i class='fas fa-edit' aria-hidden='true'></i>";
                                         echo "</button>";
                                         echo "</form>";
                                         echo "<form action='../controllers/Controller-excluir_empresa.php' method='POST' style='display: inline;' onsubmit='return confirm(\"Tem certeza que deseja excluir esta empresa?\");'>";
-                                        echo "<input type='hidden' name='btn' value='" . htmlspecialchars($value['id']) . "'>";
+                                        echo "<input type='hidden' name='btn-excluir' value='" . htmlspecialchars($value['id']) . "'>";
                                         echo "<button type='submit' class='text-red-600 hover:text-red-800' aria-label='Excluir empresa " . htmlspecialchars($value['nome']) . "'>";
                                         echo "<i class='fas fa-trash' aria-hidden='true'></i>";
                                         echo "</button>";

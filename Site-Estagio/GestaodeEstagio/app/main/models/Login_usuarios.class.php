@@ -21,13 +21,6 @@ Class Usuarios {
             }
     }
 
-    public function Recuperar_senha($email) {
-        $pdo = new PDO("mysql:host=localhost;dbname=teste","root","");
-        $consulta = 'SELECT * FROM usuario WHERE email_aluno = :email';
-        $query = $pdo->prepare($consulta);
-        $query->bindValue(":email", $email);
-        $query->execute();
-    }
 
 
 

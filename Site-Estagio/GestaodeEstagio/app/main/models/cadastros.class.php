@@ -24,6 +24,7 @@ Class Cadastro{
             }
      } 
 
+
      public function Cadastrar_alunos($nome, $matricula, $contato, $curso, $email, $endereco, $senha){
         $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
         $consulta = 'INSERT INTO aluno VALUES (null,:nome,:matricula,:contato,:curso,:email,:endereco,:senha)';
@@ -64,6 +65,7 @@ Class Cadastro{
         $query->bindValue(":id", $id);
         $query->execute();
     }
+
     
 }
 
