@@ -283,7 +283,7 @@
         </div>
 
         <form action="../controllers/Controller-editar_empresa.php" method="POST" autocomplete="off" id="empresaForm" aria-label="Formulário de cadastro de empresa">
-            <input type="text" name="id" value="<?php echo $id; ?>">
+            <input type="hidden" name="id" value="<?php echo $id ?>">
             <div class="form-grid">
                 <div class="form-group">
                     <label for="nome-empresa">Nome da Empresa</label>

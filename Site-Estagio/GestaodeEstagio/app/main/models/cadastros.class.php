@@ -66,7 +66,37 @@ Class Cadastro{
         $query->execute();
     }
 
-    
+    public function editar_empresaById($id){
+        $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
+        $consulta = 'select * from concedentes where id = :id;';
+        $query = $pdo->prepare($consulta);
+        $query->bindValue(":id", $id);
+        $query->execute();
+        return $query->fetch();
+    }
+
+    public function editar_alunoById($id){
+        $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
+        $consulta = 'select * from aluno where id = :id;';
+        $query = $pdo->prepare($consulta);
+        $query->bindValue(":id", $id);
+        $query->execute();
+        return $query->fetch();
+    }
+
+    public function editar_empresa($id, $nome, $contato, $endereco, $perfil, $vagas){
+        $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
+        $consulta = "UPDATE concedentes SET nome = :nome, contato = :contato, endereco = :endereco, perfil = :perfil, numero_vagas = :numero_vagas WHERE id = :id;";
+        $query = $pdo->prepare($consulta);
+        $query->bindValue(":id", $id);
+        $query->bindValue(":nome", $nome);
+        $query->bindValue(":contato", $contato);
+        $query->bindValue(":endereco", $endereco);
+        $query->bindValue(":perfil", $perfil);
+        $query->bindValue(":numero_vagas", $vagas);
+        $query->execute();
+        return $query->rowCount();
+    }
 }
 
 ?>

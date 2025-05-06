@@ -1,369 +1,241 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestão de Vagas - Processo Seletivo</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#005A24',
-                        'primary-dark': '#004a1d',
-                        secondary: '#FF8C00',
-                        'secondary-dark': '#e67e00',
-                    }
-                }
-            }
+    <title>Processo Seletivo</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        :root {
+            --primary-color: #2e4f4f; /* Verde musgo */
+            --secondary-color: #1a3c34; /* Verde musgo escuro */
+            --accent-color: #d94f04; /* Laranja escuro */
+            --gray-dark: #333333; /* Cinza escuro */
+            --button-green: #4CAF50; /* Verde para botão Salvar */
+            --button-red: #ff4444; /* Vermelho para botão Cadastrar Vaga */
         }
-    </script>
+        body {
+            background-color: #e8ecef;
+            color: var(--gray-dark);
+        }
+        .form-container {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+        .btn-primary {
+            background-color: var(--button-green);
+            border-color: var(--button-green);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #45a049;
+            border-color: #45a049;
+        }
+        .btn-accent {
+            background-color: var(--button-red);
+            border-color: var(--button-red);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .btn-accent:hover {
+            background-color: #e03b3b;
+            border-color: #e03b3b;
+        }
+        .form-label {
+            color: var(--gray-dark);
+            font-weight: 500;
+        }
+        .form-control, .form-select {
+            border-color: #ced4da;
+            transition: border-color 0.3s ease;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 0.2rem rgba(217, 79, 4, 0.25);
+        }
+        h2, h4 {
+            color: var(--primary-color);
+        }
+        /* Estilos para feedback de erro */
+        .form-control.is-invalid, .form-select.is-invalid {
+            border-color: var(--button-red);
+        }
+        .invalid-feedback {
+            color: var(--button-red);
+        }
+        /* Estilos para feedback de sucesso */
+        .form-control.is-valid, .form-select.is-valid {
+            border-color: var(--button-green);
+        }
+        .valid-feedback {
+            color: var(--button-green);
+        }
+    </style>
 </head>
-<body class="bg-gradient-to-br from-[#005A24] to-[#FF8C00] min-h-screen font-['Roboto']">
-    <div class="container mx-auto px-4 py-8 max-w-7xl">
-        <!-- Botão Voltar -->
-        <div class="mb-6">
-            <a href="../views/paginainical.php" class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#005A24] to-[#FF8C00] hover:from-[#FF8C00] hover:to-[#005A24] text-white rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg">
-                <i class="fas fa-arrow-left"></i>
-                Voltar para Página Inicial
-            </a>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center mb-5">Processo Seletivo</h2>
+        
+        <!-- Formulário Principal -->
+        <div class="form-container">
+            <h4 class="mb-4">Dados do Processo Seletivo</h4>
+            <form action="#" method="POST" id="processoSeletivoForm" novalidate>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="hora" class="form-label">Hora</label>
+                        <input type="time" class="form-control" id="hora" name="hora" required>
+                        <div class="invalid-feedback">Por favor, insira a hora.</div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="local" class="form-label">Local</label>
+                        <input type="text" class="form-control" id="local" name="local" required>
+                        <div class="invalid-feedback">Por favor, insira o local.</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="empresa_id" class="form-label">Empresa</label>
+                        <select class="form-select" id="empresa_id" name="empresa_id" required>
+                            <option value="">Selecione a empresa</option>
+                            <option value="1">Empresa A</option>
+                            <option value="2">Empresa B</option>
+                            <option value="3">Empresa C</option>
+                        </select>
+                        <div class="invalid-feedback">Por favor, selecione a empresa.</div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="data" class="form-label">Data</label>
+                        <input type="date" class="form-control" id="data" name="data" required>
+                        <div class="invalid-feedback">Por favor, insira a data.</div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="aluno_id" class="form-label">Aluno</label>
+                        <select class="form-select" id="aluno_id" name="aluno_id" required>
+                            <option value="">Selecione o aluno</option>
+                            <option value="1">Aluno A</option>
+                            <option value="2">Aluno B</option>
+                            <option value="3">Aluno C</option>
+                        </select>
+                        <div class="invalid-feedback">Por favor, selecione o aluno.</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="vaga_id" class="form-label">Vaga</label>
+                        <select class="form-select" id="vaga_id" name="vaga_id" required>
+                            <option value="">Selecione a vaga</option>
+                            <option value="1">Vaga A</option>
+                            <option value="2">Vaga B</option>
+                            <option value="3">Vaga C</option>
+                        </select>
+                        <div class="invalid-feedback">Por favor, selecione a vaga.</div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Salvar</button>
+            </form>
         </div>
 
-        <!-- Header Section -->
-        <div class="bg-[#F5F5F5] rounded-2xl shadow-xl p-8 mb-8">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                <div>
-                    <h1 class="text-4xl font-bold text-gray-800 mb-2">Gestão de Vagas</h1>
-                    <p class="text-gray-600">Gerencie vagas, formulários e inscrições dos alunos</p>
-                </div>
-                <div class="flex items-center gap-4">
-                    <div class="relative">
-                        <input type="text" 
-                               class="w-full md:w-64 px-4 py-3 pl-10 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                               placeholder="Pesquisar vagas...">
-                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+        <!-- Formulário de Vagas -->
+        <div class="form-container">
+            <h4 class="mb-4">Cadastro de Vagas</h4>
+            <form action="../controllers/Controller-vaga_selecao.php" method="POST" id="cadastroVagasForm" novalidate>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="num_vagas" class="form-label">Número de Vagas</label>
+                        <input type="number" class="form-control" id="num_vagas" name="num_vagas" required>
+                        <div class="invalid-feedback">Por favor, insira o número de vagas.</div>
                     </div>
-                    <button class="bg-gradient-to-r from-[#005A24] to-[#FF8C00] hover:from-[#FF8C00] hover:to-[#005A24] text-white px-6 py-3 rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center gap-2">
-                        <i class="fas fa-plus"></i>
-                        Nova Vaga
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Main Content -->
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-            <!-- Left Sidebar -->
-            <div class="lg:col-span-1">
-                <div class="bg-[#F5F5F5] rounded-2xl shadow-xl p-6 sticky top-8">
-                    <h2 class="text-xl font-bold text-gray-800 mb-6">Filtros</h2>
-                    <div class="space-y-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Área</label>
-                            <select class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
-                                <option>Todas as Áreas</option>
-                                <option>TI</option>
-                                <option>Administração</option>
-                                <option>Marketing</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Status</label>
-                            <div class="space-y-2">
-                                <label class="flex items-center">
-                                    <input type="checkbox" class="rounded text-primary focus:ring-primary">
-                                    <span class="ml-2 text-gray-700">Vagas Ativas</span>
-                                </label>
-                                <label class="flex items-center">
-                                    <input type="checkbox" class="rounded text-primary focus:ring-primary">
-                                    <span class="ml-2 text-gray-700">Vagas Encerradas</span>
-                                </label>
-                                <label class="flex items-center">
-                                    <input type="checkbox" class="rounded text-primary focus:ring-primary">
-                                    <span class="ml-2 text-gray-700">Com Inscrições</span>
-                                </label>
-                            </div>
-                        </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="concedente_id" class="form-label">Empresa Concedente</label>
+                        <select class="form-select" id="concedente_id" name="id" required>
+                            <option value="">Selecione a empresa</option>
+                            <option value="1">Empresa A</option>
+                            <option value="2">Empresa B</option>
+                            <option value="3">Empresa C</option>
+                        </select>
+                        <div class="invalid-feedback">Por favor, selecione a empresa concedente.</div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="perfil" class="form-label">Perfil</label>
+                        <textarea class="form-control" id="perfil" name="perfil" rows="4" required></textarea>
+                        <div class="invalid-feedback">Por favor, insira o perfil da vaga.</div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Main Content Area -->
-            <div class="lg:col-span-3">
-                <!-- Tabs -->
-                <div class="bg-white rounded-2xl shadow-xl p-6 mb-8">
-                    <div class="flex gap-4 overflow-x-auto pb-2">
-                        <button class="px-6 py-3 rounded-xl bg-primary text-white font-medium whitespace-nowrap flex items-center gap-2">
-                            <i class="fas fa-briefcase"></i>
-                            Vagas Ativas
-                        </button>
-                        <button class="px-6 py-3 rounded-xl bg-gray-100 text-gray-700 font-medium hover:bg-gray-200 transition-colors whitespace-nowrap flex items-center gap-2">
-                            <i class="fas fa-archive"></i>
-                            Vagas Encerradas
-                        </button>
-                        <button class="px-6 py-3 rounded-xl bg-gray-100 text-gray-700 font-medium hover:bg-gray-200 transition-colors whitespace-nowrap flex items-center gap-2">
-                            <i class="fas fa-file-alt"></i>
-                            Formulários
-                        </button>
-                        <button class="px-6 py-3 rounded-xl bg-gray-100 text-gray-700 font-medium hover:bg-gray-200 transition-colors whitespace-nowrap flex items-center gap-2">
-                            <i class="fas fa-user-graduate"></i>
-                            Inscrições
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Vacancies List -->
-                <div class="space-y-6">
-                    <!-- Vacancy Card 1 -->
-                    <div class="bg-white rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
-                        <div class="flex flex-col md:flex-row justify-between items-start gap-6">
-                            <div class="flex-1">
-                                <div class="flex items-center gap-4 mb-4">
-                                    <div class="bg-primary/10 p-3 rounded-xl">
-                                        <i class="fas fa-code text-primary text-xl"></i>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-xl font-bold text-gray-800">Desenvolvedor Full Stack</h3>
-                                        <p class="text-gray-600">Tech Solutions Ltda</p>
-                                    </div>
-                                </div>
-                                <div class="flex flex-wrap gap-3">
-                                    <span class="px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium">
-                                        <i class="fas fa-user-friends mr-1"></i>
-                                        5 vagas disponíveis
-                                    </span>
-                                    <span class="px-4 py-2 bg-[#333333]/10 text-[#333333] rounded-full text-sm font-medium">
-                                        <i class="fas fa-clock mr-1"></i>
-                                        Inscrições abertas
-                                    </span>
-                                    <span class="px-4 py-2 bg-[#333333]/10 text-[#333333] rounded-full text-sm font-medium">
-                                        <i class="fas fa-users mr-1"></i>
-                                        12 inscritos
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="flex gap-3">
-                                <button class="px-4 py-2 bg-gradient-to-r from-[#005A24] to-[#FF8C00] hover:from-[#FF8C00] hover:to-[#005A24] text-white rounded-xl transition-colors flex items-center gap-2">
-                                    <i class="fas fa-edit"></i>
-                                    Editar
-                                </button>
-                                <button class="px-4 py-2 bg-[#FF6347] hover:bg-[#FF6347]/90 text-white rounded-xl transition-colors flex items-center gap-2">
-                                    <i class="fas fa-times"></i>
-                                    Encerrar
-                                </button>
-                                <button class="px-4 py-2 bg-[#333333] hover:bg-[#333333]/90 text-white rounded-xl transition-colors flex items-center gap-2">
-                                    <i class="fas fa-eye"></i>
-                                    Ver Inscritos
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Vacancy Card 2 -->
-                    <div class="bg-white rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
-                        <div class="flex flex-col md:flex-row justify-between items-start gap-6">
-                            <div class="flex-1">
-                                <div class="flex items-center gap-4 mb-4">
-                                    <div class="bg-accent/10 p-3 rounded-xl">
-                                        <i class="fas fa-bullhorn text-accent text-xl"></i>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-xl font-bold text-gray-800">Analista de Marketing</h3>
-                                        <p class="text-gray-600">Digital Marketing SA</p>
-                                    </div>
-                                </div>
-                                <div class="flex flex-wrap gap-3">
-                                    <span class="px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium">
-                                        <i class="fas fa-user-friends mr-1"></i>
-                                        3 vagas disponíveis
-                                    </span>
-                                    <span class="px-4 py-2 bg-[#333333]/10 text-[#333333] rounded-full text-sm font-medium">
-                                        <i class="fas fa-clock mr-1"></i>
-                                        Inscrições abertas
-                                    </span>
-                                    <span class="px-4 py-2 bg-[#333333]/10 text-[#333333] rounded-full text-sm font-medium">
-                                        <i class="fas fa-users mr-1"></i>
-                                        8 inscritos
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="flex gap-3">
-                                <button class="px-4 py-2 bg-gradient-to-r from-[#005A24] to-[#FF8C00] hover:from-[#FF8C00] hover:to-[#005A24] text-white rounded-xl transition-colors flex items-center gap-2">
-                                    <i class="fas fa-edit"></i>
-                                    Editar
-                                </button>
-                                <button class="px-4 py-2 bg-[#FF6347] hover:bg-[#FF6347]/90 text-white rounded-xl transition-colors flex items-center gap-2">
-                                    <i class="fas fa-times"></i>
-                                    Encerrar
-                                </button>
-                                <button class="px-4 py-2 bg-[#333333] hover:bg-[#333333]/90 text-white rounded-xl transition-colors flex items-center gap-2">
-                                    <i class="fas fa-eye"></i>
-                                    Ver Inscritos
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Form Management Section -->
-                <div class="mt-12">
-                    <div class="flex justify-between items-center mb-8">
-                        <h2 class="text-2xl font-bold text-gray-800">Gerenciamento de Formulários</h2>
-                        <button class="px-6 py-3 bg-gradient-to-r from-[#005A24] to-[#FF8C00] hover:from-[#FF8C00] hover:to-[#005A24] text-white rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center gap-2">
-                            <i class="fas fa-plus"></i>
-                            Criar Novo Formulário
-                        </button>
-                    </div>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- Form Template 1 -->
-                        <div class="bg-white rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
-                            <div class="flex justify-between items-start mb-6">
-                                <div class="flex items-center gap-4">
-                                    <div class="bg-primary/10 p-3 rounded-xl">
-                                        <i class="fas fa-file-alt text-primary text-xl"></i>
-                                    </div>
-                                    <h3 class="text-xl font-bold text-gray-800">Formulário Padrão</h3>
-                                </div>
-                                <span class="px-4 py-2 bg-[#333333]/10 text-[#333333] rounded-full text-sm font-medium">
-                                    <i class="fas fa-check-circle mr-1"></i>
-                                    20 respostas
-                                </span>
-                            </div>
-                            <p class="text-gray-600 mb-6">Formulário básico para coleta de informações dos candidatos</p>
-                            <div class="flex gap-3">
-                                <button class="px-4 py-2 bg-gradient-to-r from-[#005A24] to-[#FF8C00] hover:from-[#FF8C00] hover:to-[#005A24] text-white rounded-xl transition-colors flex items-center gap-2">
-                                    <i class="fas fa-edit"></i>
-                                    Editar
-                                </button>
-                                <button class="px-4 py-2 bg-[#FF6347] hover:bg-[#FF6347]/90 text-white rounded-xl transition-colors flex items-center gap-2">
-                                    <i class="fas fa-eye"></i>
-                                    Ver Respostas
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Form Template 2 -->
-                        <div class="bg-white rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
-                            <div class="flex justify-between items-start mb-6">
-                                <div class="flex items-center gap-4">
-                                    <div class="bg-accent/10 p-3 rounded-xl">
-                                        <i class="fas fa-cogs text-accent text-xl"></i>
-                                    </div>
-                                    <h3 class="text-xl font-bold text-gray-800">Formulário Técnico</h3>
-                                </div>
-                                <span class="px-4 py-2 bg-[#333333]/10 text-[#333333] rounded-full text-sm font-medium">
-                                    <i class="fas fa-check-circle mr-1"></i>
-                                    15 respostas
-                                </span>
-                            </div>
-                            <p class="text-gray-600 mb-6">Formulário específico para vagas técnicas com avaliação de habilidades</p>
-                            <div class="flex gap-3">
-                                <button class="px-4 py-2 bg-gradient-to-r from-[#005A24] to-[#FF8C00] hover:from-[#FF8C00] hover:to-[#005A24] text-white rounded-xl transition-colors flex items-center gap-2">
-                                    <i class="fas fa-edit"></i>
-                                    Editar
-                                </button>
-                                <button class="px-4 py-2 bg-[#FF6347] hover:bg-[#FF6347]/90 text-white rounded-xl transition-colors flex items-center gap-2">
-                                    <i class="fas fa-eye"></i>
-                                    Ver Respostas
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Student Registrations Section -->
-                <div class="mt-12">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-8">Inscrições dos Alunos</h2>
-                    <div class="bg-[#F5F5F5] rounded-2xl shadow-xl overflow-hidden">
-                        <div class="overflow-x-auto">
-                            <table class="min-w-full">
-                                <thead class="bg-gray-50">
-                                    <tr>
-                                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aluno</th>
-                                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vaga</th>
-                                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data da Inscrição</th>
-                                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-gray-200">
-                                    <tr class="hover:bg-gray-50 transition-colors">
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="flex items-center">
-                                                <div class="flex-shrink-0 h-10 w-10">
-                                                    <img class="h-10 w-10 rounded-full" src="https://ui-avatars.com/api/?name=João+Silva" alt="">
-                                                </div>
-                                                <div class="ml-4">
-                                                    <div class="text-sm font-medium text-gray-900">João Silva</div>
-                                                    <div class="text-sm text-gray-500">joao.silva@email.com</div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900">Desenvolvedor Full Stack</div>
-                                            <div class="text-sm text-gray-500">Tech Solutions Ltda</div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">15/03/2024</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-[#333333]/10 text-[#333333]">
-                                                Em Análise
-                                            </span>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                            <button class="text-[#005A24] hover:text-[#FF8C00] mr-4">
-                                                <i class="fas fa-file-alt"></i>
-                                                Ver Formulário
-                                            </button>
-                                            <button class="text-[#005A24] hover:text-[#FF8C00]">
-                                                <i class="fas fa-check"></i>
-                                                Aprovar
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-50 transition-colors">
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="flex items-center">
-                                                <div class="flex-shrink-0 h-10 w-10">
-                                                    <img class="h-10 w-10 rounded-full" src="https://ui-avatars.com/api/?name=Maria+Santos" alt="">
-                                                </div>
-                                                <div class="ml-4">
-                                                    <div class="text-sm font-medium text-gray-900">Maria Santos</div>
-                                                    <div class="text-sm text-gray-500">maria.santos@email.com</div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900">Analista de Marketing</div>
-                                            <div class="text-sm text-gray-500">Digital Marketing SA</div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">16/03/2024</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-[#333333]/10 text-[#333333]">
-                                                Aprovado
-                                            </span>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                            <button class="text-[#005A24] hover:text-[#FF8C00] mr-4">
-                                                <i class="fas fa-file-alt"></i>
-                                                Ver Formulário
-                                            </button>
-                                            <button class="text-[#005A24] hover:text-[#FF8C00]">
-                                                <i class="fas fa-times"></i>
-                                                Reprovar
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                <input type="submit" name="btn" class="btn btn-accent" value="Cadastrar Vagas">
+            </form>
         </div>
     </div>
+
+    <!-- Bootstrap JS e Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <script>
+        // Função para aplicar estilos de validação
+        function applyValidationStyles(element, isValid) {
+            if (isValid) {
+                element.classList.remove('is-invalid');
+                element.classList.add('is-valid');
+            } else {
+                element.classList.remove('is-valid');
+                element.classList.add('is-invalid');
+            }
+        }
+
+        // Validação do formulário de Processo Seletivo
+        const processoSeletivoForm = document.getElementById('processoSeletivoForm');
+        processoSeletivoForm.addEventListener('submit', function (event) {
+            if (!processoSeletivoForm.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+
+                // Aplica estilos de validação para cada campo
+                const horaInput = document.getElementById('hora');
+                applyValidationStyles(horaInput, horaInput.checkValidity());
+
+                const localInput = document.getElementById('local');
+                applyValidationStyles(localInput, localInput.checkValidity());
+
+                const empresaIdSelect = document.getElementById('empresa_id');
+                applyValidationStyles(empresaIdSelect, empresaIdSelect.checkValidity());
+
+                const dataInput = document.getElementById('data');
+                applyValidationStyles(dataInput, dataInput.checkValidity());
+
+                const alunoIdSelect = document.getElementById('aluno_id');
+                applyValidationStyles(alunoIdSelect, alunoIdSelect.checkValidity());
+
+                const vagaIdSelect = document.getElementById('vaga_id');
+                applyValidationStyles(vagaIdSelect, vagaIdSelect.checkValidity());
+            }
+
+            processoSeletivoForm.classList.add('was-validated');
+        });
+
+        // Validação do formulário de Cadastro de Vagas
+        const cadastroVagasForm = document.getElementById('cadastroVagasForm');
+        cadastroVagasForm.addEventListener('submit', function (event) {
+            if (!cadastroVagasForm.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+
+                // Aplica estilos de validação para cada campo
+                const numVagasInput = document.getElementById('num_vagas');
+                applyValidationStyles(numVagasInput, numVagasInput.checkValidity());
+
+                const concedenteIdSelect = document.getElementById('concedente_id');
+                applyValidationStyles(concedenteIdSelect, concedenteIdSelect.checkValidity());
+
+                const perfilTextarea = document.getElementById('perfil');
+                applyValidationStyles(perfilTextarea, perfilTextarea.checkValidity());
+            }
+
+            cadastroVagasForm.classList.add('was-validated');
+        });
+    </script>
 </body>
 </html>
