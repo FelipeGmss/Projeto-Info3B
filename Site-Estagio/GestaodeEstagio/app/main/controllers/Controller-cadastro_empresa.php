@@ -11,7 +11,7 @@ if (isset($_POST["btn"])) {
 
    $x = new Cadastro();
    $x->Cadastrar_empresa($nome, $contato, $endereco, $perfil, $vagas);
-   header("Location: ../views/cadastrodaempresa.php");
+   header("Location: ../views/dadosempresa.php");
 }
 
 ?>

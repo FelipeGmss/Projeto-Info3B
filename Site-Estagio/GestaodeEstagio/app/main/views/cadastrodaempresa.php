@@ -177,12 +177,12 @@
             border-radius: 12px;
             margin-bottom: 20px;
             text-align: center;
-            display: none;
+            display: none; /* Inicialmente escondida */
             animation: fadeIn 0.5s ease-out;
         }
 
         .success-message.show {
-            display: block;
+            display: block; /* Classe para mostrar a mensagem */
         }
 
         /* Animações */
@@ -282,15 +282,17 @@
             <p>Preencha os dados da sua empresa para começar</p>
         </div>
 
+        <div class="success-message" id="cadastroSucesso">Cadastro realizado com sucesso!</div>
+
         <form action="../controllers/Controller-cadastro_empresa.php" method="POST" autocomplete="off" id="empresaForm" aria-label="Formulário de cadastro de empresa">
             <div class="form-grid">
                 <div class="form-group">
                     <label for="nome-empresa">Nome da Empresa</label>
                     <div class="input-wrapper">
-                        <input type="text" id="nome-empresa" name="nome" 
-                               placeholder="Digite o nome da empresa" 
+                        <input type="text" id="nome-empresa" name="nome"
+                               placeholder="Digite o nome da empresa"
                                required
-                               aria-required="true" 
+                               aria-required="true"
                                aria-label="Nome da empresa">
                     </div>
                     <span class="help-text">Nome completo da empresa conforme registro</span>
@@ -299,7 +301,7 @@
                 <div class="form-group">
                     <label for="contato">Contato</label>
                     <div class="input-wrapper">
-                        <input type="tel" id="contato" name="contato" 
+                        <input type="tel" id="contato" name="contato"
                                placeholder="Digite o número de telefone"
                                aria-label="Informações de contato">
                     </div>
@@ -309,16 +311,16 @@
                 <div class="form-group">
                     <label for="endereco">Endereço</label>
                     <div class="input-wrapper">
-                        <input type="text" id="endereco" name="endereco" 
+                        <input type="text" id="endereco" name="endereco"
                                placeholder="Endereço completo"
                                aria-label="Endereço da empresa">
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="perfil">Perfil da Empresa</label>
                     <div class="input-wrapper">
-                        <input type="text" id="perfil" name="perfil" 
+                        <input type="text" id="perfil" name="perfil"
                                placeholder="Descreva o perfil da empresa"
                                required
                                aria-required="true"
@@ -330,7 +332,7 @@
                 <div class="form-group">
                     <label for="vagas">Número de Vagas</label>
                     <div class="input-wrapper">
-                        <input type="number" id="vagas" name="numero_vagas" 
+                        <input type="number" id="vagas" name="numero_vagas"
                                placeholder="Quantidade de vagas disponíveis"
                                required
                                aria-required="true"
@@ -338,12 +340,38 @@
                                max="100">
                     </div>
                     </div>
-             </div>
+           </div>
 
-            <input type="submit" class="submit-button" name="btn" 
+            <input type="submit" class="submit-button" name="btn"
                    value="Cadastrar Empresa"
-                   aria-label="Cadastrar empresa">
+                   aria-label="Cadastrar empresa"
+                   id="submitBtn">
         </form>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- <script>
+        const formulario = document.getElementById('empresaForm');
+
+        formulario.addEventListener('submit', function(event) {
+            event.preventDefault(); // Impede o envio imediato
+
+            // Mostra o toast de sucesso
+            Swal.fire({
+                title: 'Sucesso!',
+                text: 'Empresa cadastrada com sucesso!',
+                icon: 'success',
+                confirmButtonText: 'OK',
+                timer: 2000,
+                timerProgressBar: true,
+                allowOutsideClick: false,
+                allowEscapeKey: false
+            }).then((result) => {
+                if (result.dismiss === Swal.DismissReason.timer) {
+                    formulario.submit();
+                }
+            });
+        }); -->
+    </script>
 </body>
 </html>
