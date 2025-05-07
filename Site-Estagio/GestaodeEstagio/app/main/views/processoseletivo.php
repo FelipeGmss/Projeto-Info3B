@@ -19,18 +19,26 @@
         body {
             background-color: #e8ecef;
             color: var(--gray-dark);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fonte mais moderna */
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 960px; /* Largura máxima para melhor leitura */
         }
         .form-container {
             background-color: white;
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            padding: 25px;
-            margin-bottom: 25px;
+            padding: 30px; /* Aumentei o padding */
+            margin-bottom: 30px; /* Aumentei a margem */
+            border: 1px solid #dee2e6; /* Adiciona uma borda sutil */
         }
         .btn-primary {
             background-color: var(--button-green);
             border-color: var(--button-green);
             transition: all 0.3s ease;
+            padding: 10px 20px; /* Melhora o tamanho do botão */
+            font-size: 1rem; /* Tamanho da fonte */
         }
         .btn-primary:hover {
             background-color: #45a049;
@@ -41,6 +49,8 @@
             border-color: var(--button-red);
             color: white;
             transition: all 0.3s ease;
+            padding: 10px 20px; /* Melhora o tamanho do botão */
+            font-size: 1rem; /* Tamanho da fonte */
         }
         .btn-accent:hover {
             background-color: #e03b3b;
@@ -49,10 +59,14 @@
         .form-label {
             color: var(--gray-dark);
             font-weight: 500;
+            margin-bottom: 0.5rem; /* Espaçamento abaixo da label */
+            display: block; /* Garante que a label ocupe toda a largura */
         }
         .form-control, .form-select {
             border-color: #ced4da;
             transition: border-color 0.3s ease;
+            padding: 0.75rem; /* Aumenta o preenchimento interno */
+            font-size: 1rem; /* Tamanho da fonte */
         }
         .form-control:focus, .form-select:focus {
             border-color: var(--accent-color);
@@ -60,6 +74,8 @@
         }
         h2, h4 {
             color: var(--primary-color);
+            margin-bottom: 1.5rem; /* Espaçamento abaixo dos títulos */
+            font-weight: 600; /* Título mais destacado */
         }
         /* Estilos para feedback de erro */
         .form-control.is-invalid, .form-select.is-invalid {
@@ -67,6 +83,7 @@
         }
         .invalid-feedback {
             color: var(--button-red);
+            margin-top: 0.25rem; /* Espaçamento acima do feedback */
         }
         /* Estilos para feedback de sucesso */
         .form-control.is-valid, .form-select.is-valid {
@@ -74,6 +91,18 @@
         }
         .valid-feedback {
             color: var(--button-green);
+            margin-top: 0.25rem; /* Espaçamento acima do feedback */
+        }
+        /* Melhorias de responsividade */
+        @media (max-width: 768px) {
+            .col-md-6, .col-md-4, .col-md-3 {
+                margin-bottom: 1rem; /* Espaçamento entre os campos em telas menores */
+            }
+        }
+        /* Estilo para a textarea */
+        textarea.form-control {
+            resize: vertical; /* Permite redimensionamento vertical */
+            height: 120px; /* Altura inicial */
         }
     </style>
 </head>
@@ -147,22 +176,17 @@
                 <div class="row">
                     <div class="col-md-4 mb-3">
                         <label for="num_vagas" class="form-label">Número de Vagas</label>
-                        <input type="number" class="form-control" id="num_vagas" name="num_vagas" required>
+                        <input type="number" class="form-control" id="num_vagas" name="num_vagas" value="" required>
                         <div class="invalid-feedback">Por favor, insira o número de vagas.</div>
                     </div>
                     <div class="col-md-4 mb-3">
-                        <label for="concedente_id" class="form-label">Empresa Concedente</label>
-                        <select class="form-select" id="concedente_id" name="id" required>
-                            <option value="">Selecione a empresa</option>
-                            <option value="1">Empresa A</option>
-                            <option value="2">Empresa B</option>
-                            <option value="3">Empresa C</option>
-                        </select>
-                        <div class="invalid-feedback">Por favor, selecione a empresa concedente.</div>
+                        <label for="nome" class="form-label">Empresa Concedente</label>
+                        <input type="text" class="form-control" name="nome" id="nome" required>
+                        <div class="invalid-feedback">Por favor, digite a empresa concedente.</div>
                     </div>
                     <div class="col-md-4 mb-3">
                         <label for="perfil" class="form-label">Perfil</label>
-                        <textarea class="form-control" id="perfil" name="perfil" rows="4" required></textarea>
+                        <textarea class="form-control" id="perfil" name="perfil" required></textarea>
                         <div class="invalid-feedback">Por favor, insira o perfil da vaga.</div>
                     </div>
                 </div>
@@ -227,8 +251,8 @@
                 const numVagasInput = document.getElementById('num_vagas');
                 applyValidationStyles(numVagasInput, numVagasInput.checkValidity());
 
-                const concedenteIdSelect = document.getElementById('concedente_id');
-                applyValidationStyles(concedenteIdSelect, concedenteIdSelect.checkValidity());
+                const nomeInput = document.getElementById('nome');
+                applyValidationStyles(nomeInput, nomeInput.checkValidity());
 
                 const perfilTextarea = document.getElementById('perfil');
                 applyValidationStyles(perfilTextarea, perfilTextarea.checkValidity());

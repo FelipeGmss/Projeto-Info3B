@@ -22,14 +22,11 @@ Class Usuarios {
     }
 
 
-
-
-
     // Professores
 
     public function Login_professor($email, $senha) {
-        $pdo = new PDO("mysql:host=localhost;dbname=teste","root","");
-        $consulta = 'SELECT * FROM user_prof WHERE email_professor = :email AND senha_professor = :senha';
+        $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
+        $consulta = 'SELECT * FROM usuario WHERE email = :email AND senha = :senha';
         $query = $pdo->prepare($consulta);
         $query->bindValue(":email", $email);
         $query->bindValue(":senha", $senha);

@@ -116,6 +116,9 @@
 
                 <input type="submit" name="btn" value="Entrar" 
                        class="w-full bg-gradient-to-r from-green-600 to-green-500 text-white py-3 px-4 rounded-xl font-semibold hover:from-green-700 hover:to-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all duration-300 btn-submit">
+                       <div>
+                       <a href="#" class="text-sm text-green-600 hover:text-green-700">Esqueceu a senha?</a>
+                 </div>
             </form>
 
             </div>
