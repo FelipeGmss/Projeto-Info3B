@@ -113,7 +113,7 @@
         <!-- Formulário Principal -->
         <div class="form-container">
             <h4 class="mb-4">Dados do Processo Seletivo</h4>
-            <form action="#" method="POST" id="processoSeletivoForm" novalidate>
+            <form action="../controllers/Controller-vaga_selecao.php" method="POST" id="processoSeletivoForm" novalidate>
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="hora" class="form-label">Hora</label>
@@ -165,7 +165,7 @@
                         <div class="invalid-feedback">Por favor, selecione a vaga.</div>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Salvar</button>
+                <button type="submit" name="btn" class="btn btn-primary">Salvar</button>
             </form>
         </div>
 
