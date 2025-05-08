@@ -116,11 +116,15 @@
                                id="search"
                                name="search"
                                class="w-full px-4 py-3 pl-10 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                               placeholder="Pesquisar empresas..."
+                               placeholder="Pesquisar empresas, contato, endereço ou perfil..."
                                value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>"
                                aria-label="Pesquisar empresas">
                         <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" aria-hidden="true"></i>
                     </form>
+                    <a href="../views/relatorio.php<?php echo isset($_GET['search']) && $_GET['search'] != '' ? '?search=' . urlencode($_GET['search']) : ''; ?>" class="w-full md:w-auto bg-secondary hover:bg-secondary-dark text-white px-6 py-3 rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
+                        <i class="fas fa-file-pdf" aria-hidden="true"></i>
+                        Gerar PDF
+                    </a>
                     <button class="w-full md:w-auto bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
                         <i class="fas fa-plus" aria-hidden="true"></i>
                         <a href="../views/cadastrodaempresa.php" class="focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-primary">Nova Empresa</a>
@@ -154,7 +158,7 @@
                                 
                                 $search = isset($_GET['search']) ? $_GET['search'] : '';
                                 if (!empty($search)) {
-                                    $consulta = 'SELECT * FROM concedentes WHERE nome LIKE :search';
+                                    $consulta = 'SELECT * FROM concedentes WHERE nome LIKE :search OR contato LIKE :search OR endereco LIKE :search OR perfil LIKE :search';
                                     $query = $pdo->prepare($consulta);
                                     $query->bindValue(':search', '%' . $search . '%');
                                 } else {
@@ -255,6 +259,7 @@
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script>
         function showCompanyDetails(company) {
             const detailsDiv = document.getElementById('companyDetails');
@@ -267,6 +272,19 @@
             document.getElementById('companyContact').textContent = company.contato;
             document.getElementById('companyAddress').textContent = company.endereco;
             document.getElementById('companyVacancies').textContent = company.numero_vagas;
+        }
+
+        function generatePDF() {
+            const element = document.querySelector('.overflow-x-auto');
+            const opt = {
+                margin: 1,
+                filename: 'lista_empresas.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
+            };
+
+            html2pdf().set(opt).from(element).save();
         }
 
         function closeDetails() {
