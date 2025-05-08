@@ -70,7 +70,7 @@
         <!-- Detalhes do Aluno -->
         <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
             <?php
-            require("../models/cadastros.class.php");
+            require("../models/model.functions.php");
             $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
             
             if (isset($_GET['id'])) {

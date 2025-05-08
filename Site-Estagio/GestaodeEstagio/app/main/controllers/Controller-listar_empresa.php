@@ -148,7 +148,7 @@
                             </thead>
                             <tbody class="divide-y divide-gray-200">
                                 <?php
-                                require("../models/cadastros.class.php");
+                                require("../models/model.functions.php");
                                 $x = new Cadastro();
                                 $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
                                 
