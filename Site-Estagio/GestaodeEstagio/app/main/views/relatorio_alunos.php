@@ -5,67 +5,87 @@ require('../assets/fpdf/fpdf.php');
 class PDF extends FPDF {
     // Page header
     function Header() {
-        // Arial bold 15
-        $this->SetFont('Arial', 'B', 15);
+        // Set font for title
+        $this->SetFont('Arial', 'B', 14);
+        $this->SetTextColor(0, 90, 36); // Dark green
         // Title
         $this->Cell(0, 10, 'Relatorio de Alunos', 0, 1, 'C');
-        // Subtitle with date
-        $this->SetFont('Arial', 'I', 10);
-        $this->Cell(0, 10, 'Data: ' . date('d/m/Y H:i'), 0, 1, 'C');
+        
+        // Line break for spacing
+        $this->Ln(5);
+
+        // Date and time
+        $this->SetFont('Arial', '', 10);
+        $this->SetTextColor(0, 0, 0);
+        $this->Cell(0, 8, 'Data: ' . date('d \d\e F \d\e Y, H:i'), 0, 1, 'C'); // e.g., "08 de Maio de 2025, 14:30"
         
         // Search term if exists
         if(isset($_GET['search']) && !empty($_GET['search'])) {
             $this->SetFont('Arial', 'B', 10);
-            $this->Cell(0, 10, 'Termo de busca: ' . $_GET['search'], 0, 1, 'C');
+            $this->SetTextColor(0, 90, 36);
+            $this->Cell(0, 8, 'Termo de busca: ' . htmlspecialchars($_GET['search']), 0, 1, 'C');
         }
         
+        // Divider line
+        $this->SetDrawColor(0, 90, 36);
+        $this->SetLineWidth(0.3);
+        $this->Line(20, $this->GetY() + 5, $this->w - 20, $this->GetY() + 5);
+        
         // Line break
-        $this->Ln(5);
+        $this->Ln(10);
     }
 
     // Page footer
     function Footer() {
-        // Position at 1.5 cm from bottom
         $this->SetY(-15);
-        // Arial italic 8
         $this->SetFont('Arial', 'I', 8);
-        // Page number
-        $this->Cell(0, 10, 'Pagina ' . $this->PageNo() . '/{nb}', 0, 0, 'C');
+        $this->SetTextColor(0, 0, 0);
+        $this->Cell(0, 10, 'Página ' . $this->PageNo() . '/{nb}', 0, 0, 'C');
     }
 
     // Table header
     function TableHeader() {
-        // Colors, line width and bold font
-        $this->SetFillColor(0, 90, 36); // Verde escuro
+        $this->SetFillColor(0, 90, 36); // Dark green
         $this->SetTextColor(255);
         $this->SetDrawColor(0, 90, 36);
-        $this->SetLineWidth(.3);
+        $this->SetLineWidth(0.2);
         $this->SetFont('Arial', 'B', 10);
 
-        // Header
-        $header = array('Nome', 'Matrícula', 'Contato', 'Curso', 'E-mail', 'Endereço');
-        $w = array(50, 25, 30, 40, 50, 50);
-        for($i = 0; $i < count($header); $i++)
-            $this->Cell($w[$i], 7, $header[$i], 1, 0, 'C', true);
+        // Center table
+        $tableWidth = array_sum(array(40, 20, 25, 30, 30, 35));
+        $startX = ($this->w - $tableWidth) / 2;
+        $this->SetX($startX);
+
+        $header = array('Nome', 'Matricula', 'Contato', 'Curso', 'E-mail', 'Endereco');
+        $w = array(35, 25, 25, 30, 30, 35);
+        $align = array('J', 'C', 'C', 'L', 'L', 'J');
+        for($i = 0; $i < count($header); $i++) {
+            $this->Cell($w[$i], 7, $header[$i], 1, 0, $align[$i], true);
+        }
         $this->Ln();
     }
 
     // Table content
     function TableContent($data) {
-        // Colors, line width and normal font
-        $this->SetFillColor(240, 240, 240);
+        $this->SetFillColor(200, 230, 200); // Light green
         $this->SetTextColor(0);
         $this->SetFont('Arial', '', 9);
+        $this->SetDrawColor(0, 90, 36);
 
-        $w = array(50, 25, 30, 40, 50, 50); // Larguras das colunas
+        $w = array(35, 25, 25, 30, 30, 35);
         $fill = false;
         foreach($data as $row) {
-            if($this->GetY() > 250) {
-                $this->AddPage('L');
+            if($this->GetY() > 260) { // Check for page break
+                $this->AddPage();
                 $this->TableHeader();
             }
 
-            // Prepara os textos
+            // Center table
+            $tableWidth = array_sum($w);
+            $startX = ($this->w - $tableWidth) / 2;
+            $this->SetX($startX);
+
+            // Prepare texts
             $nome = utf8_decode($row['nome']);
             $matricula = utf8_decode($row['matricula']);
             $contato = utf8_decode($row['contato']);
@@ -73,57 +93,59 @@ class PDF extends FPDF {
             $email = utf8_decode($row['email']);
             $endereco = utf8_decode($row['endereco']);
 
-            // Calcula a altura necessária para o campo nome
-            $nomeAltura = $this->NbLines($w[0], $nome) * 6;
-            $altura = max(6, $nomeAltura);
+            // Truncate long texts
+            $endereco = (strlen($endereco) > 25) ? substr($endereco, 0, 22) . '...' : $endereco;
 
-            // Salva a posição inicial
+            // Calculate height for nome and endereco
+            $nomeAltura = $this->NbLines($w[0], $nome) * 5;
+            $enderecoAltura = $this->NbLines($w[5], $endereco) * 5;
+            $altura = max(7, $nomeAltura, $enderecoAltura);
+
+            // Save position
             $x = $this->GetX();
             $y = $this->GetY();
 
             // Nome (MultiCell)
             $this->SetXY($x, $y);
-            $this->MultiCell($w[0], 6, $nome, 0, 'L', $fill);
-            // Volta para a posição da próxima célula
+            $this->MultiCell($w[0], 7, $nome, 1, 'J', $fill);
             $this->SetXY($x + $w[0], $y);
             
             // Matrícula
-            $this->Cell($w[1], $altura, $matricula, 'LR', 0, 'C', $fill);
+            $this->Cell($w[1], $altura, $matricula, 1, 0, 'C', $fill);
             // Contato
-            $this->Cell($w[2], $altura, $contato, 'LR', 0, 'C', $fill);
+            $this->Cell($w[2], $altura, $contato, 1, 0, 'C', $fill);
             // Curso
-            $this->Cell($w[3], $altura, $curso, 'LR', 0, 'L', $fill);
+            $this->Cell($w[3], $altura, $curso, 1, 0, 'L', $fill);
             // Email
-            $this->Cell($w[4], $altura, $email, 'LR', 0, 'L', $fill);
-            // Endereço
-            $this->Cell($w[5], $altura, $endereco, 'LR', 0, 'L', $fill);
+            $this->Cell($w[4], $altura, $email, 1, 0, 'L', $fill);
+            // Endereço (MultiCell)
+            $this->SetXY($x + $w[0] + $w[1] + $w[2] + $w[3] + $w[4], $y);
+            $this->MultiCell($w[5], 7, $endereco, 1, 'J', $fill);
             
-            // Nova linha
+            // New line
             $this->Ln($altura);
             $fill = !$fill;
         }
-        // Linha de fechamento
-        $this->Cell(array_sum($w), 0, '', 'T');
     }
 
-    // Função auxiliar para contar linhas necessárias para o MultiCell
+    // Calculate number of lines for MultiCell
     function NbLines($w, $txt) {
         $cw = &$this->CurrentFont['cw'];
-        if($w==0)
-            $w = $this->w-$this->rMargin-$this->x;
-        $wmax = ($w-2*$this->cMargin)*1000/$this->FontSize;
+        if($w == 0)
+            $w = $this->w - $this->rMargin - $this->x;
+        $wmax = ($w - 2 * $this->cMargin) * 1000 / $this->FontSize;
         $s = str_replace("\r", '', $txt);
         $nb = strlen($s);
-        if($nb>0 && $s[$nb-1]=="\n")
+        if($nb > 0 && $s[$nb - 1] == "\n")
             $nb--;
         $sep = -1;
         $i = 0;
         $j = 0;
         $l = 0;
         $nl = 1;
-        while($i<$nb) {
+        while($i < $nb) {
             $c = $s[$i];
-            if($c=="\n") {
+            if($c == "\n") {
                 $i++;
                 $sep = -1;
                 $j = $i;
@@ -131,15 +153,15 @@ class PDF extends FPDF {
                 $nl++;
                 continue;
             }
-            if($c==' ')
+            if($c == ' ')
                 $sep = $i;
             $l += $cw[$c];
             if($l > $wmax) {
-                if($sep==-1) {
-                    if($i==$j)
+                if($sep == -1) {
+                    if($i == $j)
                         $i++;
                 } else
-                    $i = $sep+1;
+                    $i = $sep + 1;
                 $sep = -1;
                 $j = $i;
                 $l = 0;
@@ -151,17 +173,20 @@ class PDF extends FPDF {
     }
 }
 
-// Create new PDF document
+// Create PDF document
 $pdf = new PDF();
+$pdf->SetMargins(20, 20, 20); // Equal margins
 $pdf->AliasNbPages();
-$pdf->AddPage('L'); // Landscape orientation
+$pdf->AddPage(); // A4 portrait
 $pdf->SetFont('Arial', '', 12);
 
-// Get data from database with search filter
+// Database connection
 $pdo = new PDO("mysql:host=localhost;dbname=estagio", "root", "");
+
+// Get search term
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
 
-// Prepara a consulta SQL
+// Prepare SQL query
 if (!empty($search)) {
     $consulta = 'SELECT * FROM aluno WHERE 
                 nome LIKE :search OR 
@@ -173,21 +198,18 @@ if (!empty($search)) {
     $query = $pdo->prepare($consulta);
     $query->bindValue(':search', '%' . $search . '%');
 } else {
-    // Se não houver termo de busca, retorna todos os alunos
     $consulta = 'SELECT * FROM aluno';
     $query = $pdo->prepare($consulta);
 }
 
-// Executa a consulta
+// Execute query
 $query->execute();
 $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
-// Add table header
+// Add table
 $pdf->TableHeader();
-
-// Add table content
 $pdf->TableContent($result);
 
 // Output PDF
 $pdf->Output('I', 'relatorio_alunos.pdf');
-?> 
+?>
