@@ -12,10 +12,11 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#005A24',
-                        'primary-dark': '#004a1d',
-                        secondary: '#FF8C00',
-                        'secondary-dark': '#e67e00',
+                        'ceara-green': '#008C45',
+                        'ceara-orange': '#FFA500',
+                        'ceara-white': '#FFFFFF',
+                        primary: '#008C45',
+                        secondary: '#FFA500',
                     }
                 }
             }
@@ -39,7 +40,7 @@
 
         /* Estilos para foco visível */
         *:focus {
-            outline: 3px solid #005A24;
+            outline: 3px solid #FFA500;
             outline-offset: 2px;
         }
 
@@ -98,16 +99,79 @@
                 display: block;
             }
         }
+
+        /* Estilos do EEEP Salaberga */
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+        .hover-scale {
+            transition: transform 0.3s ease-in-out;
+        }
+        .hover-scale:hover {
+            transform: scale(1.05);
+        }
+        .fade-in {
+            animation: fadeIn 1s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .accessibility-btn {
+            transition: all 0.3s ease;
+        }
+        .accessibility-btn:hover {
+            color: #FFA500;
+        }
+        .table-row:hover {
+            background-color: rgba(255, 165, 0, 0.1);
+        }
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: #FFFFFF;
+            border: 2px solid #008C45;
+            border-radius: 12px;
+            color: #008C45;
+            font-size: 1rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+        .back-button:hover {
+            background: #008C45;
+            color: #FFFFFF;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        .back-button:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 140, 69, 0.3);
+        }
     </style>
 </head>
-<body class="bg-gray-50 min-h-screen font-['Roboto']">
-    <div class="container mx-auto px-4 py-4 md:py-8">
+<body class="bg-gradient-to-br from-ceara-green to-ceara-orange min-h-screen font-['Roboto'] select-none">
+    <div class="container mx-auto px-4 py-4 md:py-8 fade-in">
         <!-- Header Section -->
-        <header class="bg-white rounded-2xl shadow-lg p-4 md:p-6 mb-4 md:mb-8">
+        <header class="bg-ceara-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-4 md:p-6 mb-4 md:mb-8">
             <div class="flex flex-col gap-4">
-                <div class="mobile-text-center">
-                    <h1 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2">Dados dos Alunos</h1>
-                    <p class="text-gray-600">Gerencie e visualize os dados dos alunos estagiários</p>
+                <div class="flex flex-col sm:flex-row justify-between items-center mobile-text-center">
+                    <div>
+                        <a href="javascript:history.back()" class="back-button">
+                            <i class="fas fa-arrow-left"></i> Voltar
+                        </a>
+                        <h1 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2">Dados dos Alunos</h1>
+                        <p class="text-gray-600">Gerencie e visualize os dados dos alunos estagiários</p>
+                    </div>
                 </div>
                 <div class="flex flex-col md:flex-row items-center gap-4">
                     <form action="" method="GET" class="relative w-full md:w-64" role="search">
@@ -115,19 +179,19 @@
                         <input type="text" 
                                id="search"
                                name="search"
-                               class="w-full px-4 py-3 pl-10 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                               class="w-full px-4 py-3 pl-10 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-ceara-orange focus:border-transparent"
                                placeholder="Pesquisar alunos..."
                                value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>"
                                aria-label="Pesquisar alunos">
                         <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" aria-hidden="true"></i>
                     </form>
-                    <a href="../views/relatorio_alunos.php?search=<?php echo isset($_GET['search']) && $_GET['search'] != '' ? urlencode($_GET['search']) : ''; ?>" class="w-full md:w-auto bg-secondary hover:bg-secondary-dark text-white px-6 py-3 rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
+                    <a href="../views/relatorio_alunos.php?search=<?php echo isset($_GET['search']) && $_GET['search'] != '' ? urlencode($_GET['search']) : ''; ?>" class="w-full md:w-auto bg-gradient-to-r from-ceara-green to-ceara-orange hover:from-ceara-orange hover:to-ceara-green text-ceara-white px-6 py-3 rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 hover-scale">
                         <i class="fas fa-file-pdf" aria-hidden="true"></i>
                         Gerar PDF
                     </a>
-                    <button class="w-full md:w-auto bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
+                    <button class="w-full md:w-auto bg-gradient-to-r from-ceara-green to-ceara-orange hover:from-ceara-orange hover:to-ceara-green text-ceara-white px-6 py-3 rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 hover-scale">
                         <i class="fas fa-plus" aria-hidden="true"></i>
-                        <a href="../views/cadastroaluno.php" class="focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-primary">Novo Aluno</a>
+                        <a href="../views/cadastroaluno.php" class="focus:outline-none focus:ring-2 focus:ring-ceara-white focus:ring-offset-2 focus:ring-offset-ceara-green">Novo Aluno</a>
                     </button>
                 </div>
             </div>
@@ -137,7 +201,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 md:gap-8">
             <!-- Students List -->
             <div class="lg:col-span-3">
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                <div class="bg-ceara-white/90 backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden">
                     <div class="overflow-x-auto mobile-table">
                         <table class="min-w-full" role="grid">
                             <thead class="bg-gray-50">
@@ -178,7 +242,7 @@
 
                                 if ($result > 0) {
                                     foreach ($query as $value) {
-                                        echo "<tr class='hover:bg-gray-50 transition-colors cursor-pointer' role='row'>";
+                                        echo "<tr class='table-row hover:bg-gray-50 transition-colors cursor-pointer' role='row'>";
                                         echo "<td class='px-4 md:px-6 py-3 md:py-4 whitespace-nowrap' role='cell'>";
                                         echo "<a href='../views/detalhes_aluno.php?id=" . htmlspecialchars($value['id']) . "' class='flex items-center'>";
                                         echo "<div class='flex-shrink-0 h-8 w-8 md:h-10 md:w-10'>";
@@ -208,7 +272,7 @@
                                         echo "<div class='flex items-center gap-2'>";
                                         echo "<form action='../controllers/Controller-botao_acao.php' method='GET' style='display: inline;'>";
                                         echo "<input type='hidden' name='btn-editar' value='Editar Aluno'" . htmlspecialchars($value['id']) . "'>";
-                                        echo "<button type='submit' class='text-secondary hover:text-secondary-dark' aria-label='Editar aluno " . htmlspecialchars($value['nome']) . "'>";
+                                        echo "<button type='submit' class='text-ceara-orange hover:text-ceara-green' aria-label='Editar aluno " . htmlspecialchars($value['nome']) . "'>";
                                         echo "<i class='fas fa-edit' aria-hidden='true'></i>";
                                         echo "</button>";
                                         echo "</form>";
@@ -233,5 +297,153 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // Screen Reader Support
+        let isReading = false;
+        let currentSection = 0;
+        const synth = window.speechSynthesis;
+        let utterance = null;
+
+        function toggleScreenReader() {
+            if (isReading) {
+                stopReading();
+            } else {
+                startReading();
+            }
+        }
+
+        function startReading() {
+            isReading = true;
+            currentSection = 0;
+            readNextSection();
+            updateButtonState();
+            window.addEventListener('scroll', handleScroll);
+            document.addEventListener('click', handleElementClick);
+            document.addEventListener('focus', handleElementFocus, true);
+            announceStatus('Narração ativada');
+        }
+
+        function stopReading() {
+            if (synth.speaking) {
+                synth.cancel();
+            }
+            isReading = false;
+            updateButtonState();
+            window.removeEventListener('scroll', handleScroll);
+            document.addEventListener('click', handleElementClick);
+            document.addEventListener('focus', handleElementFocus, true);
+            announceStatus('Narração desativada');
+        }
+
+        function readNextSection() {
+            const sections = document.querySelectorAll('section, article, div.section');
+            if (currentSection < sections.length) {
+                const textToRead = sections[currentSection].innerText;
+                speakText(textToRead);
+            } else {
+                stopReading();
+            }
+        }
+
+        function handleScroll() {
+            if (!isReading) return;
+
+            const sections = document.querySelectorAll('section, article, div.section');
+            const scrollPosition = window.scrollY + window.innerHeight / 2;
+
+            for (let i = 0; i < sections.length; i++) {
+                const section = sections[i];
+                const sectionTop = section.offsetTop;
+                const sectionBottom = sectionTop + section.offsetHeight;
+
+                if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                    if (i !== currentSection) {
+                        currentSection = i;
+                        if (synth.speaking) {
+                            synth.cancel();
+                        }
+                        readNextSection();
+                    }
+                    break;
+                }
+            }
+        }
+
+        function updateButtonState() {
+            const btn = document.getElementById('screenReaderBtn');
+            if (isReading) {
+                btn.classList.add('text-ceara-orange');
+                btn.setAttribute('aria-label', 'Desativar narração de tela');
+            } else {
+                btn.classList.remove('text-ceara-orange');
+                btn.setAttribute('aria-label', 'Ativar narração de tela');
+            }
+        }
+
+        function announceStatus(message) {
+            speakText(message);
+        }
+
+        function handleElementClick(event) {
+            if (!isReading) return;
+
+            const element = event.target;
+            const textToSpeak = getElementDescription(element);
+
+            if (textToSpeak) {
+                speakText(textToSpeak);
+            }
+        }
+
+        function handleElementFocus(event) {
+            if (!isReading) return;
+
+            const element = event.target;
+            const textToSpeak = getElementDescription(element);
+
+            if (textToSpeak) {
+                speakText(textToSpeak);
+            }
+        }
+
+        function getElementDescription(element) {
+            if (element.tagName === 'IMG') {
+                return element.alt || 'Imagem sem descrição';
+            } else if (element.tagName === 'A') {
+                return `Link: ${element.textContent || element.href}`;
+            } else if (element.tagName === 'BUTTON') {
+                return `Botão: ${element.textContent || element.value || 'Sem texto'}`;
+            } else if (element.tagName === 'INPUT') {
+                return `Campo de entrada: ${element.placeholder || element.name || 'Sem descrição'}`;
+            } else {
+                return element.textContent || 'Elemento sem texto';
+            }
+        }
+
+        function speakText(text) {
+            if (synth.speaking) {
+                synth.cancel();
+            }
+            utterance = new SpeechSynthesisUtterance(text);
+
+            const voices = synth.getVoices();
+            const portugueseVoice = voices.find(voice => voice.lang === 'pt-BR');
+            if (portugueseVoice) {
+                utterance.voice = portugueseVoice;
+            }
+
+            synth.speak(utterance);
+        }
+
+        const screenReaderBtn = document.getElementById('screenReaderBtn');
+        screenReaderBtn.addEventListener('click', toggleScreenReader);
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'n' || event.key === 'N') {
+                toggleScreenReader();
+            }
+        });
+    </script>
 </body>
 </html>
