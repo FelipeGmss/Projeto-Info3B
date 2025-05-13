@@ -76,6 +76,10 @@
 
         <!-- Right Side: Login Form -->
         <div class="w-full md:w-1/2 p-8">
+            <a href="javascript:history.back()" class="inline-flex items-center gap-2 text-gray-600 hover:text-gray-800 mb-4">
+                <i class="fas fa-arrow-left"></i>
+                <span>Voltar</span>
+            </a>
             <div class="text-center mb-8">
                 <h2 class="text-2xl font-bold text-gray-800 mb-2">Login do Aluno</h2>
                 <p class="text-gray-600">Acesse sua conta para continuar</p>

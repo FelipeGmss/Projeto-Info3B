@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Professor | Gestão de Estágio</title>
+    <title>Cadastro Professor | Gestão de Estágio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="shortcut icon" href="../../assets/img/Design sem nome.svg" type="image/x-icon">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -62,10 +61,6 @@
             color: #ff4444;
         }
 
-        .checkbox-container {
-            border-radius: 8px;
-        }
-
         .btn-submit {
             border-radius: 12px;
         }
@@ -83,25 +78,25 @@
             </div>
         </div>
 
-        <!-- Right Side: Login Form -->
+        <!-- Right Side: Registration Form -->
         <div class="w-full md:w-1/2 p-8">
             <a href="javascript:history.back()" class="inline-flex items-center gap-2 text-gray-600 hover:text-gray-800 mb-4">
                 <i class="fas fa-arrow-left"></i>
                 <span>Voltar</span>
             </a>
             <div class="text-center mb-8">
-                <h2 class="text-2xl font-bold text-gray-800 mb-2">Login do Professor</h2>
-                <p class="text-gray-600">Acesse sua conta para continuar</p>
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">Cadastro do Professor</h2>
+                <p class="text-gray-600">Crie sua conta para começar</p>
             </div>
 
-            <form action="../controllers/Controller-login_professor.php" method="POST" class="space-y-6">
+            <form action="../controllers/Controller-cadastro_professor.php" method="POST" class="space-y-6">
                 <div class="input-group">
                     <label for="email" class="block text-sm font-medium text-gray-700 mb-1">E-mail Institucional</label>
                     <div class="relative">
                         <input type="email" name="email" id="email" 
                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-green-500"
                                placeholder="seu.email@escola.edu.br" required>
-                        <i class="fas fa-user absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        <i class="fas fa-envelope absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                     </div>
                     <span class="error-message" id="emailError"></span>
                 </div>
@@ -118,15 +113,13 @@
                     <span class="error-message" id="senhaError"></span>
                 </div>
 
-                <input type="submit" name="btn" value="Entrar" 
+                <input type="submit" name="btn" value="Cadastrar" 
                        class="w-full bg-gradient-to-r from-green-600 to-green-500 text-white py-3 px-4 rounded-xl font-semibold hover:from-green-700 hover:to-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all duration-300 btn-submit">
-                       <div>
-                       <a href="#" class="text-sm text-green-600 hover:text-green-700">Esqueceu a senha?</a><br>
-                       <p class="block text-sm font-medium text-gray-700 mb-1">Não tem uma conta? <a href="../views/Cadastro_professor.php" class="text-sm text-green-600 hover:text-green-700">Cadastrar-se</a></p>
-                 </div>
+                
+                <div class="text-center">
+                    <p class="block text-sm font-medium text-gray-700 mb-1">Já tem uma conta? <a href="../views/Login_professor.php" class="text-sm text-green-600 hover:text-green-700">Fazer login</a></p>
+                </div>
             </form>
-
-            </div>
         </div>
     </div>
 
@@ -167,6 +160,10 @@
                     passwordInput.parentElement.parentElement.classList.add('error');
                     document.getElementById('senhaError').textContent = 'Por favor, insira sua senha';
                     isValid = false;
+                } else if (passwordInput.value.length < 6) {
+                    passwordInput.parentElement.parentElement.classList.add('error');
+                    document.getElementById('senhaError').textContent = 'A senha deve ter pelo menos 6 caracteres';
+                    isValid = false;
                 }
 
                 if (!isValid) {
@@ -183,5 +180,4 @@
         });
     </script>
 </body>
-
 </html>

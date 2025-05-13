@@ -112,6 +112,15 @@ Class Cadastro{
         $query->execute();
         return $query->rowCount() > 0;
     }
+
+    public function cadastrar_professor($email, $senha){
+        $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
+        $consulta = 'INSERT INTO usuario VALUES (null,:email,:senha)';
+        $query = $pdo->prepare($consulta);
+        $query->bindValue(":email", $email);
+        $query->bindValue(":senha", $senha);
+        $query->execute();
+    }
 }
 
 ?>
