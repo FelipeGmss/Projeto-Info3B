@@ -121,6 +121,7 @@ Class Cadastro{
         $query->bindValue(":senha", $senha);
         $query->execute();
     }
+
 }
 
 ?>

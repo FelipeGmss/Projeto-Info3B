@@ -125,8 +125,6 @@
                        <p class="block text-sm font-medium text-gray-700 mb-1">Não tem uma conta? <a href="../views/Cadastro_professor.php" class="text-sm text-green-600 hover:text-green-700">Cadastrar-se</a></p>
                  </div>
             </form>
-
-            </div>
         </div>
     </div>
 

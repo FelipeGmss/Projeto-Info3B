@@ -102,10 +102,11 @@
                  <input type="hidden" name="userType" value="student">
                  <input type="submit" name="btn" value="Entrar"
                      class="w-full bg-[#005A24] hover:bg-[#004A1D] text-white py-3 px-6 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#005A24] transition-all duration-300 font-semibold text-lg">
-                            <div>
-                     <a href="#" class="text-sm text-[#005A24] hover:text-[#004A1D]">Esqueceu a senha?</a>
-                            </div>
-             </form>
+            </form>
+
+            <div class="text-center mt-4">
+                <a href="recuperar_senha.php" class="text-sm text-green-600 hover:text-green-700">Esqueceu sua senha?</a>
+            </div>
 
         </div>
     </div>

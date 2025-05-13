@@ -113,7 +113,7 @@
         <!-- Formulário Principal -->
         <div class="form-container">
             <h4 class="mb-4">Dados do Processo Seletivo</h4>
-            <form action="#" method="POST" id="processoSeletivoForm" novalidate>
+            <form action="../controllers/Controller-processo_seletivo.php" method="POST" id="processoSeletivoForm" novalidate>
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="hora" class="form-label">Hora</label>
@@ -131,9 +131,17 @@
                         <label for="empresa_id" class="form-label">Empresa</label>
                         <select class="form-select" id="empresa_id" name="empresa_id" required>
                             <option value="">Selecione a empresa</option>
-                            <option value="1">Empresa A</option>
-                            <option value="2">Empresa B</option>
-                            <option value="3">Empresa C</option>
+                            <?php
+                            require_once "../models/cadastros.class.php";
+                            $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
+                            $consulta = 'SELECT * FROM concedentes ORDER BY nome ASC';
+                            $query = $pdo->prepare($consulta);
+                            $query->execute();
+                            
+                            while ($empresa = $query->fetch()) {
+                                echo "<option value='" . htmlspecialchars($empresa['id']) . "'>" . htmlspecialchars($empresa['nome']) . "</option>";
+                            }
+                            ?>
                         </select>
                         <div class="invalid-feedback">Por favor, selecione a empresa.</div>
                     </div>
@@ -146,9 +154,15 @@
                         <label for="aluno_id" class="form-label">Aluno</label>
                         <select class="form-select" id="aluno_id" name="aluno_id" required>
                             <option value="">Selecione o aluno</option>
-                            <option value="1">Aluno A</option>
-                            <option value="2">Aluno B</option>
-                            <option value="3">Aluno C</option>
+                            <?php
+                            $consulta = 'SELECT * FROM aluno ORDER BY nome ASC';
+                            $query = $pdo->prepare($consulta);
+                            $query->execute();
+                            
+                            while ($aluno = $query->fetch()) {
+                                echo "<option value='" . htmlspecialchars($aluno['id']) . "'>" . htmlspecialchars($aluno['nome']) . " - " . htmlspecialchars($aluno['matricula']) . "</option>";
+                            }
+                            ?>
                         </select>
                         <div class="invalid-feedback">Por favor, selecione o aluno.</div>
                     </div>
@@ -158,14 +172,23 @@
                         <label for="vaga_id" class="form-label">Vaga</label>
                         <select class="form-select" id="vaga_id" name="vaga_id" required>
                             <option value="">Selecione a vaga</option>
-                            <option value="1">Vaga A</option>
-                            <option value="2">Vaga B</option>
-                            <option value="3">Vaga C</option>
+                            <?php
+                            $consulta = 'SELECT id, nome, perfil, numero_vagas FROM concedentes WHERE numero_vagas > 0 ORDER BY nome ASC';
+                            $query = $pdo->prepare($consulta);
+                            $query->execute();
+                            
+                            while ($vaga = $query->fetch()) {
+                                echo "<option value='" . htmlspecialchars($vaga['id']) . "'>" . 
+                                     htmlspecialchars($vaga['nome']) . " - " . 
+                                     htmlspecialchars($vaga['perfil']) . " (" . 
+                                     htmlspecialchars($vaga['numero_vagas']) . " vagas)</option>";
+                            }
+                            ?>
                         </select>
                         <div class="invalid-feedback">Por favor, selecione a vaga.</div>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Salvar</button>
+                <button type="submit" name="btn" class="btn btn-primary">Salvar</button>
             </form>
         </div>
 
@@ -261,5 +284,55 @@
             cadastroVagasForm.classList.add('was-validated');
         });
     </script>
+
+    <?php
+    // Exibe mensagens de erro/sucesso
+    if (isset($_GET['error'])) {
+        $error = $_GET['error'];
+        $message = '';
+        $type = 'danger';
+
+        switch ($error) {
+            case 'campos_vazios':
+                $message = 'Por favor, preencha todos os campos.';
+                break;
+            case 'vaga_indisponivel':
+                $message = 'Esta vaga não está mais disponível.';
+                break;
+            case 'aluno_ja_inscrito':
+                $message = 'Este aluno já está inscrito nesta vaga.';
+                break;
+            case 'erro_criacao':
+                $message = 'Erro ao criar o processo seletivo.';
+                break;
+            default:
+                $message = 'Ocorreu um erro.';
+        }
+
+        echo "<div class='alert alert-$type alert-dismissible fade show mt-3' role='alert'>
+                $message
+                <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+              </div>";
+    }
+
+    if (isset($_GET['success'])) {
+        $success = $_GET['success'];
+        $message = '';
+        $type = 'success';
+
+        switch ($success) {
+            case 'processo_criado':
+                $message = 'Processo seletivo criado com sucesso!';
+                break;
+            default:
+                $message = 'Operação realizada com sucesso.';
+        }
+
+        echo "<div class='alert alert-$type alert-dismissible fade show mt-3' role='alert'>
+                $message
+                <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+              </div>";
+    }
+    ?>
 </body>
 </html>
