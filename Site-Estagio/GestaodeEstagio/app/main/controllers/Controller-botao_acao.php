@@ -4,20 +4,19 @@
 require_once '../models/cadastros.class.php';
 
 if(isset($_GET['btn-editar'])){
-    $opc = $_GET['btn-editar'];
     $id = $_GET['btn-editar'];
-
-    switch($opc){
-        case 'Editar Empresa':
-            $empresa = new Cadastro();
-            $empresa->editar_empresaById($id);
-            include '../views/editar_empresa.php';
-            break;
-        case 'Editar Aluno':
-            $aluno = new Cadastro();
-            $aluno->editar_alunoById($id);
-            include '../views/editar_aluno.php';
-            break;
+    
+    // Buscar dados do aluno
+    $aluno = new Cadastro();
+    $dados_aluno = $aluno->editar_alunoById($id);
+    
+    if($dados_aluno) {
+        // Incluir a view de edição com os dados do aluno
+        include '../views/editar_aluno.php';
+    } else {
+        // Redirecionar para a lista com mensagem de erro
+        header('Location: Controller-listar_alunos.php?error=aluno_nao_encontrado');
+        exit;
     }
 }
 

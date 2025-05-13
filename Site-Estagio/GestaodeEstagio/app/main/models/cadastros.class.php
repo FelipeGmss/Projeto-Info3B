@@ -97,6 +97,21 @@ Class Cadastro{
         $query->execute();
         return $query->rowCount();
     }
+
+    public function editar_aluno_sem_senha($id, $nome, $matricula, $contato, $curso, $email, $endereco){
+        $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
+        $consulta = "UPDATE aluno SET nome = :nome, matricula = :matricula, contato = :contato, curso = :curso, email = :email, endereco = :endereco WHERE id = :id;";
+        $query = $pdo->prepare($consulta);
+        $query->bindValue(":id", $id);
+        $query->bindValue(":nome", $nome);
+        $query->bindValue(":matricula", $matricula);
+        $query->bindValue(":contato", $contato);
+        $query->bindValue(":curso", $curso);
+        $query->bindValue(":email", $email);
+        $query->bindValue(":endereco", $endereco);
+        $query->execute();
+        return $query->rowCount() > 0;
+    }
 }
 
 ?>
