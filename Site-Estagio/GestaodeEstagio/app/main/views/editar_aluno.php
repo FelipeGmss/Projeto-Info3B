@@ -1,3 +1,9 @@
+<?php
+if (!isset($dados_aluno) || empty($dados_aluno)) {
+    header('Location: ../controllers/Controller-listar_alunos.php?error=dados_nao_encontrados');
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>

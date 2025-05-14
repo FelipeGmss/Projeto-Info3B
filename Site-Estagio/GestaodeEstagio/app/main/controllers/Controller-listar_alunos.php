@@ -189,10 +189,10 @@
                         <i class="fas fa-file-pdf" aria-hidden="true"></i>
                         Gerar PDF
                     </a>
-                    <button class="w-full md:w-auto bg-gradient-to-r from-ceara-green to-ceara-orange hover:from-ceara-orange hover:to-ceara-green text-ceara-white px-6 py-3 rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 hover-scale">
+                    <a href="../views/cadastroaluno.php" class="w-full md:w-auto bg-gradient-to-r from-ceara-green to-ceara-orange hover:from-ceara-orange hover:to-ceara-green text-ceara-white px-6 py-3 rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 hover-scale">
                         <i class="fas fa-plus" aria-hidden="true"></i>
-                        <a href="../views/cadastroaluno.php" class="focus:outline-none focus:ring-2 focus:ring-ceara-white focus:ring-offset-2 focus:ring-offset-ceara-green">Novo Aluno</a>
-                    </button>
+                        Novo Aluno
+                    </a>
                 </div>
             </div>
         </header>
@@ -243,29 +243,29 @@
                                 if ($result > 0) {
                                     foreach ($query as $value) {
                                         echo "<tr class='table-row hover:bg-gray-50 transition-colors cursor-pointer' role='row'>";
-                                        echo "<td class='px-4 md:px-6 py-3 md:py-4 whitespace-nowrap' role='cell'>";
-                                        echo "<a href='../views/detalhes_aluno.php?id=" . htmlspecialchars($value['id']) . "' class='flex items-center'>";
+                                        echo "<td class='px-4 md:px-6 py-3 md:py-4 whitespace-nowrap' role='cell' onclick='window.location.href=\"../views/detalhes_aluno.php?id=" . htmlspecialchars($value['id']) . "\"'>";
+                                        echo "<div class='flex items-center'>";
                                         echo "<div class='flex-shrink-0 h-8 w-8 md:h-10 md:w-10'>";
                                         echo "<img class='h-8 w-8 md:h-10 md:w-10 rounded-full' src='https://ui-avatars.com/api/?name=" . urlencode($value['nome']) . "' alt='Foto do aluno " . htmlspecialchars($value['nome']) . "'>";
                                         echo "</div>";
                                         echo "<div class='ml-2 md:ml-4'>";
                                         echo "<div class='text-sm font-medium text-gray-900'>" . htmlspecialchars($value['nome']) . "</div>";
                                         echo "</div>";
-                                        echo "</a>";
+                                        echo "</div>";
                                         echo "</td>";
-                                        echo "<td class='px-4 md:px-6 py-3 md:py-4 whitespace-nowrap' role='cell'>";
+                                        echo "<td class='px-4 md:px-6 py-3 md:py-4 whitespace-nowrap' role='cell' onclick='window.location.href=\"../views/detalhes_aluno.php?id=" . htmlspecialchars($value['id']) . "\"'>";
                                         echo "<div class='text-sm text-gray-900'>" . htmlspecialchars($value['matricula']) . "</div>";
                                         echo "</td>";
-                                        echo "<td class='px-4 md:px-6 py-3 md:py-4 whitespace-nowrap' role='cell'>";
+                                        echo "<td class='px-4 md:px-6 py-3 md:py-4 whitespace-nowrap' role='cell' onclick='window.location.href=\"../views/detalhes_aluno.php?id=" . htmlspecialchars($value['id']) . "\"'>";
                                         echo "<div class='text-sm text-gray-900'>" . htmlspecialchars($value['contato']) . "</div>";
                                         echo "</td>";
-                                        echo "<td class='px-4 md:px-6 py-3 md:py-4 whitespace-nowrap' role='cell'>";
+                                        echo "<td class='px-4 md:px-6 py-3 md:py-4 whitespace-nowrap' role='cell' onclick='window.location.href=\"../views/detalhes_aluno.php?id=" . htmlspecialchars($value['id']) . "\"'>";
                                         echo "<div class='text-sm text-gray-900'>" . htmlspecialchars($value['curso']) . "</div>";
                                         echo "</td>";
-                                        echo "<td class='px-4 md:px-6 py-3 md:py-4 whitespace-nowrap' role='cell'>";
+                                        echo "<td class='px-4 md:px-6 py-3 md:py-4 whitespace-nowrap' role='cell' onclick='window.location.href=\"../views/detalhes_aluno.php?id=" . htmlspecialchars($value['id']) . "\"'>";
                                         echo "<div class='text-sm text-gray-900'>" . htmlspecialchars($value['email']) . "</div>";
                                         echo "</td>";
-                                        echo "<td class='px-4 md:px-6 py-3 md:py-4 whitespace-nowrap' role='cell'>";
+                                        echo "<td class='px-4 md:px-6 py-3 md:py-4 whitespace-nowrap' role='cell' onclick='window.location.href=\"../views/detalhes_aluno.php?id=" . htmlspecialchars($value['id']) . "\"'>";
                                         echo "<div class='text-sm text-gray-900'>" . htmlspecialchars($value['endereco']) . "</div>";
                                         echo "</td>";
                                         echo "<td class='px-4 md:px-6 py-3 md:py-4 whitespace-nowrap text-sm font-medium' role='cell'>";

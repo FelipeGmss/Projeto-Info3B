@@ -181,12 +181,15 @@
 
                                 <!-- Botões de Ação -->
                                 <div class="flex flex-col sm:flex-row gap-4">
-                                    <a href="editar_aluno.php?btn=<?php echo htmlspecialchars($aluno['id']); ?>" 
-                                       class="px-4 py-2 bg-primary hover:bg-primary-dark text-white rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2"
-                                       aria-label="Editar informações do aluno">
-                                        <i class="fas fa-edit" aria-hidden="true"></i>
-                                        Editar Aluno
-                                    </a>
+                                    <form action="../controllers/Controller-botao_acao.php" method="GET" class="w-full sm:w-auto">
+                                        <input type="hidden" name="btn-editar" value="<?php echo htmlspecialchars($aluno['id']); ?>">
+                                        <button type="submit" 
+                                                class="w-full px-4 py-2 bg-primary hover:bg-primary-dark text-white rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2"
+                                                aria-label="Editar informações do aluno">
+                                            <i class="fas fa-edit" aria-hidden="true"></i>
+                                            Editar Aluno
+                                        </button>
+                                    </form>
                                     <form action="../controllers/Controller-excluir_alunos.php" method="POST" 
                                           onsubmit="return confirm('Tem certeza que deseja excluir este aluno?');"
                                           class="w-full sm:w-auto">

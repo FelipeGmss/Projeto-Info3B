@@ -18,6 +18,10 @@ if(isset($_GET['btn-editar'])){
         header('Location: Controller-listar_alunos.php?error=aluno_nao_encontrado');
         exit;
     }
+} else {
+    // Se não houver ID, redirecionar para a lista
+    header('Location: Controller-listar_alunos.php');
+    exit;
 }
 
 ?>

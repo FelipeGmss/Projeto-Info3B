@@ -77,11 +77,12 @@ Class Cadastro{
 
     public function editar_alunoById($id){
         $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
-        $consulta = 'select * from aluno where id = :id;';
+        $consulta = 'SELECT * FROM aluno WHERE id = :id';
         $query = $pdo->prepare($consulta);
         $query->bindValue(":id", $id);
         $query->execute();
-        return $query->fetch();
+        $resultado = $query->fetch(PDO::FETCH_ASSOC);
+        return $resultado ? $resultado : false;
     }
 
     public function editar_empresa($id, $nome, $contato, $endereco, $perfil, $vagas){
