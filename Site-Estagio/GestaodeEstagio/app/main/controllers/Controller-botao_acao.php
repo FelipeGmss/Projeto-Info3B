@@ -24,4 +24,27 @@ if(isset($_GET['btn-editar'])){
     exit;
 }
 
+
+
+if(isset($_GET['btn-editar_empresa'])){
+    $id = $_GET['btn-editar_empresa'];
+    
+    // Buscar dados do aluno
+    $empresa = new Cadastro();
+    $dados_empresa = $empresa->editar_empresaById($id);
+    
+    if($dados_empresa) {
+        // Incluir a view de edição com os dados do aluno
+        include '../views/editar_empresa.php';
+    } else {
+        // Redirecionar para a lista com mensagem de erro
+        header('Location: Controller-listar_empresa.php?error=empresa_nao_encontrada');
+        exit;
+    }
+} else {
+    // Se não houver ID, redirecionar para a lista
+    header('Location: Controller-listar_empresa.php');
+    exit;
+}
+
 ?>

@@ -106,7 +106,7 @@
 
             <div class="text-center mt-4">
                 <a href="recuperar_senha.php" class="text-sm text-green-600 hover:text-green-700">Esqueceu sua senha?</a>
-            </div>
+                </div>
 
         </div>
     </div>

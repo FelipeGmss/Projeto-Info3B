@@ -48,7 +48,7 @@
     <div class="w-full max-w-md flex flex-col items-center justify-center px-8 py-10 bg-white card-container">
         <!-- Logo -->
         <div class="w-full flex flex-col items-center mb-8">
-            <img src="views/nome_Salaberga2.jpg" alt="Logo" class="mb-6 rounded-2xl shadow-md w-40 h-auto transform hover:scale-105 transition-transform duration-300">
+            <img src="config/img/nome_Salaberga2.jpg" alt="Logo" class="mb-6 rounded-2xl shadow-md w-40 h-auto transform hover:scale-105 transition-transform duration-300">
             <h2 class="text-2xl font-bold text-gray-800 mb-2">Bem-vindo ao Sistema de Estágio!</h2>
             <p class="text-gray-600 text-base text-center">Escolha como realizar o login!</p>
         </div>
