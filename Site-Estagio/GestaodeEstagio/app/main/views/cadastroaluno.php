@@ -62,17 +62,8 @@
 
 <body class="min-h-screen flex items-center justify-center p-4">
     <div class="w-full max-w-6xl flex bg-white rounded-3xl shadow-xl overflow-hidden">
-        <!-- Left Side: Image and Welcome Message -->
-        <div class="hidden md:block w-1/2 bg-gradient-to-br from-green-600 to-orange-500 p-8 text-white">
-            <div class="h-full flex flex-col justify-center">
-                <img src="https://i.postimg.cc/ryxHRNkj/lavosier-nas-2.png" alt="Logo EEEP Salaberga" class="w-40 mb-8">
-                <h1 class="text-3xl font-bold mb-4">EEEP Salaberga</h1>
-                <p class="text-lg opacity-90">Transformando o futuro através da educação e inovação</p>
-            </div>
-        </div>
-
         <!-- Right Side: Registration Form -->
-        <div class="w-full md:w-1/2 p-8">
+        <div class="w-full p-8">
             <a href="javascript:history.back()" class="inline-flex items-center gap-2 text-gray-600 hover:text-gray-800 mb-4">
                 <i class="fas fa-arrow-left"></i>
                 <span>Voltar</span>

@@ -1,338 +1,354 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Processo Seletivo</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <style>
-        :root {
-            --primary-color: #2e4f4f; /* Verde musgo */
-            --secondary-color: #1a3c34; /* Verde musgo escuro */
-            --accent-color: #d94f04; /* Laranja escuro */
-            --gray-dark: #333333; /* Cinza escuro */
-            --button-green: #4CAF50; /* Verde para botão Salvar */
-            --button-red: #ff4444; /* Vermelho para botão Cadastrar Vaga */
-        }
-        body {
-            background-color: #e8ecef;
-            color: var(--gray-dark);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fonte mais moderna */
-            line-height: 1.6;
-        }
-        .container {
-            max-width: 960px; /* Largura máxima para melhor leitura */
-        }
-        .form-container {
-            background-color: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            padding: 30px; /* Aumentei o padding */
-            margin-bottom: 30px; /* Aumentei a margem */
-            border: 1px solid #dee2e6; /* Adiciona uma borda sutil */
-        }
-        .btn-primary {
-            background-color: var(--button-green);
-            border-color: var(--button-green);
-            transition: all 0.3s ease;
-            padding: 10px 20px; /* Melhora o tamanho do botão */
-            font-size: 1rem; /* Tamanho da fonte */
-        }
-        .btn-primary:hover {
-            background-color: #45a049;
-            border-color: #45a049;
-        }
-        .btn-accent {
-            background-color: var(--button-red);
-            border-color: var(--button-red);
-            color: white;
-            transition: all 0.3s ease;
-            padding: 10px 20px; /* Melhora o tamanho do botão */
-            font-size: 1rem; /* Tamanho da fonte */
-        }
-        .btn-accent:hover {
-            background-color: #e03b3b;
-            border-color: #e03b3b;
-        }
-        .form-label {
-            color: var(--gray-dark);
-            font-weight: 500;
-            margin-bottom: 0.5rem; /* Espaçamento abaixo da label */
-            display: block; /* Garante que a label ocupe toda a largura */
-        }
-        .form-control, .form-select {
-            border-color: #ced4da;
-            transition: border-color 0.3s ease;
-            padding: 0.75rem; /* Aumenta o preenchimento interno */
-            font-size: 1rem; /* Tamanho da fonte */
-        }
-        .form-control:focus, .form-select:focus {
-            border-color: var(--accent-color);
-            box-shadow: 0 0 0 0.2rem rgba(217, 79, 4, 0.25);
-        }
-        h2, h4 {
-            color: var(--primary-color);
-            margin-bottom: 1.5rem; /* Espaçamento abaixo dos títulos */
-            font-weight: 600; /* Título mais destacado */
-        }
-        /* Estilos para feedback de erro */
-        .form-control.is-invalid, .form-select.is-invalid {
-            border-color: var(--button-red);
-        }
-        .invalid-feedback {
-            color: var(--button-red);
-            margin-top: 0.25rem; /* Espaçamento acima do feedback */
-        }
-        /* Estilos para feedback de sucesso */
-        .form-control.is-valid, .form-select.is-valid {
-            border-color: var(--button-green);
-        }
-        .valid-feedback {
-            color: var(--button-green);
-            margin-top: 0.25rem; /* Espaçamento acima do feedback */
-        }
-        /* Melhorias de responsividade */
-        @media (max-width: 768px) {
-            .col-md-6, .col-md-4, .col-md-3 {
-                margin-bottom: 1rem; /* Espaçamento entre os campos em telas menores */
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ceara-green': '#008C45',
+                        'ceara-orange': '#FFA500',
+                        'ceara-white': '#FFFFFF',
+                        primary: '#008C45',
+                        secondary: '#FFA500',
+                    }
+                }
             }
         }
-        /* Estilo para a textarea */
-        textarea.form-control {
-            resize: vertical; /* Permite redimensionamento vertical */
-            height: 120px; /* Altura inicial */
+    </script>
+    <style>
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+
+        @media (prefers-contrast: high) {
+            :root {
+                --text-color: #000;
+                --border-color: #000;
+            }
+        }
+
+        *:focus {
+            outline: 3px solid #FFA500;
+            outline-offset: 2px;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-stack {
+                display: flex;
+                flex-direction: column;
+            }
+            
+            .mobile-full {
+                width: 100%;
+            }
+            
+            .mobile-padding {
+                padding: 1rem;
+            }
+            
+            .mobile-text-center {
+                text-align: center;
+            }
+            
+            .mobile-margin {
+                margin-bottom: 1rem;
+            }
+            
+            .mobile-table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+            
+            .mobile-table th,
+            .mobile-table td {
+                min-width: 120px;
+            }
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+        .hover-scale {
+            transition: transform 0.3s ease-in-out;
+        }
+        .hover-scale:hover {
+            transform: scale(1.05);
+        }
+        .fade-in {
+            animation: fadeIn 1s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: #FFFFFF;
+            border: 2px solid #008C45;
+            border-radius: 12px;
+            color: #008C45;
+            font-size: 1rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+        .back-button:hover {
+            background: #008C45;
+            color: #FFFFFF;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        .back-button:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 140, 69, 0.3);
         }
     </style>
 </head>
-<body>
-    <div class="container mt-5">
-        <h2 class="text-center mb-5">Processo Seletivo</h2>
-        
-        <!-- Formulário Principal -->
-        <div class="form-container">
-            <h4 class="mb-4">Dados do Processo Seletivo</h4>
-            <form action="../controllers/Controller-processo_seletivo.php" method="POST" id="processoSeletivoForm" novalidate>
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="hora" class="form-label">Hora</label>
-                        <input type="time" class="form-control" id="hora" name="hora" required>
-                        <div class="invalid-feedback">Por favor, insira a hora.</div>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="local" class="form-label">Local</label>
-                        <input type="text" class="form-control" id="local" name="local" required>
-                        <div class="invalid-feedback">Por favor, insira o local.</div>
+<body class="bg-gradient-to-br from-ceara-green to-ceara-orange min-h-screen font-['Roboto'] select-none">
+    <div class="container mx-auto px-4 py-4 md:py-8 fade-in">
+        <!-- Header Section -->
+        <header class="bg-ceara-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-4 md:p-6 mb-4 md:mb-8">
+            <div class="flex flex-col gap-4">
+                <div class="flex flex-col sm:flex-row justify-between items-center mobile-text-center">
+                    <div>
+                        <a href="javascript:history.back()" class="back-button">
+                            <i class="fas fa-arrow-left"></i> Voltar
+                        </a>
+                        <h1 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2">Processo Seletivo</h1>
+                        <p class="text-gray-600">Gerencie as inscrições dos alunos</p>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <label for="empresa_id" class="form-label">Empresa</label>
-                        <select class="form-select" id="empresa_id" name="empresa_id" required>
-                            <option value="">Selecione a empresa</option>
-                            <?php
-                            require_once "../models/cadastros.class.php";
-                            $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
-                            $consulta = 'SELECT * FROM concedentes ORDER BY nome ASC';
-                            $query = $pdo->prepare($consulta);
-                            $query->execute();
-                            
-                            while ($empresa = $query->fetch()) {
-                                echo "<option value='" . htmlspecialchars($empresa['id']) . "'>" . htmlspecialchars($empresa['nome']) . "</option>";
-                            }
-                            ?>
-                        </select>
-                        <div class="invalid-feedback">Por favor, selecione a empresa.</div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="data" class="form-label">Data</label>
-                        <input type="date" class="form-control" id="data" name="data" required>
-                        <div class="invalid-feedback">Por favor, insira a data.</div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="aluno_id" class="form-label">Aluno</label>
-                        <select class="form-select" id="aluno_id" name="aluno_id" required>
-                            <option value="">Selecione o aluno</option>
-                            <?php
-                            $consulta = 'SELECT * FROM aluno ORDER BY nome ASC';
-                            $query = $pdo->prepare($consulta);
-                            $query->execute();
-                            
-                            while ($aluno = $query->fetch()) {
-                                echo "<option value='" . htmlspecialchars($aluno['id']) . "'>" . htmlspecialchars($aluno['nome']) . " - " . htmlspecialchars($aluno['matricula']) . "</option>";
-                            }
-                            ?>
-                        </select>
-                        <div class="invalid-feedback">Por favor, selecione o aluno.</div>
-                    </div>
+                <div class="flex flex-col md:flex-row items-center gap-4">
+                    <form action="" method="GET" class="relative w-full md:w-64" role="search">
+                        <label for="search" class="sr-only">Pesquisar inscrições</label>
+                        <input type="text" 
+                               id="search"
+                               name="search"
+                               class="w-full px-4 py-3 pl-10 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-ceara-orange focus:border-transparent"
+                               placeholder="Pesquisar por nome, curso ou empresa..."
+                               value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>"
+                               aria-label="Pesquisar inscrições">
+                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" aria-hidden="true"></i>
+                    </form>
+                    <a href="../views/relatorio_inscricoes.php<?php echo isset($_GET['search']) && $_GET['search'] != '' ? '?search=' . urlencode($_GET['search']) : ''; ?>" class="w-full md:w-auto bg-gradient-to-r from-ceara-green to-ceara-orange hover:from-ceara-orange hover:to-ceara-green text-ceara-white px-6 py-3 rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 hover-scale">
+                        <i class="fas fa-file-pdf" aria-hidden="true"></i>
+                        Gerar PDF
+                    </a>
+                    <a href="../views/nova_inscricao.php" class="w-full md:w-auto bg-gradient-to-r from-ceara-green to-ceara-orange hover:from-ceara-orange hover:to-ceara-green text-ceara-white px-6 py-3 rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 hover-scale">
+                        <i class="fas fa-plus" aria-hidden="true"></i>
+                        Nova Inscrição
+                    </a>
                 </div>
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="vaga_id" class="form-label">Vaga</label>
-                        <select class="form-select" id="vaga_id" name="vaga_id" required>
-                            <option value="">Selecione a vaga</option>
-                            <?php
-                            $consulta = 'SELECT id, nome, perfil, numero_vagas FROM concedentes WHERE numero_vagas > 0 ORDER BY nome ASC';
-                            $query = $pdo->prepare($consulta);
-                            $query->execute();
-                            
-                            while ($vaga = $query->fetch()) {
-                                echo "<option value='" . htmlspecialchars($vaga['id']) . "'>" . 
-                                     htmlspecialchars($vaga['nome']) . " - " . 
-                                     htmlspecialchars($vaga['perfil']) . " (" . 
-                                     htmlspecialchars($vaga['numero_vagas']) . " vagas)</option>";
-                            }
-                            ?>
-                        </select>
-                        <div class="invalid-feedback">Por favor, selecione a vaga.</div>
-                    </div>
-                </div>
-                <button type="submit" name="btn" class="btn btn-primary">Salvar</button>
-            </form>
-        </div>
+            </div>
+        </header>
 
-        <!-- Formulário de Vagas -->
-        <div class="form-container">
-            <h4 class="mb-4">Cadastro de Vagas</h4>
-            <form action="../controllers/Controller-vaga_selecao.php" method="POST" id="cadastroVagasForm" novalidate>
-                <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <label for="num_vagas" class="form-label">Número de Vagas</label>
-                        <input type="number" class="form-control" id="num_vagas" name="num_vagas" value="" required>
-                        <div class="invalid-feedback">Por favor, insira o número de vagas.</div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="nome" class="form-label">Empresa Concedente</label>
-                        <input type="text" class="form-control" name="nome" id="nome" required>
-                        <div class="invalid-feedback">Por favor, digite a empresa concedente.</div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="perfil" class="form-label">Perfil</label>
-                        <textarea class="form-control" id="perfil" name="perfil" required></textarea>
-                        <div class="invalid-feedback">Por favor, insira o perfil da vaga.</div>
+        <!-- Main Content -->
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 md:gap-8">
+            <!-- Inscrições List -->
+            <div class="lg:col-span-3">
+                <div class="bg-ceara-white/90 backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden">
+                    <div class="overflow-x-auto mobile-table">
+                        <table class="min-w-full" role="grid">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-4 md:px-6 py-3 md:py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aluno</th>
+                                    <th scope="col" class="px-4 md:px-6 py-3 md:py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Curso</th>
+                                    <th scope="col" class="px-4 md:px-6 py-3 md:py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Empresa</th>
+                                    <th scope="col" class="px-4 md:px-6 py-3 md:py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                    <th scope="col" class="px-4 md:px-6 py-3 md:py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data</th>
+                                    <th scope="col" class="px-4 md:px-6 py-3 md:py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                <?php
+                                require("../models/cadastros.class.php");
+                                $x = new Cadastro();
+                                $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
+                                
+                                $search = isset($_GET['search']) ? $_GET['search'] : '';
+                                if (!empty($search)) {
+                                    $consulta = 'SELECT i.*, a.nome as aluno_nome, a.curso, e.nome as empresa_nome 
+                                               FROM inscricoes i 
+                                               JOIN alunos a ON i.aluno_id = a.id 
+                                               JOIN concedentes e ON i.empresa_id = e.id 
+                                               WHERE a.nome LIKE :search 
+                                               OR a.curso LIKE :search 
+                                               OR e.nome LIKE :search';
+                                    $query = $pdo->prepare($consulta);
+                                    $query->bindValue(':search', '%' . $search . '%');
+                                } else {
+                                    $consulta = 'SELECT i.*, a.nome as aluno_nome, a.curso, e.nome as empresa_nome 
+                                               FROM inscricoes i 
+                                               JOIN alunos a ON i.aluno_id = a.id 
+                                               JOIN concedentes e ON i.empresa_id = e.id';
+                                    $query = $pdo->prepare($consulta);
+                                }
+                                
+                                $query->execute();
+                                $result = $query->rowCount();
+
+                                if ($result > 0) {
+                                    foreach ($query as $value) {
+                                        echo "<tr class='table-row hover:bg-gray-50 transition-colors cursor-pointer' role='row'>";
+                                        echo "<td class='px-4 md:px-6 py-3 md:py-4 whitespace-nowrap' role='cell' onclick='showInscricaoDetails(" . json_encode($value) . ")'>";
+                                        echo "<div class='flex items-center'>";
+                                        echo "<div class='flex-shrink-0 h-8 w-8 md:h-10 md:w-10'>";
+                                        echo "<img class='h-8 w-8 md:h-10 md:w-10 rounded-full' src='https://ui-avatars.com/api/?name=" . urlencode($value['aluno_nome']) . "' alt='Foto do aluno " . htmlspecialchars($value['aluno_nome']) . "'>";
+                                        echo "</div>";
+                                        echo "<div class='ml-2 md:ml-4'>";
+                                        echo "<div class='text-sm font-medium text-gray-900'>" . htmlspecialchars($value['aluno_nome']) . "</div>";
+                                        echo "</div>";
+                                        echo "</div>";
+                                        echo "</td>";
+                                        echo "<td class='px-4 md:px-6 py-3 md:py-4 whitespace-nowrap' role='cell' onclick='showInscricaoDetails(" . json_encode($value) . ")'>";
+                                        echo "<div class='text-sm text-gray-900'>" . htmlspecialchars($value['curso']) . "</div>";
+                                        echo "</td>";
+                                        echo "<td class='px-4 md:px-6 py-3 md:py-4 whitespace-nowrap' role='cell' onclick='showInscricaoDetails(" . json_encode($value) . ")'>";
+                                        echo "<div class='text-sm text-gray-900'>" . htmlspecialchars($value['empresa_nome']) . "</div>";
+                                        echo "</td>";
+                                        echo "<td class='px-4 md:px-6 py-3 md:py-4 whitespace-nowrap' role='cell' onclick='showInscricaoDetails(" . json_encode($value) . ")'>";
+                                        $statusClass = '';
+                                        switch($value['status']) {
+                                            case 'Pendente':
+                                                $statusClass = 'bg-yellow-100 text-yellow-800';
+                                                break;
+                                            case 'Aprovado':
+                                                $statusClass = 'bg-green-100 text-green-800';
+                                                break;
+                                            case 'Reprovado':
+                                                $statusClass = 'bg-red-100 text-red-800';
+                                                break;
+                                            default:
+                                                $statusClass = 'bg-gray-100 text-gray-800';
+                                        }
+                                        echo "<span class='px-2 inline-flex text-xs leading-5 font-semibold rounded-full " . $statusClass . "'>";
+                                        echo htmlspecialchars($value['status']);
+                                        echo "</span>";
+                                        echo "</td>";
+                                        echo "<td class='px-4 md:px-6 py-3 md:py-4 whitespace-nowrap' role='cell' onclick='showInscricaoDetails(" . json_encode($value) . ")'>";
+                                        echo "<div class='text-sm text-gray-900'>" . date('d/m/Y', strtotime($value['data_inscricao'])) . "</div>";
+                                        echo "</td>";
+                                        echo "<td class='px-4 md:px-6 py-3 md:py-4 whitespace-nowrap text-sm font-medium' role='cell'>";
+                                        echo "<div class='flex items-center gap-2'>";
+                                        echo "<form action='../controllers/Controller-botao_acao.php' method='GET' style='display: inline;'>";
+                                        echo "<input type='hidden' name='btn-editar_inscricao' value='" . htmlspecialchars($value['id']) . "'>";
+                                        echo "<button type='submit' class='text-ceara-orange hover:text-ceara-green' aria-label='Editar inscrição de " . htmlspecialchars($value['aluno_nome']) . "'>";
+                                        echo "<i class='fas fa-edit' aria-hidden='true'></i>";
+                                        echo "</button>";
+                                        echo "</form>";
+                                        echo "<form action='../controllers/Controller-excluir_inscricao.php' method='POST' style='display: inline;' onsubmit='return confirm(\"Tem certeza que deseja excluir esta inscrição?\");'>";
+                                        echo "<input type='hidden' name='btn-excluir' value='" . htmlspecialchars($value['id']) . "'>";
+                                        echo "<button type='submit' class='text-red-600 hover:text-red-800' aria-label='Excluir inscrição de " . htmlspecialchars($value['aluno_nome']) . "'>";
+                                        echo "<i class='fas fa-trash' aria-hidden='true'></i>";
+                                        echo "</button>";
+                                        echo "</form>";
+                                        echo "</div>";
+                                        echo "</td>";
+                                        echo "</tr>";
+                                    }
+                                } else {
+                                    echo "<tr><td colspan='6' class='px-4 md:px-6 py-3 md:py-4 text-center text-gray-500' role='cell'>Nenhuma inscrição encontrada</td></tr>";
+                                }
+                                ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                <input type="submit" name="btn" class="btn btn-accent" value="Cadastrar Vagas">
-            </form>
+            </div>
+
+            <!-- Inscrição Details Sidebar -->
+            <div class="lg:col-span-1">
+                <div id="inscricaoDetails" class="bg-ceara-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-4 md:p-6 sticky top-4 md:top-8 hidden" role="complementary" aria-label="Detalhes da inscrição">
+                    <div class="flex justify-between items-center mb-4 md:mb-6">
+                        <h2 class="text-lg md:text-xl font-bold text-gray-800">Detalhes da Inscrição</h2>
+                        <button onclick="closeDetails()" class="text-gray-500 hover:text-ceara-orange" aria-label="Fechar detalhes">
+                            <i class="fas fa-times" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div class="space-y-4 md:space-y-6">
+                        <div class="flex justify-center">
+                            <img id="alunoImage" class="h-16 w-16 md:h-24 md:w-24 rounded-full" src="" alt="" role="img">
+                        </div>
+                        <div>
+                            <h3 id="alunoName" class="text-base md:text-lg font-semibold text-gray-800 mb-2"></h3>
+                            <p id="alunoCurso" class="text-sm md:text-base text-gray-600"></p>
+                        </div>
+                        <div class="space-y-3 md:space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-500">Empresa</label>
+                                <p id="empresaName" class="mt-1 text-sm text-gray-900"></p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-500">Status</label>
+                                <p id="inscricaoStatus" class="mt-1 text-sm text-gray-900"></p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-500">Data da Inscrição</label>
+                                <p id="inscricaoData" class="mt-1 text-sm text-gray-900"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Bootstrap JS e Popper.js -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
     <script>
-        // Função para aplicar estilos de validação
-        function applyValidationStyles(element, isValid) {
-            if (isValid) {
-                element.classList.remove('is-invalid');
-                element.classList.add('is-valid');
-            } else {
-                element.classList.remove('is-valid');
-                element.classList.add('is-invalid');
-            }
+        function showInscricaoDetails(inscricao) {
+            const detailsDiv = document.getElementById('inscricaoDetails');
+            detailsDiv.classList.remove('hidden');
+            
+            document.getElementById('alunoImage').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(inscricao.aluno_nome)}`;
+            document.getElementById('alunoImage').alt = `Foto do aluno ${inscricao.aluno_nome}`;
+            document.getElementById('alunoName').textContent = inscricao.aluno_nome;
+            document.getElementById('alunoCurso').textContent = inscricao.curso;
+            document.getElementById('empresaName').textContent = inscricao.empresa_nome;
+            document.getElementById('inscricaoStatus').textContent = inscricao.status;
+            document.getElementById('inscricaoData').textContent = new Date(inscricao.data_inscricao).toLocaleDateString('pt-BR');
         }
 
-        // Validação do formulário de Processo Seletivo
-        const processoSeletivoForm = document.getElementById('processoSeletivoForm');
-        processoSeletivoForm.addEventListener('submit', function (event) {
-            if (!processoSeletivoForm.checkValidity()) {
-                event.preventDefault();
-                event.stopPropagation();
+        function closeDetails() {
+            document.getElementById('inscricaoDetails').classList.add('hidden');
+        }
 
-                // Aplica estilos de validação para cada campo
-                const horaInput = document.getElementById('hora');
-                applyValidationStyles(horaInput, horaInput.checkValidity());
-
-                const localInput = document.getElementById('local');
-                applyValidationStyles(localInput, localInput.checkValidity());
-
-                const empresaIdSelect = document.getElementById('empresa_id');
-                applyValidationStyles(empresaIdSelect, empresaIdSelect.checkValidity());
-
-                const dataInput = document.getElementById('data');
-                applyValidationStyles(dataInput, dataInput.checkValidity());
-
-                const alunoIdSelect = document.getElementById('aluno_id');
-                applyValidationStyles(alunoIdSelect, alunoIdSelect.checkValidity());
-
-                const vagaIdSelect = document.getElementById('vaga_id');
-                applyValidationStyles(vagaIdSelect, vagaIdSelect.checkValidity());
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeDetails();
             }
-
-            processoSeletivoForm.classList.add('was-validated');
-        });
-
-        // Validação do formulário de Cadastro de Vagas
-        const cadastroVagasForm = document.getElementById('cadastroVagasForm');
-        cadastroVagasForm.addEventListener('submit', function (event) {
-            if (!cadastroVagasForm.checkValidity()) {
-                event.preventDefault();
-                event.stopPropagation();
-
-                // Aplica estilos de validação para cada campo
-                const numVagasInput = document.getElementById('num_vagas');
-                applyValidationStyles(numVagasInput, numVagasInput.checkValidity());
-
-                const nomeInput = document.getElementById('nome');
-                applyValidationStyles(nomeInput, nomeInput.checkValidity());
-
-                const perfilTextarea = document.getElementById('perfil');
-                applyValidationStyles(perfilTextarea, perfilTextarea.checkValidity());
-            }
-
-            cadastroVagasForm.classList.add('was-validated');
         });
     </script>
-
-    <?php
-    // Exibe mensagens de erro/sucesso
-    if (isset($_GET['error'])) {
-        $error = $_GET['error'];
-        $message = '';
-        $type = 'danger';
-
-        switch ($error) {
-            case 'campos_vazios':
-                $message = 'Por favor, preencha todos os campos.';
-                break;
-            case 'vaga_indisponivel':
-                $message = 'Esta vaga não está mais disponível.';
-                break;
-            case 'aluno_ja_inscrito':
-                $message = 'Este aluno já está inscrito nesta vaga.';
-                break;
-            case 'erro_criacao':
-                $message = 'Erro ao criar o processo seletivo.';
-                break;
-            default:
-                $message = 'Ocorreu um erro.';
-        }
-
-        echo "<div class='alert alert-$type alert-dismissible fade show mt-3' role='alert'>
-                $message
-                <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-              </div>";
-    }
-
-    if (isset($_GET['success'])) {
-        $success = $_GET['success'];
-        $message = '';
-        $type = 'success';
-
-        switch ($success) {
-            case 'processo_criado':
-                $message = 'Processo seletivo criado com sucesso!';
-                break;
-            default:
-                $message = 'Operação realizada com sucesso.';
-        }
-
-        echo "<div class='alert alert-$type alert-dismissible fade show mt-3' role='alert'>
-                $message
-                <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-              </div>";
-    }
-    ?>
 </body>
 </html>
