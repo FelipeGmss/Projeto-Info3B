@@ -123,6 +123,19 @@ Class Cadastro{
         $query->execute();
     }
 
+    public function cadastrar_selecao($hora, $local, $id_concedente, $data_inscricao, $id_aluno, $id_vaga){
+        $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
+        $consulta = 'INSERT INTO selecao VALUES (null,:hora,:local,:id_concedente,:data_inscricao,:id_aluno,:id_vaga)';
+        $query = $pdo->prepare($consulta);
+        $query->bindValue(":hora", $hora);
+        $query->bindValue(":local", $local);
+        $query->bindValue(":id_concedente", $id_concedente);
+        $query->bindValue(":data_inscricao", $data_inscricao);
+        $query->bindValue(":id_aluno", $id_aluno);
+        $query->bindValue(":id_vaga", $id_vaga);
+        $query->execute();
+    }
+
 }
 
 ?>
