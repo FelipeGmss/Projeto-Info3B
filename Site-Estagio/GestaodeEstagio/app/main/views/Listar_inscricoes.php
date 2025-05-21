@@ -23,6 +23,7 @@
         }
     </script>
     <style>
+        /* Melhorias de Acessibilidade */
         @media (prefers-reduced-motion: reduce) {
             * {
                 animation: none !important;
@@ -53,48 +54,190 @@
             white-space: nowrap;
             border-width: 0;
         }
+
+        @media (max-width: 768px) {
+            .mobile-stack {
+                display: flex;
+                flex-direction: column;
+            }
+            
+            .mobile-full {
+                width: 100%;
+            }
+            
+            .mobile-padding {
+                padding: 1rem;
+            }
+            
+            .mobile-text-center {
+                text-align: center;
+            }
+            
+            .mobile-margin {
+                margin-bottom: 1rem;
+            }
+            
+            .mobile-table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+            
+            .mobile-table th,
+            .mobile-table td {
+                min-width: 120px;
+            }
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #f3f4f6;
+        }
+
+        .hover-scale {
+            transition: transform 0.3s ease-in-out;
+        }
+        .hover-scale:hover {
+            transform: scale(1.05);
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: #FFFFFF;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(4px);
+        }
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .back-button:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+        }
+
+        .school-logo {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+
+        .school-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+            line-height: 1.2;
+        }
+
+        .header-moss {
+            background: #2d4739;
+        }
+        .header-moss * {
+            color: #fff !important;
+        }
+        .header-moss input,
+        .header-moss input:focus {
+            color: #222 !important;
+            background: #fff !important;
+        }
+        .header-moss .fa-search {
+            color: #888 !important;
+        }
+
+        .main-list-container {
+            background: #fff;
+            border-radius: 1.5rem;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            margin: 0 auto;
+            max-width: 1200px;
+            padding: 2rem;
+        }
+
+        .table th, .table td {
+            white-space: normal !important;
+        }
+
+        @media (max-width: 900px) {
+            .main-list-container {
+                padding: 1rem;
+            }
+        }
+        @media (max-width: 600px) {
+            .main-list-container {
+                padding: 0.5rem;
+            }
+        }
     </style>
 </head>
-<body class="bg-gradient-to-br from-ceara-green to-ceara-orange min-h-screen font-['Roboto']">
-    <div class="container mx-auto px-4 py-8">
-        <!-- Header Section -->
-        <header class="bg-ceara-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-6 mb-8">
-            <div class="flex flex-col gap-4">
-                <div class="flex flex-col sm:flex-row justify-between items-center">
-                    <div>
-                        <a href="javascript:history.back()" class="inline-flex items-center text-primary hover:text-primary-dark mb-4 transition-colors duration-300">
-                            <i class="fas fa-arrow-left mr-2"></i>
-                            Voltar
-                        </a>
-                        <h1 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2">Empresas com Inscrições</h1>
-                        <p class="text-gray-600">Visualize as empresas e seus alunos inscritos</p>
+<body class="min-h-screen font-['Roboto'] select-none">
+    <!-- Cabeçalho verde musgo -->
+    <header class="header-moss w-full shadow-lg mb-8">
+        <div class="container mx-auto px-4 py-4">
+            <!-- Main header content -->
+            <div class="flex flex-col md:flex-row md:items-center gap-3">
+                <!-- Left section with back button, logo and school name -->
+                <div class="flex items-center gap-3 flex-shrink-0">
+                    <a href="javascript:history.back()" class="back-button">
+                        <i class="fas fa-arrow-left"></i> Voltar
+                    </a>
+                    <img src="../config/img/logo_Salaberga-removebg-preview.png" alt="Logo EEEP Salaberga" class="school-logo">
+                    <div class="flex flex-col">
+                        <span class="school-name">EEEP Salaberga</span>
+                        <h1 class="text-xl md:text-2xl font-bold mb-0">Empresas com Inscrições</h1>
                     </div>
                 </div>
-                <div class="flex flex-col md:flex-row items-center gap-4">
-                    <form action="" method="GET" class="relative w-full md:w-64">
-                        <label for="search" class="sr-only">Pesquisar empresas</label>
-                        <input type="text" 
-                               id="search"
-                               name="search"
-                               class="w-full px-4 py-3 pl-10 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-ceara-orange focus:border-transparent"
-                               placeholder="Pesquisar empresa..."
-                               value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
-                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                    </form>
-                </div>
-            </div>
-        </header>
 
-        <!-- Main Content -->
+                <!-- Search bar -->
+                <form action="" method="GET" class="relative w-full md:w-64" role="search">
+                    <label for="search" class="sr-only">Pesquisar empresas</label>
+                    <input type="text" 
+                           id="search"
+                           name="search"
+                           class="w-full px-4 py-3 pl-10 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-ceara-orange focus:border-transparent"
+                           placeholder="Pesquisar empresa..."
+                           value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>"
+                           aria-label="Pesquisar empresas">
+                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" aria-hidden="true"></i>
+                </form>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-4 md:py-8 fade-in">
         <div class="bg-ceara-white/90 backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden">
-            <div class="overflow-x-auto">
-                <table class="min-w-full">
+            <div class="overflow-x-auto mobile-table">
+                <table class="min-w-full" role="grid">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Empresa</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Local</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hora</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
+                            <th scope="col" class="px-4 md:px-6 py-3 md:py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Empresa</th>
+                            <th scope="col" class="px-4 md:px-6 py-3 md:py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Local</th>
+                            <th scope="col" class="px-4 md:px-6 py-3 md:py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hora</th>
+                            <th scope="col" class="px-4 md:px-6 py-3 md:py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">

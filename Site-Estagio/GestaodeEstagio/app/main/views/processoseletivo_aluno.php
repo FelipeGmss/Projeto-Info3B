@@ -26,6 +26,7 @@ session_start();
         }
     </script>
     <style>
+        /* Melhorias de Acessibilidade */
         @media (prefers-reduced-motion: reduce) {
             * {
                 animation: none !important;
@@ -40,11 +41,266 @@ session_start();
             }
         }
 
-        *:focus {
+        /* Melhorias de Foco e Navegação */
+        *:focus-visible {
             outline: 3px solid #FFA500;
             outline-offset: 2px;
+            border-radius: 4px;
         }
 
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #008C45;
+            color: white;
+            padding: 8px;
+            z-index: 100;
+            transition: top 0.2s;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        /* Layout Base */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #f3f4f6;
+            line-height: 1.5;
+            color: #1f2937;
+        }
+
+        .container {
+            width: min(1400px, 95%);
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header Styles */
+        .header-moss {
+            background: #2d4739;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+
+        .school-brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .school-logo {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+
+        .school-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        /* Botão Voltar */
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0.5rem;
+            color: #fff;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .back-button:hover,
+        .back-button:focus-visible {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+
+        /* Barra de Pesquisa */
+        .search-container {
+            width: min(400px, 100%);
+            margin: 0 auto;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            background: #fff;
+            font-size: 1rem;
+            transition: all 0.2s;
+            color: #1f2937;
+        }
+
+        .search-input:focus-visible {
+            border-color: #008C45;
+            box-shadow: 0 0 0 3px rgba(0, 140, 69, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+            pointer-events: none;
+        }
+
+        /* Tabela Responsiva */
+        .table-container {
+            background: #fff;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin: 2rem auto;
+            overflow: hidden;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table th {
+            background: #f8fafc;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: #475569;
+            border-bottom: 2px solid #e2e8f0;
+            white-space: nowrap;
+        }
+
+        .table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: middle;
+            color: #1f2937;
+        }
+
+        .table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .table tr:hover td {
+            background: #f8fafc;
+        }
+
+        /* Botões de Ação */
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .action-button {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+            white-space: nowrap;
+        }
+
+        .action-button.inscrever {
+            background: #008C45;
+            color: white;
+        }
+
+        .action-button.inscrever:hover,
+        .action-button.inscrever:focus-visible {
+            background: #006b35;
+            transform: translateY(-1px);
+        }
+
+        .action-button.ver-inscritos {
+            background: #f0f9ff;
+            color: #0369a1;
+        }
+
+        .action-button.ver-inscritos:hover,
+        .action-button.ver-inscritos:focus-visible {
+            background: #e0f2fe;
+            transform: translateY(-1px);
+        }
+
+        /* Responsividade */
+        @media (max-width: 1024px) {
+            .table-container {
+                margin: 1rem auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                gap: 0.75rem;
+            }
+
+            .school-brand {
+                justify-content: center;
+            }
+
+            .table th,
+            .table td {
+                padding: 0.75rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .action-button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Mensagem de Estado Vazio */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: #64748b;
+        }
+
+        .empty-state i {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #94a3b8;
+        }
+
+        /* Melhorias de Acessibilidade para Leitores de Tela */
         .sr-only {
             position: absolute;
             width: 1px;
@@ -57,186 +313,132 @@ session_start();
             border-width: 0;
         }
 
-        @media (max-width: 768px) {
-            .mobile-stack {
-                display: flex;
-                flex-direction: column;
-            }
-            
-            .mobile-full {
-                width: 100%;
-            }
-            
-            .mobile-padding {
-                padding: 1rem;
-            }
-            
-            .mobile-text-center {
-                text-align: center;
-            }
-            
-            .mobile-margin {
-                margin-bottom: 1rem;
-            }
-            
-            .mobile-table {
-                display: block;
-                overflow-x: auto;
-                white-space: nowrap;
-            }
-            
-            .mobile-table th,
-            .mobile-table td {
-                min-width: 120px;
-            }
+        [role="button"],
+        button {
+            cursor: pointer;
         }
 
-        body {
-            font-family: 'Roboto', sans-serif;
-        }
-        .hover-scale {
-            transition: transform 0.3s ease-in-out;
-        }
-        .hover-scale:hover {
-            transform: scale(1.05);
-        }
-        .fade-in {
-            animation: fadeIn 1s ease-out forwards;
-        }
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        .back-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 20px;
-            background: #FFFFFF;
-            border: 2px solid #008C45;
-            border-radius: 12px;
-            color: #008C45;
-            font-size: 1rem;
-            font-weight: 500;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            margin-bottom: 20px;
-        }
-        .back-button:hover {
-            background: #008C45;
-            color: #FFFFFF;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-        .back-button:focus {
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(0, 140, 69, 0.3);
+        /* Melhorias de Performance */
+        .will-change-transform {
+            will-change: transform;
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-ceara-green to-ceara-orange min-h-screen font-['Roboto'] select-none">
-    <div class="container mx-auto px-4 py-4 md:py-8 fade-in">
-        <!-- Header Section -->
-        <header class="bg-ceara-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-4 md:p-6 mb-4 md:mb-8">
-            <div class="flex flex-col gap-4">
-                <div class="flex flex-col sm:flex-row justify-between items-center mobile-text-center">
+<body class="min-h-screen">
+    <!-- Skip Link para Acessibilidade -->
+    <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+
+    <!-- Cabeçalho verde musgo -->
+    <header class="header-moss" role="banner">
+        <div class="container">
+            <div class="header-content">
+                <div class="school-brand">
+                    <a href="javascript:history.back()" class="back-button" aria-label="Voltar para a página anterior">
+                        <i class="fas fa-arrow-left" aria-hidden="true"></i>
+                        <span>Voltar</span>
+                    </a>
+                    <img src="../config/img/logo_Salaberga-removebg-preview.png" 
+                         alt="Logo EEEP Salaberga" 
+                         class="school-logo"
+                         width="40"
+                         height="40">
                     <div>
-                        <a href="javascript:history.back()" class="back-button">
-                            <i class="fas fa-arrow-left"></i> Voltar
-                        </a>
-                        <h1 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2">Processo Seletivo</h1>
-                        <p class="text-gray-600">Visualize e inscreva-se nos processos seletivos disponíveis</p>
+                        <span class="school-name">EEEP Salaberga</span>
+                        <h1 class="text-xl font-bold text-white mt-1">Processo Seletivo</h1>
                     </div>
                 </div>
-                <div class="flex flex-col md:flex-row items-center gap-4">
-                    <form action="" method="GET" class="relative w-full md:w-64" role="search">
+
+                <div class="search-container">
+                    <form action="" method="GET" class="relative" role="search">
                         <label for="search" class="sr-only">Pesquisar processos seletivos</label>
                         <input type="text" 
                                id="search"
                                name="search"
-                               class="w-full px-4 py-3 pl-10 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-ceara-orange focus:border-transparent"
+                               class="search-input"
                                placeholder="Pesquisar local ou empresa..."
                                value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>"
                                aria-label="Pesquisar processos seletivos">
-                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" aria-hidden="true"></i>
+                        <i class="fas fa-search search-icon" aria-hidden="true"></i>
                     </form>
                 </div>
             </div>
-        </header>
+        </div>
+    </header>
 
-        <!-- Main Content -->
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 md:gap-8">
-            <!-- Formulários List -->
-            <div class="lg:col-span-3">
-                <div class="bg-ceara-white/90 backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden">
-                    <div class="overflow-x-auto mobile-table">
-                        <table class="min-w-full" role="grid">
-                            <thead class="bg-gray-50">
-                                <tr>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Hora</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Local</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Empresa</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-gray-200">
-                                <?php
-                                $pdo = new PDO('mysql:host=localhost;dbname=estagio', 'root', '');
-                                $search = isset($_GET['search']) ? $_GET['search'] : '';
-                                
-                                $sql = 'SELECT s.*, c.nome as nome_empresa 
-                                       FROM selecao s 
-                                       LEFT JOIN concedentes c ON s.id_concedente = c.id';
-                                
-                                if (!empty($search)) {
-                                    $sql .= ' WHERE (s.local LIKE :search OR c.nome LIKE :search)';
-                                }
-                                
-                                $query = $pdo->prepare($sql);
-                                
-                                if (!empty($search)) {
-                                    $query->bindValue(':search', '%' . $search . '%');
-                                }
-                                
-                                $query->execute();
-                                $result = $query->rowCount();
+    <!-- Conteúdo Principal -->
+    <main id="main-content" class="container py-6" role="main">
+        <div class="table-container">
+            <div class="overflow-x-auto">
+                <table class="table" role="grid" aria-label="Lista de processos seletivos">
+                    <thead>
+                        <tr>
+                            <th scope="col">Hora</th>
+                            <th scope="col">Local</th>
+                            <th scope="col">Empresa</th>
+                            <th scope="col">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $pdo = new PDO('mysql:host=localhost;dbname=estagio', 'root', '');
+                        $search = isset($_GET['search']) ? $_GET['search'] : '';
+                        
+                        $sql = 'SELECT s.*, c.nome as nome_empresa 
+                               FROM selecao s 
+                               LEFT JOIN concedentes c ON s.id_concedente = c.id';
+                        
+                        if (!empty($search)) {
+                            $sql .= ' WHERE (s.local LIKE :search OR c.nome LIKE :search)';
+                        }
+                        
+                        $query = $pdo->prepare($sql);
+                        
+                        if (!empty($search)) {
+                            $query->bindValue(':search', '%' . $search . '%');
+                        }
+                        
+                        $query->execute();
+                        $result = $query->rowCount();
 
-                                if ($result > 0) {
-                                    foreach ($query as $form) {
-                                        echo "<tr class='table-row hover:bg-gray-50 transition-colors cursor-pointer' role='row'>";
-                                        echo "<td class='px-4 py-3'>" . htmlspecialchars($form['hora']) . "</td>";
-                                        echo "<td class='px-4 py-3'>" . htmlspecialchars($form['local']) . "</td>";
-                                        echo "<td class='px-4 py-3'>" . htmlspecialchars($form['nome_empresa']) . "</td>";
-                                        echo "<td class='px-4 py-3'>";
-                                        // Botão Inscrever-se
-                                        echo "<button onclick='showInscricaoModal(" . $form['id'] . ")' class='text-green-600 hover:text-green-800 mr-2' title='Inscrever-se'>";
-                                        echo "<i class='fas fa-user-plus'></i> Inscrever-se";
-                                        echo "</button>";
-                                        
-                                        // Botão Ver Inscritos
-                                        echo "<button onclick='showInscritosModal(" . $form['id'] . ")' class='text-blue-600 hover:text-blue-800' title='Ver Inscritos'>";
-                                        echo "<i class='fas fa-users'></i> Ver Inscritos";
-                                        echo "</button>";
-                                        echo "</td>";
-                                        echo "</tr>";
-                                    }
-                                } else {
-                                    echo "<tr><td colspan='4' class='text-center text-gray-500 py-4'>Nenhum processo seletivo disponível.</td></tr>";
-                                }
-                                ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                        if ($result > 0) {
+                            foreach ($query as $form) {
+                                echo "<tr>";
+                                echo "<td>" . htmlspecialchars($form['hora']) . "</td>";
+                                echo "<td>" . htmlspecialchars($form['local']) . "</td>";
+                                echo "<td>" . htmlspecialchars($form['nome_empresa']) . "</td>";
+                                echo "<td>";
+                                echo "<div class='action-buttons'>";
+                                // Botão Inscrever-se
+                                echo "<button onclick='showInscricaoModal(" . $form['id'] . ")' 
+                                          class='action-button inscrever' 
+                                          title='Inscrever-se no processo seletivo'
+                                          aria-label='Inscrever-se no processo seletivo'>";
+                                echo "<i class='fas fa-user-plus' aria-hidden='true'></i> Inscrever-se";
+                                echo "</button>";
+                                
+                                // Botão Ver Inscritos
+                                echo "<button onclick='showInscritosModal(" . $form['id'] . ")' 
+                                          class='action-button ver-inscritos' 
+                                          title='Ver lista de inscritos'
+                                          aria-label='Ver lista de inscritos'>";
+                                echo "<i class='fas fa-users' aria-hidden='true'></i> Ver Inscritos";
+                                echo "</button>";
+                                echo "</div>";
+                                echo "</td>";
+                                echo "</tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='4' class='empty-state'>";
+                            echo "<i class='fas fa-clipboard-list' aria-hidden='true'></i>";
+                            echo "<p>Nenhum processo seletivo disponível no momento.</p>";
+                            echo "</td></tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
             </div>
         </div>
-    </div>
+    </main>
 
     <!-- Modal de Inscrição -->
     <div id="inscricaoModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">

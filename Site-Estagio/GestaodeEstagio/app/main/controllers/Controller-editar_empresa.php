@@ -1,6 +1,7 @@
 <?php 
 
-require_once '../models/cadastros.class.php';
+require("../models/cadastros.class.php");
+
 if(isset($_POST['btn-editar'])){
     $id = $_POST['id'];
     $nome = $_POST['nome'];
@@ -9,8 +10,13 @@ if(isset($_POST['btn-editar'])){
     $perfil = $_POST['perfil'];
     $vagas = $_POST['numero_vagas'];
 
-    $empresa = new Cadastro();
-    $empresa->editar_empresa($id, $nome, $contato, $endereco, $perfil, $vagas);
-    header('location:../views/dadosempresa.php?resultado=editar');
+    $x = new Cadastro();
+    $resultado = $x->editar_empresa($id, $nome, $contato, $endereco, $perfil, $vagas);
+    
+    if($resultado){
+        header('location:Controller-listar_empresa.php?resultado=editar');
+    }else{
+        header('location:Controller-listar_empresa.php?resultado=erro');
+    }
 }
 ?>

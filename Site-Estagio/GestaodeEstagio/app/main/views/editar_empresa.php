@@ -81,6 +81,7 @@ if (!isset(
             </div>
 
             <form action="../controllers/Controller-editar_empresa.php" method="POST" class="space-y-4">
+                <input type="hidden" name="id" value="<?php echo htmlspecialchars($dados_empresa['id']) ?>">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="input-group">
                         <label for="nome" class="block text-sm font-medium text-gray-700 mb-1">Nome da Empresa</label>
@@ -130,7 +131,7 @@ if (!isset(
                     </div>
                 </div>
 
-                <input type="submit" name="btn" value="Atualizar Empresa"
+                <input type="submit" name="btn-editar" value="Atualizar Empresa"
                     class="w-full bg-[#005A24] hover:bg-[#004A1D] text-white py-3 px-6 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#005A24] transition-all duration-300 font-semibold text-lg">
             </form>
         </div>

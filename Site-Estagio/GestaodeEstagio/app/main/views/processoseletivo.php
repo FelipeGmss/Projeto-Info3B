@@ -15,6 +15,7 @@
                         'ceara-green': '#008C45',
                         'ceara-orange': '#FFA500',
                         'ceara-white': '#FFFFFF',
+                        'ceara-moss': '#2d4739', // Verde musgo
                         primary: '#008C45',
                         secondary: '#FFA500',
                     }
@@ -90,6 +91,7 @@
 
         body {
             font-family: 'Roboto', sans-serif;
+            background: #f3f4f6; /* cinza claro */
         }
         .hover-scale {
             transition: transform 0.3s ease-in-out;
@@ -113,133 +115,180 @@
         .back-button {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 10px 20px;
-            background: #FFFFFF;
-            border: 2px solid #008C45;
-            border-radius: 12px;
-            color: #008C45;
-            font-size: 1rem;
+            gap: 6px;
+            padding: 6px 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: #FFFFFF;
+            font-size: 0.9rem;
             font-weight: 500;
             text-decoration: none;
-            transition: all 0.3s ease;
-            margin-bottom: 20px;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(4px);
         }
         .back-button:hover {
-            background: #008C45;
-            color: #FFFFFF;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
         .back-button:focus {
             outline: none;
-            box-shadow: 0 0 0 3px rgba(0, 140, 69, 0.3);
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+        }
+        .school-logo {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+        .school-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+            line-height: 1.2;
+        }
+        .header-moss {
+            background: #2d4739;
+        }
+        .header-moss * {
+            color: #fff !important;
+        }
+        .header-moss input,
+        .header-moss input:focus {
+            color: #222 !important;
+            background: #fff !important;
+        }
+        .header-moss .fa-search {
+            color: #888 !important;
+        }
+        .main-list-container {
+            background: #fff;
+            border-radius: 1.5rem;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            margin: 0 auto;
+            max-width: 1200px;
+            padding: 2rem 2rem 2rem 2rem;
+        }
+        .table th, .table td {
+            white-space: normal !important;
+        }
+        @media (max-width: 900px) {
+            .main-list-container {
+                padding: 1rem;
+            }
+        }
+        @media (max-width: 600px) {
+            .main-list-container {
+                padding: 0.5rem;
+            }
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-ceara-green to-ceara-orange min-h-screen font-['Roboto'] select-none">
-    <div class="container mx-auto px-4 py-4 md:py-8 fade-in">
-        <!-- Header Section -->
-        <header class="bg-ceara-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-4 md:p-6 mb-4 md:mb-8">
-            <div class="flex flex-col gap-4">
-                <div class="flex flex-col sm:flex-row justify-between items-center mobile-text-center">
-                    <div>
-                        <a href="javascript:history.back()" class="back-button">
-                            <i class="fas fa-arrow-left"></i> Voltar
-                        </a>
-                        <h1 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2">Formulários de Seleção</h1>
-                        <p class="text-gray-600">Gerencie e visualize os formulários de processo seletivo</p>
+<body class="min-h-screen font-['Roboto'] select-none">
+    <!-- Cabeçalho verde musgo -->
+    <header class="header-moss w-full shadow-lg mb-8">
+        <div class="container mx-auto px-4 py-4">
+            <!-- Main header content -->
+            <div class="flex flex-col md:flex-row md:items-center gap-3">
+                <!-- Left section with back button, logo and school name -->
+                <div class="flex items-center gap-3 flex-shrink-0">
+                    <a href="javascript:history.back()" class="back-button">
+                        <i class="fas fa-arrow-left"></i> Voltar
+                    </a>
+                    <img src="../config/img/logo_Salaberga-removebg-preview.png" alt="Logo EEEP Salaberga" class="school-logo">
+                    <div class="flex flex-col">
+                        <span class="school-name">EEEP Salaberga</span>
+                        <h1 class="text-xl md:text-2xl font-bold mb-0">Formulários de Seleção</h1>
                     </div>
                 </div>
-                <div class="flex flex-col md:flex-row items-center gap-4">
-                    <form action="" method="GET" class="relative w-full md:w-64" role="search">
-                        <label for="search" class="sr-only">Pesquisar formulários</label>
-                        <input type="text" 
-                               id="search"
-                               name="search"
-                               class="w-full px-4 py-3 pl-10 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-ceara-orange focus:border-transparent"
-                               placeholder="Pesquisar local, concedente, aluno..."
-                               value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>"
-                               aria-label="Pesquisar formulários">
-                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" aria-hidden="true"></i>
-                    </form>
-                    <a href="novo_formulario.php" class="w-full md:w-auto bg-gradient-to-r from-ceara-green to-ceara-orange hover:from-ceara-orange hover:to-ceara-green text-ceara-white px-6 py-3 rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 hover-scale">
+
+                <!-- Search bar - now takes more space -->
+                <form action="" method="GET" class="relative flex-1 min-w-[300px]" role="search">
+                    <label for="search" class="sr-only">Pesquisar formulários</label>
+                    <input type="text" 
+                           id="search"
+                           name="search"
+                           class="w-full px-4 py-2 pl-10 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-ceara-orange focus:border-transparent"
+                           placeholder="Pesquisar local, concedente, aluno..."
+                           value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>"
+                           aria-label="Pesquisar formulários">
+                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2" aria-hidden="true"></i>
+                </form>
+
+                <!-- Right section with action buttons -->
+                <div class="flex gap-2 flex-shrink-0">
+                    <a href="novo_formulario.php" class="bg-gradient-to-r from-ceara-orange to-ceara-green hover:from-ceara-green hover:to-ceara-orange text-white px-4 py-2 rounded-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 text-sm whitespace-nowrap">
                         <i class="fas fa-plus" aria-hidden="true"></i>
                         Novo Formulário
                     </a>
-                    <a href="../views/Listar_inscricoes.php" class="w-full md:w-auto bg-gradient-to-r from-ceara-green to-ceara-orange hover:from-ceara-orange hover:to-ceara-green text-ceara-white px-6 py-3 rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 hover-scale">
+                    <a href="../views/Listar_inscricoes.php" class="bg-gradient-to-r from-ceara-orange to-ceara-green hover:from-ceara-green hover:to-ceara-orange text-white px-4 py-2 rounded-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 text-sm whitespace-nowrap">
                         <i class="fas fa-list" aria-hidden="true"></i>
                         Ver Inscrições
                     </a>
                 </div>
             </div>
-        </header>
+        </div>
+    </header>
+    <!-- Fim do cabeçalho -->
 
-        <!-- Main Content -->
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 md:gap-8">
-            <!-- Formulários List -->
-            <div class="lg:col-span-3">
-                <div class="bg-ceara-white/90 backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden">
-                    <div class="overflow-x-auto mobile-table">
-                        <table class="min-w-full" role="grid">
-                            <thead class="bg-gray-50">
-                                <tr>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Hora</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Local</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Concedente</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-gray-200">
-                                <?php
-                                $pdo = new PDO('mysql:host=localhost;dbname=estagio', 'root', '');
-                                $search = isset($_GET['search']) ? $_GET['search'] : '';
-                                if (!empty($search)) {
-                                    $sql = 'SELECT * FROM selecao WHERE local LIKE :search OR id_concedente LIKE :search OR id_aluno LIKE :search';
-                                    $query = $pdo->prepare($sql);
-                                    $query->bindValue(':search', '%' . $search . '%');
-                                } else {
-                                    $sql = 'SELECT * FROM selecao';
-                                    $query = $pdo->prepare($sql);
-                                }
-                                $query->execute();
-                                $result = $query->rowCount();
+    <!-- Lista centralizada -->
+    <div class="main-list-container mt-4 mb-8">
+        <div class="overflow-x-auto">
+            <table class="min-w-full table" role="grid">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Hora</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Local</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Concedente</th>
+                        <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase">Ações</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    <?php
+                    $pdo = new PDO('mysql:host=localhost;dbname=estagio', 'root', '');
+                    $search = isset($_GET['search']) ? $_GET['search'] : '';
+                    if (!empty($search)) {
+                        $sql = 'SELECT * FROM selecao WHERE local LIKE :search OR id_concedente LIKE :search OR id_aluno LIKE :search';
+                        $query = $pdo->prepare($sql);
+                        $query->bindValue(':search', '%' . $search . '%');
+                    } else {
+                        $sql = 'SELECT * FROM selecao';
+                        $query = $pdo->prepare($sql);
+                    }
+                    $query->execute();
+                    $result = $query->rowCount();
 
-                                if ($result > 0) {
-                                    foreach ($query as $form) {
-                                        // Buscar nome do concedente
-                                        $stmt_conc = $pdo->prepare('SELECT nome FROM concedentes WHERE id = ?');
-                                        $stmt_conc->execute([$form['id_concedente']]);
-                                        $nome_concedente = $stmt_conc->fetchColumn();
-                                        echo "<tr class='table-row hover:bg-gray-50 transition-colors cursor-pointer' role='row'>";
-                                        echo "<td class='px-4 py-3'>" . htmlspecialchars($form['hora']) . "</td>";
-                                        echo "<td class='px-4 py-3'>" . htmlspecialchars($form['local']) . "</td>";
-                                        echo "<td class='px-4 py-3'>" . htmlspecialchars($nome_concedente) . "</td>";
-                                        echo "<td class='px-4 py-3 flex gap-2'>";
-                                        echo "<form action='../controllers/Controller-excluir_formulario.php' method='POST' style='display:inline;' onsubmit='return confirm(\'Tem certeza que deseja excluir este formulário?\');'>";
-                                        echo "<input type='hidden' name='id' value='" . $form['id'] . "'>";
-                                        echo "<button type='submit' name='btn-excluir' class='text-red-600 hover:text-red-800' title='Excluir'><i class='fas fa-trash'></i></button>";
-                                        echo "</form>";
-                                        echo "<form action='controller_inscrever.php' method='POST' style='display:inline;'>";
-                                        echo "<input type='hidden' name='id_formulario' value='" . $form['id'] . "'>";
-                                        echo "<button type='submit' class='text-green-600 hover:text-green-800' title='Inscrever-se'><i class='fas fa-user-plus'></i></button>";
-                                        echo "</form>";
-                                        echo "</td>";
-                                        echo "</tr>";
-                                    }
-                                } else {
-                                    echo "<tr><td colspan='4' class='text-center text-gray-500 py-4'>Nenhum formulário encontrado.</td></tr>";
-                                }
-                                ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <!-- Sidebar de detalhes (opcional, igual empresas) -->
-            <!-- ... -->
+                    if ($result > 0) {
+                        foreach ($query as $form) {
+                            // Buscar nome do concedente
+                            $stmt_conc = $pdo->prepare('SELECT nome FROM concedentes WHERE id = ?');
+                            $stmt_conc->execute([$form['id_concedente']]);
+                            $nome_concedente = $stmt_conc->fetchColumn();
+                            echo "<tr class='hover:bg-gray-100 transition-colors cursor-pointer' role='row'>";
+                            echo "<td class='px-4 py-3'>" . htmlspecialchars($form['hora']) . "</td>";
+                            echo "<td class='px-4 py-3'>" . htmlspecialchars($form['local']) . "</td>";
+                            echo "<td class='px-4 py-3'>" . htmlspecialchars($nome_concedente) . "</td>";
+                            echo "<td class='px-4 py-3 flex gap-2 justify-center'>";
+                            echo "<form action='../controllers/Controller-excluir_formulario.php' method='POST' style='display:inline;' onsubmit='return confirm(\\'Tem certeza que deseja excluir este formulário?\\');'>";
+                            echo "<input type='hidden' name='id' value='" . $form['id'] . "'>";
+                            echo "<button type='submit' name='btn-excluir' class='text-red-600 hover:text-red-800 bg-red-50 rounded-full p-2' title='Excluir'><i class='fas fa-trash'></i></button>";
+                            echo "</form>";
+                            echo "<form action='controller_inscrever.php' method='POST' style='display:inline;'>";
+                            echo "<input type='hidden' name='id_formulario' value='" . $form['id'] . "'>";
+                            echo "<button type='submit' class='text-green-600 hover:text-green-800 bg-green-50 rounded-full p-2' title='Inscrever-se'><i class='fas fa-user-plus'></i></button>";
+                            echo "</form>";
+                            echo "</td>";
+                            echo "</tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='4' class='text-center text-gray-500 py-4'>Nenhum formulário encontrado.</td></tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
         </div>
     </div>
+    <!-- Fim da lista centralizada -->
 
     <!-- Modal de Inscrição -->
     <div id="inscricaoModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
