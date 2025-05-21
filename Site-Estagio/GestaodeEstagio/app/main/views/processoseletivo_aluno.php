@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulários de Seleção</title>
+    <title>Processo Seletivo - Aluno</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -147,30 +147,22 @@
                         <a href="javascript:history.back()" class="back-button">
                             <i class="fas fa-arrow-left"></i> Voltar
                         </a>
-                        <h1 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2">Formulários de Seleção</h1>
-                        <p class="text-gray-600">Gerencie e visualize os formulários de processo seletivo</p>
+                        <h1 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2">Processo Seletivo</h1>
+                        <p class="text-gray-600">Visualize e inscreva-se nos processos seletivos disponíveis</p>
                     </div>
                 </div>
                 <div class="flex flex-col md:flex-row items-center gap-4">
                     <form action="" method="GET" class="relative w-full md:w-64" role="search">
-                        <label for="search" class="sr-only">Pesquisar formulários</label>
+                        <label for="search" class="sr-only">Pesquisar processos seletivos</label>
                         <input type="text" 
                                id="search"
                                name="search"
                                class="w-full px-4 py-3 pl-10 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-ceara-orange focus:border-transparent"
-                               placeholder="Pesquisar local, concedente, aluno..."
+                               placeholder="Pesquisar local ou empresa..."
                                value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>"
-                               aria-label="Pesquisar formulários">
+                               aria-label="Pesquisar processos seletivos">
                         <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" aria-hidden="true"></i>
                     </form>
-                    <a href="novo_formulario.php" class="w-full md:w-auto bg-gradient-to-r from-ceara-green to-ceara-orange hover:from-ceara-orange hover:to-ceara-green text-ceara-white px-6 py-3 rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 hover-scale">
-                        <i class="fas fa-plus" aria-hidden="true"></i>
-                        Novo Formulário
-                    </a>
-                    <a href="../views/Listar_inscricoes.php" class="w-full md:w-auto bg-gradient-to-r from-ceara-green to-ceara-orange hover:from-ceara-orange hover:to-ceara-green text-ceara-white px-6 py-3 rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 hover-scale">
-                        <i class="fas fa-list" aria-hidden="true"></i>
-                        Ver Inscrições
-                    </a>
                 </div>
             </div>
         </header>
@@ -186,49 +178,49 @@
                                 <tr>
                                     <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Hora</th>
                                     <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Local</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Concedente</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Empresa</th>
                                     <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Ações</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200">
                                 <?php
+                                session_start();
                                 $pdo = new PDO('mysql:host=localhost;dbname=estagio', 'root', '');
                                 $search = isset($_GET['search']) ? $_GET['search'] : '';
+                                
+                                $sql = 'SELECT s.*, c.nome as nome_empresa 
+                                       FROM selecao s 
+                                       LEFT JOIN concedentes c ON s.id_concedente = c.id 
+                                       WHERE s.id_aluno IS NULL';
+                                
                                 if (!empty($search)) {
-                                    $sql = 'SELECT * FROM selecao WHERE local LIKE :search OR id_concedente LIKE :search OR id_aluno LIKE :search';
-                                    $query = $pdo->prepare($sql);
-                                    $query->bindValue(':search', '%' . $search . '%');
-                                } else {
-                                    $sql = 'SELECT * FROM selecao';
-                                    $query = $pdo->prepare($sql);
+                                    $sql .= ' AND (s.local LIKE :search OR c.nome LIKE :search)';
                                 }
+                                
+                                $query = $pdo->prepare($sql);
+                                
+                                if (!empty($search)) {
+                                    $query->bindValue(':search', '%' . $search . '%');
+                                }
+                                
                                 $query->execute();
                                 $result = $query->rowCount();
 
                                 if ($result > 0) {
                                     foreach ($query as $form) {
-                                        // Buscar nome do concedente
-                                        $stmt_conc = $pdo->prepare('SELECT nome FROM concedentes WHERE id = ?');
-                                        $stmt_conc->execute([$form['id_concedente']]);
-                                        $nome_concedente = $stmt_conc->fetchColumn();
                                         echo "<tr class='table-row hover:bg-gray-50 transition-colors cursor-pointer' role='row'>";
                                         echo "<td class='px-4 py-3'>" . htmlspecialchars($form['hora']) . "</td>";
                                         echo "<td class='px-4 py-3'>" . htmlspecialchars($form['local']) . "</td>";
-                                        echo "<td class='px-4 py-3'>" . htmlspecialchars($nome_concedente) . "</td>";
-                                        echo "<td class='px-4 py-3 flex gap-2'>";
-                                        echo "<form action='../controllers/Controller-excluir_formulario.php' method='POST' style='display:inline;' onsubmit='return confirm(\'Tem certeza que deseja excluir este formulário?\');'>";
-                                        echo "<input type='hidden' name='id' value='" . $form['id'] . "'>";
-                                        echo "<button type='submit' name='btn-excluir' class='text-red-600 hover:text-red-800' title='Excluir'><i class='fas fa-trash'></i></button>";
-                                        echo "</form>";
-                                        echo "<form action='controller_inscrever.php' method='POST' style='display:inline;'>";
-                                        echo "<input type='hidden' name='id_formulario' value='" . $form['id'] . "'>";
-                                        echo "<button type='submit' class='text-green-600 hover:text-green-800' title='Inscrever-se'><i class='fas fa-user-plus'></i></button>";
-                                        echo "</form>";
+                                        echo "<td class='px-4 py-3'>" . htmlspecialchars($form['nome_empresa']) . "</td>";
+                                        echo "<td class='px-4 py-3'>";
+                                        echo "<button onclick='showInscricaoModal(" . $form['id'] . ")' class='text-green-600 hover:text-green-800' title='Inscrever-se'>";
+                                        echo "<i class='fas fa-user-plus'></i> Inscrever-se";
+                                        echo "</button>";
                                         echo "</td>";
                                         echo "</tr>";
                                     }
                                 } else {
-                                    echo "<tr><td colspan='4' class='text-center text-gray-500 py-4'>Nenhum formulário encontrado.</td></tr>";
+                                    echo "<tr><td colspan='4' class='text-center text-gray-500 py-4'>Nenhum processo seletivo disponível.</td></tr>";
                                 }
                                 ?>
                             </tbody>
@@ -236,8 +228,6 @@
                     </div>
                 </div>
             </div>
-            <!-- Sidebar de detalhes (opcional, igual empresas) -->
-            <!-- ... -->
         </div>
     </div>
 
@@ -258,17 +248,18 @@
             <form id="inscricaoForm" action="../controllers/controller_inscrever.php" method="POST" class="mt-6">
                 <input type="hidden" name="id_formulario" id="modal_form_id">
                 <input type="hidden" name="data_inscricao" id="data_inscricao">
-                <input type="hidden" name="id_aluno" id="id_aluno">
+                <input type="hidden" name="id_aluno" value="<?php echo $_SESSION['id']; ?>">
+                
                 <div class="mb-4">
                     <label class="block text-sm font-medium text-gray-700 mb-2">Nome do Aluno:</label>
-                    <input type="text" id="nome_aluno" name="nome_aluno" class="w-full px-3 py-2 border rounded" autocomplete="off" placeholder="Digite o nome do aluno">
-                    <div id="alunoSuggestions" class="bg-white border rounded shadow mt-1 hidden"></div>
+                    <input type="text" value="<?php echo $_SESSION['nome']; ?>" class="w-full px-3 py-2 border rounded bg-gray-50" readonly>
                 </div>
                 
                 <div class="mb-4">
                     <label class="block text-sm font-medium text-gray-700 mb-2">Perfis Disponíveis:</label>
                     <div id="perfisContainer" class="space-y-2"></div>
                 </div>
+                
                 <div class="flex justify-end gap-4 mt-6">
                     <button type="button" onclick="closeModal()" class="px-4 py-2 text-gray-600 hover:text-gray-800">Cancelar</button>
                     <button type="submit" class="px-4 py-2 bg-ceara-green text-white rounded-lg hover:bg-opacity-90">Confirmar Inscrição</button>
@@ -278,7 +269,7 @@
     </div>
 
     <script>
-        function openModal(formId) {
+        function showInscricaoModal(formId) {
             const modal = document.getElementById('inscricaoModal');
             const formIdInput = document.getElementById('modal_form_id');
             const dataInscricaoInput = document.getElementById('data_inscricao');
@@ -343,60 +334,10 @@
             modal.classList.remove('flex');
         }
 
-        // Modify the inscription button click handler
-        document.querySelectorAll('form[action="controller_inscrever.php"]').forEach(form => {
-            form.onsubmit = function(e) {
-                e.preventDefault();
-                const formId = this.querySelector('input[name="id_formulario"]').value;
-                openModal(formId);
-            };
-        });
-
-        // Busca AJAX de alunos pelo nome
-        const nomeAlunoInput = document.getElementById('nome_aluno');
-        const alunoSuggestions = document.getElementById('alunoSuggestions');
-        const idAlunoInput = document.getElementById('id_aluno');
-
-        nomeAlunoInput.addEventListener('input', function() {
-            const nome = this.value.trim();
-            if (nome.length < 2) {
-                alunoSuggestions.classList.add('hidden');
-                return;
-            }
-            fetch(`buscar_alunos.php?nome=${encodeURIComponent(nome)}`)
-                .then(res => res.json())
-                .then(data => {
-                    if (data.length > 0) {
-                        alunoSuggestions.innerHTML = data.map(aluno => 
-                            `<div class='p-2 cursor-pointer hover:bg-gray-100' 
-                                  data-id='${aluno.id}' 
-                                  data-nome='${aluno.nome}'>${aluno.nome}</div>`
-                        ).join('');
-                        alunoSuggestions.classList.remove('hidden');
-                    } else {
-                        alunoSuggestions.innerHTML = '<div class="p-2 text-gray-500">Nenhum aluno encontrado</div>';
-                        alunoSuggestions.classList.remove('hidden');
-                    }
-                });
-        });
-
-        alunoSuggestions.addEventListener('click', function(e) {
-            if (e.target.dataset.id) {
-                nomeAlunoInput.value = e.target.dataset.nome;
-                idAlunoInput.value = e.target.dataset.id;
-                alunoSuggestions.classList.add('hidden');
-            }
-        });
-
         // Form submission
         document.getElementById('inscricaoForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            if (!idAlunoInput.value) {
-                alert('Por favor, selecione um aluno da lista');
-                return;
-            }
-
             const formData = new FormData(this);
             
             fetch('../controllers/controller_inscrever.php', {

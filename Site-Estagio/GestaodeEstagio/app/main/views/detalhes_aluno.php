@@ -190,6 +190,12 @@
                                             Editar Aluno
                                         </button>
                                     </form>
+                                    <a href="processoseletivo_aluno.php" 
+                                       class="w-full sm:w-auto px-4 py-2 bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-white rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2"
+                                       aria-label="Acessar processo seletivo">
+                                        <i class="fas fa-clipboard-list" aria-hidden="true"></i>
+                                        Processo Seletivo
+                                    </a>
                                     <form action="../controllers/Controller-excluir_alunos.php" method="POST" 
                                           onsubmit="return confirm('Tem certeza que deseja excluir este aluno?');"
                                           class="w-full sm:w-auto">

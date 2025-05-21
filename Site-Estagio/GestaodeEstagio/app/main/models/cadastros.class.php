@@ -136,6 +136,23 @@ Class Cadastro{
         $query->execute();
     }
 
+    public function excluir_formulario($id){
+        $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
+        $consulta = 'delete from selecao where id = :id;';
+        $query = $pdo->prepare($consulta);
+        $query->bindValue(":id", $id);
+        $query->execute();
+    }
+
+    // public function inscrever_aluno($id_formulario, $id_aluno){
+    //     $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
+    //     $consulta = 'INSERT INTO inscricao VALUES (null,:id_formulario,:id_aluno)';
+    //     $query = $pdo->prepare($consulta);
+    //     $query->bindValue(":id_formulario", $id_formulario);
+    //     $query->bindValue(":id_aluno", $id_aluno);
+    //     $query->execute();
+    // }
+
 }
 
 ?>
