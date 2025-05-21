@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -184,17 +187,15 @@
                             </thead>
                             <tbody class="divide-y divide-gray-200">
                                 <?php
-                                session_start();
                                 $pdo = new PDO('mysql:host=localhost;dbname=estagio', 'root', '');
                                 $search = isset($_GET['search']) ? $_GET['search'] : '';
                                 
                                 $sql = 'SELECT s.*, c.nome as nome_empresa 
                                        FROM selecao s 
-                                       LEFT JOIN concedentes c ON s.id_concedente = c.id 
-                                       WHERE s.id_aluno IS NULL';
+                                       LEFT JOIN concedentes c ON s.id_concedente = c.id';
                                 
                                 if (!empty($search)) {
-                                    $sql .= ' AND (s.local LIKE :search OR c.nome LIKE :search)';
+                                    $sql .= ' WHERE (s.local LIKE :search OR c.nome LIKE :search)';
                                 }
                                 
                                 $query = $pdo->prepare($sql);
@@ -213,8 +214,14 @@
                                         echo "<td class='px-4 py-3'>" . htmlspecialchars($form['local']) . "</td>";
                                         echo "<td class='px-4 py-3'>" . htmlspecialchars($form['nome_empresa']) . "</td>";
                                         echo "<td class='px-4 py-3'>";
-                                        echo "<button onclick='showInscricaoModal(" . $form['id'] . ")' class='text-green-600 hover:text-green-800' title='Inscrever-se'>";
+                                        // Botão Inscrever-se
+                                        echo "<button onclick='showInscricaoModal(" . $form['id'] . ")' class='text-green-600 hover:text-green-800 mr-2' title='Inscrever-se'>";
                                         echo "<i class='fas fa-user-plus'></i> Inscrever-se";
+                                        echo "</button>";
+                                        
+                                        // Botão Ver Inscritos
+                                        echo "<button onclick='showInscritosModal(" . $form['id'] . ")' class='text-blue-600 hover:text-blue-800' title='Ver Inscritos'>";
+                                        echo "<i class='fas fa-users'></i> Ver Inscritos";
                                         echo "</button>";
                                         echo "</td>";
                                         echo "</tr>";
@@ -236,7 +243,7 @@
         <div class="bg-white rounded-xl p-6 max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-xl font-bold text-gray-800">Inscrição no Processo Seletivo</h3>
-                <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700">
+                <button onclick="closeModal('inscricaoModal')" class="text-gray-500 hover:text-gray-700">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
@@ -248,23 +255,42 @@
             <form id="inscricaoForm" action="../controllers/controller_inscrever.php" method="POST" class="mt-6">
                 <input type="hidden" name="id_formulario" id="modal_form_id">
                 <input type="hidden" name="data_inscricao" id="data_inscricao">
-                <input type="hidden" name="id_aluno" value="<?php echo $_SESSION['id']; ?>">
-                
+                <input type="hidden" name="id_aluno" id="id_aluno">
                 <div class="mb-4">
                     <label class="block text-sm font-medium text-gray-700 mb-2">Nome do Aluno:</label>
-                    <input type="text" value="<?php echo $_SESSION['nome']; ?>" class="w-full px-3 py-2 border rounded bg-gray-50" readonly>
+                    <input type="text" 
+                           id="nome_aluno" 
+                           name="nome_aluno" 
+                           class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-ceara-orange focus:border-transparent" 
+                           autocomplete="off" 
+                           placeholder="Digite o nome do aluno">
+                    <div id="alunoSuggestions" class="bg-white border rounded-lg shadow mt-1 hidden"></div>
                 </div>
                 
                 <div class="mb-4">
                     <label class="block text-sm font-medium text-gray-700 mb-2">Perfis Disponíveis:</label>
                     <div id="perfisContainer" class="space-y-2"></div>
                 </div>
-                
                 <div class="flex justify-end gap-4 mt-6">
-                    <button type="button" onclick="closeModal()" class="px-4 py-2 text-gray-600 hover:text-gray-800">Cancelar</button>
+                    <button type="button" onclick="closeModal('inscricaoModal')" class="px-4 py-2 text-gray-600 hover:text-gray-800">Cancelar</button>
                     <button type="submit" class="px-4 py-2 bg-ceara-green text-white rounded-lg hover:bg-opacity-90">Confirmar Inscrição</button>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <!-- Modal de Lista de Inscritos -->
+    <div id="inscritosListaModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-xl p-6 max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-gray-800">Alunos Inscritos</h3>
+                <button onclick="closeModal('inscritosListaModal')" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="inscritosList" class="space-y-4">
+                <!-- Lista de alunos inscritos será preenchida via JavaScript -->
+            </div>
         </div>
     </div>
 
@@ -328,16 +354,57 @@
             modal.classList.add('flex');
         }
 
-        function closeModal() {
-            const modal = document.getElementById('inscricaoModal');
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
             modal.classList.add('hidden');
             modal.classList.remove('flex');
         }
+
+        // Busca AJAX de alunos pelo nome
+        const nomeAlunoInput = document.getElementById('nome_aluno');
+        const alunoSuggestions = document.getElementById('alunoSuggestions');
+        const idAlunoInput = document.getElementById('id_aluno');
+
+        nomeAlunoInput.addEventListener('input', function() {
+            const nome = this.value.trim();
+            if (nome.length < 2) {
+                alunoSuggestions.classList.add('hidden');
+                return;
+            }
+            fetch(`buscar_alunos.php?nome=${encodeURIComponent(nome)}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.length > 0) {
+                        alunoSuggestions.innerHTML = data.map(aluno => 
+                            `<div class='p-2 cursor-pointer hover:bg-gray-100' 
+                                  data-id='${aluno.id}' 
+                                  data-nome='${aluno.nome}'>${aluno.nome}</div>`
+                        ).join('');
+                        alunoSuggestions.classList.remove('hidden');
+                    } else {
+                        alunoSuggestions.innerHTML = '<div class="p-2 text-gray-500">Nenhum aluno encontrado</div>';
+                        alunoSuggestions.classList.remove('hidden');
+                    }
+                });
+        });
+
+        alunoSuggestions.addEventListener('click', function(e) {
+            if (e.target.dataset.id) {
+                nomeAlunoInput.value = e.target.dataset.nome;
+                idAlunoInput.value = e.target.dataset.id;
+                alunoSuggestions.classList.add('hidden');
+            }
+        });
 
         // Form submission
         document.getElementById('inscricaoForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
+            if (!idAlunoInput.value) {
+                alert('Por favor, selecione um aluno da lista');
+                return;
+            }
+
             const formData = new FormData(this);
             
             fetch('../controllers/controller_inscrever.php', {
@@ -348,7 +415,7 @@
             .then(data => {
                 if (data.success) {
                     alert('Inscrição realizada com sucesso!');
-                    closeModal();
+                    closeModal('inscricaoModal');
                     window.location.reload();
                 } else {
                     alert(data.message || 'Erro ao realizar inscrição');
@@ -359,6 +426,58 @@
                 alert('Erro ao realizar inscrição');
             });
         });
+
+        function showInscritosModal(processoId) {
+            const modal = document.getElementById('inscritosListaModal');
+            const inscritosList = document.getElementById('inscritosList');
+            
+            // Mostrar loading
+            inscritosList.innerHTML = '<div class="text-center"><i class="fas fa-spinner fa-spin text-2xl text-gray-500"></i></div>';
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            // Buscar alunos inscritos neste processo específico
+            fetch(`../controllers/get_inscritos_processo.php?processo_id=${processoId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        inscritosList.innerHTML = `<p class="text-center text-red-500">${data.error}</p>`;
+                        return;
+                    }
+                    
+                    if (data.length > 0) {
+                        const nomeEmpresa = data[0].nome_empresa;
+                        inscritosList.innerHTML = `
+                            <div class="bg-gray-50 p-4 rounded-lg mb-4">
+                                <p class="text-lg font-semibold text-gray-800">Empresa: ${nomeEmpresa}</p>
+                                <p class="text-sm text-gray-600">Total de Inscritos: ${data.length}</p>
+                            </div>
+                            <div class="space-y-3">
+                                ${data.map((aluno, index) => `
+                                    <div class="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                                        <div>
+                                            <p class="font-medium text-gray-900">${aluno.nome}</p>
+                                            <p class="text-sm text-gray-500">${aluno.curso}</p>
+                                        </div>
+                                        <div class="text-sm text-gray-500 text-right">
+                                            <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs font-semibold">
+                                                Inscrito
+                                            </span>
+                                            <p class="text-xs text-gray-400 mt-2">Data da Inscrição: ${aluno.data_inscricao}</p>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `;
+                    } else {
+                        inscritosList.innerHTML = '<p class="text-center text-gray-500">Nenhum aluno inscrito nesta empresa ainda.</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    inscritosList.innerHTML = '<p class="text-center text-red-500">Erro ao carregar inscritos.</p>';
+                });
+        }
     </script>
 </body>
 </html>

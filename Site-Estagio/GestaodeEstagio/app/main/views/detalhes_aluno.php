@@ -126,59 +126,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Marcação de Tempo -->
-                                <div class="bg-gray-50 rounded-xl p-6">
-                                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Tempo de Estágio</h2>
-                                    <div class="mb-6">
-                                        <div class="flex justify-between mb-2">
-                                            <span class="text-sm font-medium text-gray-700">Horas Cumpridas</span>
-                                            <span class="text-sm font-medium text-gray-700">0/400 horas</span>
-                                        </div>
-                                        <div class="w-full bg-gray-200 rounded-full h-2">
-                                            <div class="bg-gradient-to-r from-primary to-secondary h-2 rounded-full" 
-                                                 style="width: 0%"></div>
-                                        </div>
-                                    </div>
-
-                                    <form class="space-y-4">
-                                        <div>
-                                            <label class="block text-sm font-medium text-gray-700 mb-1">
-                                                Registro de Horário
-                                            </label>
-                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                                                <div>
-                                                    <label class="block text-xs text-gray-500 mb-1">Início</label>
-                                                    <input type="time" 
-                                                           id="hora_inicio" 
-                                                           class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                                                           aria-label="Horário de início">
-                                                </div>
-                                                <div>
-                                                    <label class="block text-xs text-gray-500 mb-1">Término</label>
-                                                    <input type="time" 
-                                                           id="hora_fim" 
-                                                           class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                                                           aria-label="Horário de término">
-                                                </div>
-                                            </div>
-                                            <div class="flex gap-2">
-                                                <button type="button" 
-                                                        onclick="adicionarHoras()"
-                                                        class="flex-1 px-4 py-2 bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-white rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
-                                                    <i class="fas fa-plus" aria-hidden="true"></i>
-                                                    Adicionar
-                                                </button>
-                                                <button type="button" 
-                                                        onclick="removerHoras()"
-                                                        class="flex-1 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
-                                                    <i class="fas fa-minus" aria-hidden="true"></i>
-                                                    Remover
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-
                                 <!-- Botões de Ação -->
                                 <div class="flex flex-col sm:flex-row gap-4">
                                     <form action="../controllers/Controller-botao_acao.php" method="GET" class="w-full sm:w-auto">
