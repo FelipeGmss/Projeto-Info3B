@@ -10,15 +10,20 @@ try {
     $pdo = new PDO('mysql:host=localhost;dbname=estagio', 'root', '');
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql = 'SELECT a.nome, a.curso, s.hora
-            FROM selecao s
-            INNER JOIN aluno a ON s.id_aluno = a.id
+    $empresa_id = $_GET['empresa_id'];
+
+    // Modificada para incluir o perfil do concedente
+    $sql = 'SELECT a.nome, a.curso, s.hora, c.perfil
+            FROM aluno a
+            INNER JOIN selecao s ON a.id = s.id_aluno
+            INNER JOIN concedentes c ON s.id_concedente = c.id
             WHERE s.id_concedente = :empresa_id
             ORDER BY a.nome';
 
     $stmt = $pdo->prepare($sql);
-    $stmt->execute(['empresa_id' => $_GET['empresa_id']]);
-    
+    $stmt->bindValue(':empresa_id', $empresa_id, PDO::PARAM_INT);
+    $stmt->execute();
+
     $alunos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     echo json_encode($alunos);
 

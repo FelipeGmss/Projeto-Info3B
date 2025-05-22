@@ -324,11 +324,11 @@
                         <h2 id="empresa-title" class="text-xl font-bold text-gray-800">Empresa</h2>
                     </div>
                     <div class="space-y-4">
-                        <a href="../views/cadastroempresa.php" class="block w-full py-3 px-4 btn-primary rounded-xl flex items-center justify-center gap-2">
+                        <a href="../views/cadastrodaempresa.php" class="block w-full py-3 px-4 btn-primary rounded-xl flex items-center justify-center gap-2">
                             <i class="fas fa-plus-circle" aria-hidden="true"></i>
                             Cadastrar Empresa
                         </a>
-                        <a href="../views/empresas.php" class="block w-full py-3 px-4 btn-secondary rounded-xl flex items-center justify-center gap-2">
+                        <a href="../views/dadosempresa.php" class="block w-full py-3 px-4 btn-secondary rounded-xl flex items-center justify-center gap-2">
                             <i class="fas fa-building" aria-hidden="true"></i>
                             Ver Empresas
                         </a>

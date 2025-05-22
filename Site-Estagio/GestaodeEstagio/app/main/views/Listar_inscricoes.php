@@ -15,6 +15,7 @@
                         'ceara-green': '#008C45',
                         'ceara-orange': '#FFA500',
                         'ceara-white': '#FFFFFF',
+                        'ceara-moss': '#2d4739',
                         primary: '#008C45',
                         secondary: '#FFA500',
                     }
@@ -191,6 +192,15 @@
                 padding: 0.5rem;
             }
         }
+
+        .gradient-button {
+            background: linear-gradient(to right, #FFA500, #008C45);
+            transition: all 0.3s ease;
+        }
+        .gradient-button:hover {
+            background: linear-gradient(to right, #008C45, #FFA500);
+            transform: scale(1.05);
+        }
     </style>
 </head>
 <body class="min-h-screen font-['Roboto'] select-none">
@@ -212,32 +222,40 @@
                 </div>
 
                 <!-- Search bar -->
-                <form action="" method="GET" class="relative w-full md:w-64" role="search">
+                <form action="" method="GET" class="relative flex-1 min-w-[300px]" role="search">
                     <label for="search" class="sr-only">Pesquisar empresas</label>
                     <input type="text" 
                            id="search"
                            name="search"
-                           class="w-full px-4 py-3 pl-10 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-ceara-orange focus:border-transparent"
+                           class="w-full px-4 py-2 pl-10 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-ceara-orange focus:border-transparent"
                            placeholder="Pesquisar empresa..."
                            value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>"
                            aria-label="Pesquisar empresas">
-                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" aria-hidden="true"></i>
+                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2" aria-hidden="true"></i>
                 </form>
+
+                <!-- Right section with action buttons -->
+                <div class="flex gap-2 flex-shrink-0">
+                    <a href="processoseletivo.php" class="gradient-button text-white px-4 py-2 rounded-lg flex items-center justify-center gap-2 text-sm whitespace-nowrap">
+                        <i class="fas fa-list" aria-hidden="true"></i>
+                        Ver Formulários
+                    </a>
+                </div>
             </div>
         </div>
     </header>
 
     <!-- Main Content -->
     <div class="container mx-auto px-4 py-4 md:py-8 fade-in">
-        <div class="bg-ceara-white/90 backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden">
+        <div class="main-list-container">
             <div class="overflow-x-auto mobile-table">
-                <table class="min-w-full" role="grid">
+                <table class="min-w-full table" role="grid">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th scope="col" class="px-4 md:px-6 py-3 md:py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Empresa</th>
-                            <th scope="col" class="px-4 md:px-6 py-3 md:py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Local</th>
-                            <th scope="col" class="px-4 md:px-6 py-3 md:py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hora</th>
-                            <th scope="col" class="px-4 md:px-6 py-3 md:py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
+                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Empresa</th>
+                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Local</th>
+                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hora</th>
+                            <th scope="col" class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
@@ -269,22 +287,22 @@
                         if ($stmt->rowCount() > 0) {
                             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                                 echo "<tr class='hover:bg-gray-50'>";
-                                echo "<td class='px-6 py-4 whitespace-nowrap'>" . htmlspecialchars($row['nome_empresa']) . "</td>";
-                                echo "<td class='px-6 py-4 whitespace-nowrap'>" . htmlspecialchars($row['local']) . "</td>";
-                                echo "<td class='px-6 py-4 whitespace-nowrap'>" . htmlspecialchars($row['hora']) . "</td>";
-                                echo "<td class='px-6 py-4 whitespace-nowrap'>";
-                                echo "<button onclick='showAlunos(" . $row['id'] . ")' class='text-blue-600 hover:text-blue-800 mr-2' title='Ver Alunos'>";
-                                echo "<i class='fas fa-users'></i> Ver Alunos (" . $row['total_inscritos'] . ")";
+                                echo "<td class='px-4 py-3'>" . htmlspecialchars($row['nome_empresa']) . "</td>";
+                                echo "<td class='px-4 py-3'>" . htmlspecialchars($row['local']) . "</td>";
+                                echo "<td class='px-4 py-3'>" . htmlspecialchars($row['hora']) . "</td>";
+                                echo "<td class='px-4 py-3 text-center'>";
+                                echo "<button onclick='showInscritosModal(" . $row['id'] . ")' class='gradient-button text-white px-3 py-1 rounded-lg mr-2' title='Ver Inscritos'>";
+                                echo "<i class='fas fa-users'></i> Ver Inscritos (" . $row['total_inscritos'] . ")";
                                 echo "</button>";
                                 echo "<form action='../controllers/Controller-excluir_formulario.php' method='POST' style='display:inline;' onsubmit='return confirm(\"Tem certeza que deseja excluir esta inscrição?\");'>";
                                 echo "<input type='hidden' name='id' value='" . $row['id'] . "'>";
-                                echo "<button type='submit' name='btn-excluir' class='text-red-600 hover:text-red-800' title='Excluir'><i class='fas fa-trash'></i></button>";
+                                echo "<button type='submit' name='btn-excluir' class='bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-lg' title='Excluir'><i class='fas fa-trash'></i></button>";
                                 echo "</form>";
                                 echo "</td>";
                                 echo "</tr>";
                             }
                         } else {
-                            echo "<tr><td colspan='4' class='px-6 py-4 text-center text-gray-500'>Nenhuma empresa com inscrições encontrada</td></tr>";
+                            echo "<tr><td colspan='4' class='px-4 py-3 text-center text-gray-500'>Nenhuma empresa com inscrições encontrada</td></tr>";
                         }
                         ?>
                     </tbody>
@@ -293,64 +311,75 @@
         </div>
     </div>
 
-    <!-- Modal de Alunos -->
-    <div id="alunosModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-        <div class="bg-white rounded-xl p-6 max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+    <!-- Modal de Lista de Inscritos -->
+    <div id="inscritosListaModal" class="fixed inset-0 bg-black bg-opacity-50 modal hidden items-center justify-center z-50">
+        <div class="modal-content p-6 max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto bg-white rounded-xl">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-xl font-bold text-gray-800">Alunos Inscritos</h3>
-                <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700">
+                <button onclick="closeModal('inscritosListaModal')" class="text-gray-500 hover:text-gray-700">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            <div id="alunosList" class="space-y-4">
-                <!-- Lista de alunos será preenchida via JavaScript -->
+            <div id="inscritosList" class="space-y-4">
+                <!-- Lista de alunos inscritos será preenchida via JavaScript -->
             </div>
         </div>
     </div>
 
     <script>
-        function showAlunos(empresaId) {
-            const modal = document.getElementById('alunosModal');
-            const alunosList = document.getElementById('alunosList');
+        function showInscritosModal(processoId) {
+            const modal = document.getElementById('inscritosListaModal');
+            const inscritosList = document.getElementById('inscritosList');
             
             // Mostrar loading
-            alunosList.innerHTML = '<div class="text-center"><i class="fas fa-spinner fa-spin text-2xl text-gray-500"></i></div>';
+            inscritosList.innerHTML = '<div class="text-center"><i class="fas fa-spinner fa-spin text-2xl text-gray-500"></i></div>';
             modal.classList.remove('hidden');
             modal.classList.add('flex');
             
-            // Buscar alunos da empresa
-            fetch(`../controllers/get_alunos_empresa.php?empresa_id=${empresaId}`)
+            // Buscar alunos inscritos neste processo específico
+            fetch(`../controllers/get_inscritos_processo.php?processo_id=${processoId}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.error) {
-                        alunosList.innerHTML = `<p class="text-center text-red-500">${data.error}</p>`;
+                        inscritosList.innerHTML = `<p class="text-center text-red-500">${data.error}</p>`;
                         return;
                     }
                     
                     if (data.length > 0) {
-                        alunosList.innerHTML = data.map(aluno => `
-                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                                <div>
-                                    <p class="font-medium text-gray-900">${aluno.nome}</p>
-                                    <p class="text-sm text-gray-500">${aluno.curso}</p>
-                                </div>
-                                <div class="text-sm text-gray-500">
-                                    ${aluno.hora}
-                                </div>
+                        const nomeEmpresa = data[0].nome_empresa;
+                        inscritosList.innerHTML = `
+                            <div class="bg-gray-50 p-4 rounded-lg mb-4">
+                                <p class="text-lg font-semibold text-gray-800">Empresa: ${nomeEmpresa}</p>
+                                <p class="text-sm text-gray-600">Total de Inscritos: ${data.length}</p>
                             </div>
-                        `).join('');
+                            <div class="space-y-3">
+                                ${data.map((aluno, index) => `
+                                    <div class="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                                        <div>
+                                            <p class="font-medium text-gray-900">${aluno.nome}</p>
+                                            <p class="text-sm text-gray-500">${aluno.curso}</p>
+                                        </div>
+                                        <div class="text-sm text-gray-500 text-right">
+                                            <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs font-semibold">
+                                                ${aluno.perfil}
+                                            </span>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `;
                     } else {
-                        alunosList.innerHTML = '<p class="text-center text-gray-500">Nenhum aluno inscrito</p>';
+                        inscritosList.innerHTML = '<p class="text-center text-gray-500">Nenhum aluno inscrito nesta empresa ainda.</p>';
                     }
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    alunosList.innerHTML = '<p class="text-center text-red-500">Erro ao carregar alunos</p>';
+                    inscritosList.innerHTML = '<p class="text-center text-red-500">Erro ao carregar inscritos.</p>';
                 });
         }
 
-        function closeModal() {
-            const modal = document.getElementById('alunosModal');
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
             modal.classList.add('hidden');
             modal.classList.remove('flex');
         }

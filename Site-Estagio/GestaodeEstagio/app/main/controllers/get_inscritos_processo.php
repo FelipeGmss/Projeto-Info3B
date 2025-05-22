@@ -13,17 +13,12 @@ try {
 
     $processoId = $_GET['processo_id'];
 
-    $sql = 'SELECT 
-                a.nome, 
-                a.curso,
-                c.nome as nome_empresa,
-                s.hora as data_inscricao
-            FROM selecao s
-            JOIN aluno a ON s.id_aluno = a.id
-            JOIN concedentes c ON s.id_concedente = c.id
-            WHERE s.id_concedente = (SELECT id_concedente FROM selecao WHERE id = :processo_id)
-            AND s.id_aluno IS NOT NULL
-            ORDER BY s.hora DESC';
+    $sql = 'SELECT a.nome, a.curso, s.hora, c.perfil, c.nome as nome_empresa
+            FROM aluno a
+            INNER JOIN selecao s ON a.id = s.id_aluno
+            INNER JOIN concedentes c ON s.id_concedente = c.id
+            WHERE s.id_concedente = :processo_id
+            ORDER BY a.nome';
 
     $query = $pdo->prepare($sql);
     $query->bindValue(':processo_id', $processoId, PDO::PARAM_INT);
