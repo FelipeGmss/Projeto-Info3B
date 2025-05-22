@@ -1,5 +1,5 @@
 <?php 
-require("../models/cadastros.class.php");
+require("../models/model-function.php");
 
 if (isset($_POST['btn-editar'])) {
     $id = $_POST['id'];

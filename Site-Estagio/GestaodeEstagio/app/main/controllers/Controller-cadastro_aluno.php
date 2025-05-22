@@ -1,6 +1,6 @@
 <?php 
 session_start();
-require("../models/cadastros.class.php");
+require("../models/model-function.php");
 require_once '../config/conexao.php';
 
 if (isset($_POST["btn"])) {

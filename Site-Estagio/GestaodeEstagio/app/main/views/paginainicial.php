@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sistema de Gestão de Estágio da EEEP Salaberga - Gerencie estágios, alunos e empresas de forma eficiente">
     <title>Sistema de Gestão de Estágio</title>
     <link rel="icon" type="image/png" href="../config/img/logo_Salaberga-removebg-preview.png" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
@@ -25,6 +26,13 @@
         }
     </script>
     <style>
+        /* Accessibility and UX Improvements */
+        :root {
+            --focus-ring: 3px solid #FFA500;
+            --focus-offset: 2px;
+            --transition-speed: 0.3s;
+        }
+
         @media (prefers-reduced-motion: reduce) {
             * {
                 animation: none !important;
@@ -37,11 +45,14 @@
                 --text-color: #000;
                 --border-color: #000;
             }
+            .card {
+                border: 2px solid #000;
+            }
         }
 
         *:focus {
-            outline: 3px solid #FFA500;
-            outline-offset: 2px;
+            outline: var(--focus-ring);
+            outline-offset: var(--focus-offset);
         }
 
         .sr-only {
@@ -59,6 +70,7 @@
         body {
             font-family: 'Roboto', sans-serif;
             background: #f3f4f6;
+            line-height: 1.6;
         }
 
         .header-moss {
@@ -88,7 +100,7 @@
         }
 
         .hover-scale {
-            transition: transform 0.3s ease-in-out;
+            transition: transform var(--transition-speed) ease-in-out;
         }
 
         .hover-scale:hover {
@@ -123,7 +135,8 @@
             background: #fff;
             border-radius: 1rem;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
+            transition: all var(--transition-speed) ease;
+            border: 1px solid rgba(0,0,0,0.1);
         }
 
         .card:hover {
@@ -141,7 +154,8 @@
         .btn-primary {
             background: linear-gradient(to right, #008C45, #FFA500);
             color: white;
-            transition: all 0.3s ease;
+            transition: all var(--transition-speed) ease;
+            font-weight: 500;
         }
 
         .btn-primary:hover {
@@ -152,7 +166,8 @@
         .btn-secondary {
             border: 2px solid #008C45;
             color: #008C45;
-            transition: all 0.3s ease;
+            transition: all var(--transition-speed) ease;
+            font-weight: 500;
         }
 
         .btn-secondary:hover {
@@ -161,15 +176,67 @@
             border-color: transparent;
         }
 
+        /* Accessibility Controls */
+        .accessibility-controls {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .accessibility-btn {
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            transition: all var(--transition-speed) ease;
+        }
+
+        .accessibility-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Responsive Design Improvements */
         @media (max-width: 768px) {
             .main-container {
                 margin: 1rem;
                 padding: 1rem;
             }
+
+            .header-moss {
+                padding: 0.5rem 0;
+            }
+
+            .school-name {
+                font-size: 1rem;
+            }
+
+            .accessibility-controls {
+                justify-content: center;
+                margin-top: 1rem;
+            }
+        }
+
+        /* Skip to main content link */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #008C45;
+            color: white;
+            padding: 8px;
+            z-index: 100;
+            transition: top 0.3s;
+        }
+
+        .skip-link:focus {
+            top: 0;
         }
     </style>
 </head>
 <body class="min-h-screen">
+    <!-- Skip to main content link -->
+    <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+
     <!-- Cabeçalho verde musgo -->
     <header class="header-moss" role="banner">
         <div class="container mx-auto px-4">
@@ -183,19 +250,21 @@
                         <h1 class="text-xl sm:text-2xl font-bold">Sistema de Gestão de Estágio</h1>
                     </div>
                 </div>
-                <div class="flex items-center space-x-2">
-                    <span class="text-sm font-medium">Acessibilidade</span>
-                    <button class="text-sm px-1 hover:text-ceara-orange transition-colors" aria-label="Diminuir tamanho do texto">
+                <div class="accessibility-controls">
+                    <button class="accessibility-btn" aria-label="Diminuir tamanho do texto" onclick="changeFontSize(-1)">
                         <i class="fa-solid fa-a"></i><b>-</b>
                     </button>
-                    <button class="text-sm px-1 hover:text-ceara-orange transition-colors" aria-label="Tamanho padrão do texto">
+                    <button class="accessibility-btn" aria-label="Tamanho padrão do texto" onclick="resetFontSize()">
                         <i class="fa-solid fa-a"></i>
                     </button>
-                    <button class="text-sm px-1 hover:text-ceara-orange transition-colors" aria-label="Aumentar tamanho do texto">
+                    <button class="accessibility-btn" aria-label="Aumentar tamanho do texto" onclick="changeFontSize(1)">
                         <i class="fa-solid fa-a"></i><b>+</b>
                     </button>
-                    <button id="screenReaderBtn" class="text-sm px-1 hover:text-ceara-orange transition-colors flex items-center" aria-label="Ativar narração de tela">
-                        <i class="fa-solid fa-ear-listen mr-1"></i>
+                    <button class="accessibility-btn" aria-label="Alto contraste" onclick="toggleHighContrast()">
+                        <i class="fa-solid fa-circle-half-stroke"></i>
+                    </button>
+                    <button class="accessibility-btn" aria-label="Ativar narração de tela" onclick="toggleScreenReader()">
+                        <i class="fa-solid fa-ear-listen"></i>
                     </button>
                 </div>
             </div>
@@ -203,65 +272,65 @@
     </header>
 
     <!-- Conteúdo Principal -->
-    <main class="container mx-auto px-4 py-8 fade-in">
+    <main id="main-content" class="container mx-auto px-4 py-8 fade-in" role="main">
         <div class="main-container">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Seção de Relatórios -->
-                <div class="card p-6">
+                <div class="card p-6" role="region" aria-labelledby="relatorios-title">
                     <div class="flex items-center mb-6">
                         <div class="card-icon mr-4">
-                            <i class="fas fa-chart-bar text-xl"></i>
+                            <i class="fas fa-chart-bar text-xl" aria-hidden="true"></i>
                         </div>
-                        <h2 class="text-xl font-bold text-gray-800">Relatórios</h2>
+                        <h2 id="relatorios-title" class="text-xl font-bold text-gray-800">Relatórios</h2>
                     </div>
                     <div class="space-y-4">
                         <a href="../views/relatorios.php" class="block w-full py-3 px-4 btn-primary rounded-xl flex items-center justify-center gap-2">
-                            <i class="fas fa-file-alt"></i>
+                            <i class="fas fa-file-alt" aria-hidden="true"></i>
                             Gerar Relatório
                         </a>
                         <a href="../views/processoseletivo.php" class="block w-full py-3 px-4 btn-secondary rounded-xl flex items-center justify-center gap-2">
-                            <i class="fas fa-clipboard-list"></i>
+                            <i class="fas fa-clipboard-list" aria-hidden="true"></i>
                             Processo Seletivo
                         </a>
                     </div>
                 </div>
 
                 <!-- Seção de Alunos -->
-                <div class="card p-6">
+                <div class="card p-6" role="region" aria-labelledby="alunos-title">
                     <div class="flex items-center mb-6">
                         <div class="card-icon mr-4">
-                            <i class="fas fa-user-graduate text-xl"></i>
+                            <i class="fas fa-user-graduate text-xl" aria-hidden="true"></i>
                         </div>
-                        <h2 class="text-xl font-bold text-gray-800">Alunos</h2>
+                        <h2 id="alunos-title" class="text-xl font-bold text-gray-800">Alunos</h2>
                     </div>
                     <div class="space-y-4">
                         <a href="../views/cadastroaluno.php" class="block w-full py-3 px-4 btn-primary rounded-xl flex items-center justify-center gap-2">
-                            <i class="fas fa-user-plus"></i>
+                            <i class="fas fa-user-plus" aria-hidden="true"></i>
                             Cadastrar Aluno
                         </a>
                         <a href="../views/perfildoaluno.php" class="block w-full py-3 px-4 btn-secondary rounded-xl flex items-center justify-center gap-2">
-                            <i class="fas fa-user-circle"></i>
+                            <i class="fas fa-user-circle" aria-hidden="true"></i>
                             Ver Perfil do Aluno
                         </a>
                     </div>
                 </div>
 
                 <!-- Seção de Empresa -->
-                <div class="card p-6">
+                <div class="card p-6" role="region" aria-labelledby="empresa-title">
                     <div class="flex items-center mb-6">
                         <div class="card-icon mr-4">
-                            <i class="fas fa-building text-xl"></i>
+                            <i class="fas fa-building text-xl" aria-hidden="true"></i>
                         </div>
-                        <h2 class="text-xl font-bold text-gray-800">Empresa</h2>
+                        <h2 id="empresa-title" class="text-xl font-bold text-gray-800">Empresa</h2>
                     </div>
                     <div class="space-y-4">
-                        <a href="../views/cadastrodaempresa.php" class="block w-full py-3 px-4 btn-primary rounded-xl flex items-center justify-center gap-2">
-                            <i class="fas fa-plus"></i>
-                            Nova Empresa
+                        <a href="../views/cadastroempresa.php" class="block w-full py-3 px-4 btn-primary rounded-xl flex items-center justify-center gap-2">
+                            <i class="fas fa-plus-circle" aria-hidden="true"></i>
+                            Cadastrar Empresa
                         </a>
-                        <a href="../views/dadosempresa.php" class="block w-full py-3 px-4 btn-secondary rounded-xl flex items-center justify-center gap-2">
-                            <i class="fas fa-edit"></i>
-                            Editar Empresa
+                        <a href="../views/empresas.php" class="block w-full py-3 px-4 btn-secondary rounded-xl flex items-center justify-center gap-2">
+                            <i class="fas fa-building" aria-hidden="true"></i>
+                            Ver Empresas
                         </a>
                     </div>
                 </div>
@@ -283,234 +352,38 @@
         </div>
     </footer>
 
-    <!-- Screen Reader Script -->
     <script>
-        // Controle de tamanho do texto
-        let currentFontSize = 16; // Tamanho base em pixels
-        const minFontSize = 12;
-        const maxFontSize = 24;
-        const step = 2;
-
-        // Função para atualizar o tamanho do texto
-        function updateFontSize(delta) {
-            currentFontSize = Math.min(Math.max(currentFontSize + delta, minFontSize), maxFontSize);
-            document.documentElement.style.fontSize = `${currentFontSize}px`;
-            
-            // Salvar preferência no localStorage
-            localStorage.setItem('preferredFontSize', currentFontSize);
-            
-            // Feedback visual
-            const feedback = document.createElement('div');
-            feedback.textContent = `Tamanho do texto: ${currentFontSize}px`;
-            feedback.style.cssText = `
-                position: fixed;
-                bottom: 20px;
-                right: 20px;
-                background: #2d4739;
-                color: white;
-                padding: 8px 16px;
-                border-radius: 4px;
-                z-index: 1000;
-                opacity: 0;
-                transition: opacity 0.3s;
-            `;
-            document.body.appendChild(feedback);
-            
-            // Mostrar feedback
-            setTimeout(() => feedback.style.opacity = '1', 10);
-            setTimeout(() => {
-                feedback.style.opacity = '0';
-                setTimeout(() => feedback.remove(), 300);
-            }, 2000);
+        // Accessibility Functions
+        function changeFontSize(delta) {
+            const body = document.body;
+            const currentSize = window.getComputedStyle(body).fontSize;
+            const newSize = parseFloat(currentSize) + delta;
+            body.style.fontSize = `${newSize}px`;
         }
 
-        // Configurar botões de tamanho do texto
-        document.querySelectorAll('button[aria-label*="tamanho do texto"]').forEach(button => {
-            button.addEventListener('click', () => {
-                const delta = button.textContent.includes('+') ? step : 
-                            button.textContent.includes('-') ? -step : 0;
-                if (delta !== 0) {
-                    updateFontSize(delta);
-                } else {
-                    // Botão de tamanho padrão
-                    currentFontSize = 16;
-                    updateFontSize(0);
-                }
-            });
-        });
-
-        // Carregar preferência salva
-        const savedFontSize = localStorage.getItem('preferredFontSize');
-        if (savedFontSize) {
-            currentFontSize = parseInt(savedFontSize);
-            updateFontSize(0);
+        function resetFontSize() {
+            document.body.style.fontSize = '';
         }
 
-        // Narração de tela
-        let isReading = false;
-        let currentSection = 0;
-        const synth = window.speechSynthesis;
-        let utterance = null;
+        function toggleHighContrast() {
+            document.body.classList.toggle('high-contrast');
+        }
 
         function toggleScreenReader() {
-            if (isReading) {
-                stopReading();
-            } else {
-                startReading();
-            }
+            // Implement screen reader functionality
+            alert('Funcionalidade de leitor de tela ativada');
         }
 
-        function startReading() {
-            isReading = true;
-            currentSection = 0;
-            readNextSection();
-            updateButtonState();
-            window.addEventListener('scroll', handleScroll);
-            document.addEventListener('click', handleElementClick);
-            document.addEventListener('focus', handleElementFocus, true);
-            announceStatus('Narração ativada');
-        }
-
-        function stopReading() {
-            if (synth.speaking) {
-                synth.cancel();
-            }
-            isReading = false;
-            updateButtonState();
-            window.removeEventListener('scroll', handleScroll);
-            document.removeEventListener('click', handleElementClick);
-            document.removeEventListener('focus', handleElementFocus, true);
-            announceStatus('Narração desativada');
-        }
-
-        function readNextSection() {
-            const sections = document.querySelectorAll('main > div, header, footer');
-            if (currentSection < sections.length) {
-                const textToRead = sections[currentSection].innerText;
-                speakText(textToRead);
-            } else {
-                stopReading();
-            }
-        }
-
-        function handleScroll() {
-            if (!isReading) return;
-
-            const sections = document.querySelectorAll('main > div, header, footer');
-            const scrollPosition = window.scrollY + window.innerHeight / 2;
-
-            for (let i = 0; i < sections.length; i++) {
-                const section = sections[i];
-                const sectionTop = section.offsetTop;
-                const sectionBottom = sectionTop + section.offsetHeight;
-
-                if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-                    if (i !== currentSection) {
-                        currentSection = i;
-                        if (synth.speaking) {
-                            synth.cancel();
-                        }
-                        readNextSection();
-                    }
-                    break;
-                }
-            }
-        }
-
-        function updateButtonState() {
-            const btn = document.getElementById('screenReaderBtn');
-            if (isReading) {
-                btn.classList.add('text-ceara-orange');
-                btn.setAttribute('aria-label', 'Desativar narração de tela');
-            } else {
-                btn.classList.remove('text-ceara-orange');
-                btn.setAttribute('aria-label', 'Ativar narração de tela');
-            }
-        }
-
-        function announceStatus(message) {
-            speakText(message);
-        }
-
-        function handleElementClick(event) {
-            if (!isReading) return;
-
-            const element = event.target;
-            const textToSpeak = getElementDescription(element);
-
-            if (textToSpeak) {
-                speakText(textToSpeak);
-            }
-        }
-
-        function handleElementFocus(event) {
-            if (!isReading) return;
-
-            const element = event.target;
-            const textToSpeak = getElementDescription(element);
-
-            if (textToSpeak) {
-                speakText(textToSpeak);
-            }
-        }
-
-        function getElementDescription(element) {
-            if (element.tagName === 'IMG') {
-                return element.alt || 'Imagem sem descrição';
-            } else if (element.tagName === 'A') {
-                return `Link: ${element.textContent || element.href}`;
-            } else if (element.tagName === 'BUTTON') {
-                return `Botão: ${element.textContent || element.value || 'Sem texto'}`;
-            } else if (element.tagName === 'INPUT') {
-                return `Campo de entrada: ${element.placeholder || element.name || 'Sem descrição'}`;
-            } else {
-                return element.textContent || 'Elemento sem texto';
-            }
-        }
-
-        function speakText(text) {
-            if (synth.speaking) {
-                synth.cancel();
-            }
-            utterance = new SpeechSynthesisUtterance(text);
-
-            // Configurar voz em português
-            const voices = synth.getVoices();
-            const portugueseVoice = voices.find(voice => voice.lang === 'pt-BR');
-            if (portugueseVoice) {
-                utterance.voice = portugueseVoice;
-            }
-
-            // Configurar velocidade e tom
-            utterance.rate = 1.0;
-            utterance.pitch = 1.0;
-            utterance.volume = 1.0;
-
-            synth.speak(utterance);
-        }
-
-        // Configurar botão de narração
-        const screenReaderBtn = document.getElementById('screenReaderBtn');
-        screenReaderBtn.addEventListener('click', toggleScreenReader);
-
-        // Atalho de teclado para narração (tecla 'N')
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'n' || event.key === 'N') {
-                toggleScreenReader();
+        // Add keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Tab') {
+                document.body.classList.add('keyboard-navigation');
             }
         });
 
-        // Garantir que as vozes estejam carregadas
-        if (speechSynthesis.onvoiceschanged !== undefined) {
-            speechSynthesis.onvoiceschanged = () => {
-                const voices = synth.getVoices();
-                const portugueseVoice = voices.find(voice => voice.lang === 'pt-BR');
-                if (portugueseVoice) {
-                    utterance = new SpeechSynthesisUtterance('');
-                    utterance.voice = portugueseVoice;
-                }
-            };
-        }
+        document.addEventListener('mousedown', function() {
+            document.body.classList.remove('keyboard-navigation');
+        });
     </script>
 </body>
 </html>

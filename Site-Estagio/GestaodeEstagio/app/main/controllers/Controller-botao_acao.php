@@ -1,7 +1,7 @@
 <?php 
 
 // Incluir a classe Cadastro
-require_once '../models/cadastros.class.php';
+require_once '../models/model-function.php';
 
 if(isset($_GET['btn-editar'])){
     $id = $_GET['btn-editar'];

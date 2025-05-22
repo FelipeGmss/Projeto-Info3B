@@ -1,5 +1,5 @@
 <?php
-require_once '../models/cadastros.class.php';
+require_once '../models/model-function.php';
 
 if (isset($_POST['btn'])) {
     $empresa_id = $_POST['empresa_id'];

@@ -1,6 +1,6 @@
 <?php 
 
-require("../models/cadastros.class.php");
+require("../models/model-function.php");
 
 if (isset($_POST['btn-excluir'])) {
     $id = $_POST['id'];
