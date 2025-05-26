@@ -56,6 +56,20 @@
         }
 
         @media (max-width: 768px) {
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            
+            .grid {
+                display: grid;
+                gap: 1rem;
+            }
+            
+            .grid-cols-1 {
+                grid-template-columns: repeat(1, minmax(0, 1fr));
+            }
+            
             .mobile-stack {
                 display: flex;
                 flex-direction: column;
@@ -182,6 +196,42 @@
                 padding: 0.5rem;
             }
         }
+        .grid {
+            display: grid;
+            gap: 1rem;
+        }
+        
+        @media (min-width: 640px) {
+            .grid-cols-2 {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .grid-cols-3 {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .info-box {
+            background: #f9fafb;
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+            transition: background-color 0.2s ease;
+        }
+        
+        .info-box:hover {
+            background: #f3f4f6;
+        }
     </style>
 </head>
 <body class="min-h-screen font-['Roboto'] select-none">
@@ -232,63 +282,64 @@
     <!-- Fim do cabeçalho -->
 
     <!-- Lista centralizada -->
-    <div class="main-list-container mt-4 mb-8">
-        <div class="overflow-x-auto">
-            <table class="min-w-full table" role="grid">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Hora</th>
-                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Local</th>
-                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Concedente</th>
-                        <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase">Ações</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200">
-                    <?php
-                    $pdo = new PDO('mysql:host=localhost;dbname=estagio', 'root', '');
-                    $search = isset($_GET['search']) ? $_GET['search'] : '';
-                    if (!empty($search)) {
-                        $sql = 'SELECT * FROM selecao WHERE local LIKE :search OR id_concedente LIKE :search OR id_aluno LIKE :search';
-                        $query = $pdo->prepare($sql);
-                        $query->bindValue(':search', '%' . $search . '%');
-                    } else {
-                        $sql = 'SELECT * FROM selecao';
-                        $query = $pdo->prepare($sql);
-                    }
-                    $query->execute();
-                    $result = $query->rowCount();
-
-                    if ($result > 0) {
-                        foreach ($query as $form) {
-                            // Buscar nome do concedente
-                            $stmt_conc = $pdo->prepare('SELECT nome FROM concedentes WHERE id = ?');
-                            $stmt_conc->execute([$form['id_concedente']]);
-                            $nome_concedente = $stmt_conc->fetchColumn();
-                            echo "<tr class='hover:bg-gray-100 transition-colors cursor-pointer' role='row'>";
-                            echo "<td class='px-4 py-3'>" . htmlspecialchars($form['hora']) . "</td>";
-                            echo "<td class='px-4 py-3'>" . htmlspecialchars($form['local']) . "</td>";
-                            echo "<td class='px-4 py-3'>" . htmlspecialchars($nome_concedente) . "</td>";
-                            echo "<td class='px-4 py-3 flex gap-2 justify-center'>";
-                            echo "<form action='../controllers/Controller-excluir_formulario.php' method='POST' style='display:inline;' onsubmit='return confirm(\\'Tem certeza que deseja excluir este formulário?\\');'>";
-                            echo "<input type='hidden' name='id' value='" . $form['id'] . "'>";
-                            echo "<button type='submit' name='btn-excluir' class='text-red-600 hover:text-red-800 bg-red-50 rounded-full p-2' title='Excluir'><i class='fas fa-trash'></i></button>";
-                            echo "</form>";
-                            echo "<form action='controller_inscrever.php' method='POST' style='display:inline;'>";
-                            echo "<input type='hidden' name='id_formulario' value='" . $form['id'] . "'>";
-                            echo "<button type='submit' class='text-green-600 hover:text-green-800 bg-green-50 rounded-full p-2' title='Inscrever-se'><i class='fas fa-user-plus'></i></button>";
-                            echo "</form>";
-                            echo "</td>";
-                            echo "</tr>";
+    <div class="container mx-auto px-4 py-4 md:py-8 fade-in">
+        <div class="bg-white rounded-xl shadow-md p-4">
+            <div class="overflow-x-auto">
+                <table class="min-w-full table" role="grid">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Concedente</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Local</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Hora</th>
+                            <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        <?php
+                        $pdo = new PDO('mysql:host=localhost;dbname=estagio', 'root', '');
+                        $search = isset($_GET['search']) ? $_GET['search'] : '';
+                        if (!empty($search)) {
+                            $sql = 'SELECT s.*, c.nome as nome_concedente FROM selecao s 
+                                   INNER JOIN concedentes c ON s.id_concedente = c.id 
+                                   WHERE c.nome LIKE :search OR s.local LIKE :search OR s.hora LIKE :search';
+                            $query = $pdo->prepare($sql);
+                            $query->bindValue(':search', '%' . $search . '%');
+                        } else {
+                            $sql = 'SELECT s.*, c.nome as nome_concedente FROM selecao s 
+                                   INNER JOIN concedentes c ON s.id_concedente = c.id 
+                                   ORDER BY c.nome';
+                            $query = $pdo->prepare($sql);
                         }
-                    } else {
-                        echo "<tr><td colspan='4' class='text-center text-gray-500 py-4'>Nenhum formulário encontrado.</td></tr>";
-                    }
-                    ?>
-                </tbody>
-            </table>
+                        $query->execute();
+                        $result = $query->rowCount();
+
+                        if ($result > 0) {
+                            foreach ($query as $form) {
+                                echo "<tr class='hover:bg-gray-100 transition-colors cursor-pointer' role='row'>";
+                                echo "<td class='px-4 py-3'>" . htmlspecialchars($form['nome_concedente']) . "</td>";
+                                echo "<td class='px-4 py-3'>" . htmlspecialchars($form['local']) . "</td>";
+                                echo "<td class='px-4 py-3'>" . htmlspecialchars($form['hora']) . "</td>";
+                                echo "<td class='px-4 py-3 flex gap-2 justify-center'>";
+                                echo "<form action='../controllers/Controller-excluir_formulario.php' method='POST' style='display:inline;' onsubmit='return confirm(\\'Tem certeza que deseja excluir este formulário?\\');'>";
+                                echo "<input type='hidden' name='id' value='" . $form['id'] . "'>";
+                                echo "<button type='submit' name='btn-excluir' class='text-red-600 hover:text-red-800 bg-red-50 rounded-full p-2' title='Excluir'><i class='fas fa-trash'></i></button>";
+                                echo "</form>";
+                                echo "<form action='controller_inscrever.php' method='POST' style='display:inline;'>";
+                                echo "<input type='hidden' name='id_formulario' value='" . $form['id'] . "'>";
+                                echo "<button type='submit' class='text-green-600 hover:text-green-800 bg-green-50 rounded-full p-2' title='Inscrever-se'><i class='fas fa-user-plus'></i></button>";
+                                echo "</form>";
+                                echo "</td>";
+                                echo "</tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='4' class='text-center text-gray-500 py-4'>Nenhum formulário encontrado.</td></tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-    <!-- Fim da lista centralizada -->
 
     <!-- Modal de Inscrição -->
     <div id="inscricaoModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">

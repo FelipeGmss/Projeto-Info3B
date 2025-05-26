@@ -13,11 +13,11 @@ try {
 
     $processoId = $_GET['processo_id'];
 
-    $sql = 'SELECT a.nome, a.curso, s.hora, c.perfil, c.nome as nome_empresa
-            FROM aluno a
-            INNER JOIN selecao s ON a.id = s.id_aluno
+    $sql = 'SELECT s.id as id_selecao, a.nome, a.curso, s.hora, c.perfil, c.nome as nome_empresa
+            FROM selecao s
+            INNER JOIN aluno a ON s.id_aluno = a.id
             INNER JOIN concedentes c ON s.id_concedente = c.id
-            WHERE s.id_concedente = :processo_id
+            WHERE s.id = :processo_id AND s.id_aluno IS NOT NULL
             ORDER BY a.nome';
 
     $query = $pdo->prepare($sql);

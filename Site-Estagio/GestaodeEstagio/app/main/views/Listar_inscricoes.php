@@ -236,6 +236,10 @@
 
                 <!-- Right section with action buttons -->
                 <div class="flex gap-2 flex-shrink-0">
+                    <a href="alunos_alocados.php" class="gradient-button text-white px-4 py-2 rounded-lg flex items-center justify-center gap-2 text-sm whitespace-nowrap">
+                        <i class="fas fa-user-check" aria-hidden="true"></i>
+                        Alunos Alocados
+                    </a>
                     <a href="processoseletivo.php" class="gradient-button text-white px-4 py-2 rounded-lg flex items-center justify-center gap-2 text-sm whitespace-nowrap">
                         <i class="fas fa-list" aria-hidden="true"></i>
                         Ver Formulários
@@ -260,49 +264,57 @@
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
                         <?php
-                        $pdo = new PDO('mysql:host=localhost;dbname=estagio', 'root', '');
+                        error_reporting(E_ALL);
+                        ini_set('display_errors', 1);
                         
-                        $search = isset($_GET['search']) ? $_GET['search'] : '';
-                        $sql = 'SELECT DISTINCT c.id, c.nome as nome_empresa, s.local, s.hora, 
-                               (SELECT COUNT(*) FROM selecao WHERE id_concedente = c.id AND id_aluno IS NOT NULL) as total_inscritos
-                               FROM concedentes c 
-                               INNER JOIN selecao s ON c.id = s.id_concedente 
-                               WHERE s.id_aluno IS NOT NULL';
-                        
-                        if (!empty($search)) {
-                            $sql .= ' AND c.nome LIKE :search';
-                        }
-                        
-                        $sql .= ' GROUP BY c.id, c.nome, s.local, s.hora';
-                        $sql .= ' ORDER BY c.nome';
-                        
-                        $stmt = $pdo->prepare($sql);
-                        
-                        if (!empty($search)) {
-                            $stmt->bindValue(':search', '%' . $search . '%');
-                        }
-                        
-                        $stmt->execute();
-                        
-                        if ($stmt->rowCount() > 0) {
-                            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                                echo "<tr class='hover:bg-gray-50'>";
-                                echo "<td class='px-4 py-3'>" . htmlspecialchars($row['nome_empresa']) . "</td>";
-                                echo "<td class='px-4 py-3'>" . htmlspecialchars($row['local']) . "</td>";
-                                echo "<td class='px-4 py-3'>" . htmlspecialchars($row['hora']) . "</td>";
-                                echo "<td class='px-4 py-3 text-center'>";
-                                echo "<button onclick='showInscritosModal(" . $row['id'] . ")' class='gradient-button text-white px-3 py-1 rounded-lg mr-2' title='Ver Inscritos'>";
-                                echo "<i class='fas fa-users'></i> Ver Inscritos (" . $row['total_inscritos'] . ")";
-                                echo "</button>";
-                                echo "<form action='../controllers/Controller-excluir_formulario.php' method='POST' style='display:inline;' onsubmit='return confirm(\"Tem certeza que deseja excluir esta inscrição?\");'>";
-                                echo "<input type='hidden' name='id' value='" . $row['id'] . "'>";
-                                echo "<button type='submit' name='btn-excluir' class='bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-lg' title='Excluir'><i class='fas fa-trash'></i></button>";
-                                echo "</form>";
-                                echo "</td>";
-                                echo "</tr>";
+                        try {
+                            $pdo = new PDO('mysql:host=localhost;dbname=estagio', 'root', '');
+                            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                            
+                            $search = isset($_GET['search']) ? $_GET['search'] : '';
+                            
+                            $sql = 'SELECT DISTINCT s.id, s.local, s.hora, c.nome as nome_empresa,
+                                   (SELECT COUNT(*) FROM selecao WHERE id = s.id AND id_aluno IS NOT NULL) as total_inscritos
+                                   FROM selecao s 
+                                   INNER JOIN concedentes c ON s.id_concedente = c.id
+                                   WHERE s.id_aluno IS NOT NULL';
+                            
+                            if (!empty($search)) {
+                                $sql .= ' AND (c.nome LIKE :search OR s.local LIKE :search)';
                             }
-                        } else {
-                            echo "<tr><td colspan='4' class='px-4 py-3 text-center text-gray-500'>Nenhuma empresa com inscrições encontrada</td></tr>";
+                            
+                            $sql .= ' ORDER BY c.nome';
+                            
+                            $query = $pdo->prepare($sql);
+                            
+                            if (!empty($search)) {
+                                $query->bindValue(':search', '%' . $search . '%');
+                            }
+                            
+                            $query->execute();
+                            $result = $query->rowCount();
+
+                            if ($result > 0) {
+                                foreach ($query as $form) {
+                                    echo "<tr class='hover:bg-gray-50'>";
+                                    echo "<td class='px-4 py-3'>" . htmlspecialchars($form['nome_empresa']) . "</td>";
+                                    echo "<td class='px-4 py-3'>" . htmlspecialchars($form['local']) . "</td>";
+                                    echo "<td class='px-4 py-3'>" . htmlspecialchars($form['hora']) . "</td>";
+                                    echo "<td class='px-4 py-3 text-center'>";
+                                    echo "<button onclick='showInscritosModal(" . $form['id'] . ")' 
+                                              class='gradient-button text-white px-3 py-1 rounded-lg' 
+                                              title='Ver lista de inscritos'
+                                              aria-label='Ver lista de inscritos'>";
+                                    echo "<i class='fas fa-users'></i> Ver Inscritos (" . $form['total_inscritos'] . ")";
+                                    echo "</button>";
+                                    echo "</td>";
+                                    echo "</tr>";
+                                }
+                            } else {
+                                echo "<tr><td colspan='4' class='px-4 py-3 text-center text-gray-500'>Nenhuma empresa com inscrições encontrada.</td></tr>";
+                            }
+                        } catch (PDOException $e) {
+                            echo "<tr><td colspan='4' class='px-4 py-3 text-center text-red-500'>Erro ao conectar ao banco de dados: " . $e->getMessage() . "</td></tr>";
                         }
                         ?>
                     </tbody>
@@ -359,10 +371,15 @@
                                             <p class="font-medium text-gray-900">${aluno.nome}</p>
                                             <p class="text-sm text-gray-500">${aluno.curso}</p>
                                         </div>
-                                        <div class="text-sm text-gray-500 text-right">
+                                        <div class="flex items-center gap-3">
                                             <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs font-semibold">
-                                                ${aluno.perfil}
+                                                ${aluno.perfil || 'Perfil não especificado'}
                                             </span>
+                                            <button onclick="excluirInscrito(${aluno.id_selecao}, ${processoId})" 
+                                                    class="text-red-600 hover:text-red-800 bg-red-50 rounded-full p-2 transition-colors"
+                                                    title="Excluir inscrição">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
                                         </div>
                                     </div>
                                 `).join('')}
@@ -376,6 +393,34 @@
                     console.error('Error:', error);
                     inscritosList.innerHTML = '<p class="text-center text-red-500">Erro ao carregar inscritos.</p>';
                 });
+        }
+
+        function excluirInscrito(idSelecao, processoId) {
+            if (!confirm('Tem certeza que deseja excluir esta inscrição?')) {
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('id_selecao', idSelecao);
+
+            fetch('../controllers/controller_excluir_inscrito.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Inscrição removida com sucesso!');
+                    showInscritosModal(processoId); // Recarrega a lista
+                    window.location.reload(); // Recarrega a página para atualizar o contador
+                } else {
+                    alert(data.message || 'Erro ao remover inscrição');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Erro ao remover inscrição');
+            });
         }
 
         function closeModal(modalId) {

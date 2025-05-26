@@ -228,10 +228,7 @@ session_start();
                         <i class="fas fa-arrow-left"></i> Voltar
                     </a>
                     <img src="../config/img/logo_Salaberga-removebg-preview.png" alt="Logo EEEP Salaberga" class="school-logo">
-                    <div class="flex flex-col">
-                        <span class="school-name">EEEP Salaberga</span>
-                        <h1 class="text-xl md:text-2xl font-bold mb-0">Processo Seletivo</h1>
-                    </div>
+                    <h1 class="text-xl md:text-2xl font-bold mb-0">Processo Seletivo</h1>
                 </div>
 
                 <!-- Search bar -->
@@ -265,56 +262,67 @@ session_start();
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
                         <?php
-                        $pdo = new PDO('mysql:host=localhost;dbname=estagio', 'root', '');
+                        error_reporting(E_ALL);
+                        ini_set('display_errors', 1);
                         
-                        $search = isset($_GET['search']) ? $_GET['search'] : '';
-                        
-                        $sql = 'SELECT s.*, c.nome as nome_empresa 
-                               FROM selecao s 
-                               LEFT JOIN concedentes c ON s.id_concedente = c.id';
-                        
-                        if (!empty($search)) {
-                            $sql .= ' WHERE (s.local LIKE :search OR c.nome LIKE :search)';
-                        }
-                        
-                        $query = $pdo->prepare($sql);
-                        
-                        if (!empty($search)) {
-                            $query->bindValue(':search', '%' . $search . '%');
-                        }
-                        
-                        $query->execute();
-                        $result = $query->rowCount();
-
-                        if ($result > 0) {
-                            foreach ($query as $form) {
-                                echo "<tr class='hover:bg-gray-50'>";
-                                echo "<td class='px-4 py-3'>" . htmlspecialchars($form['nome_empresa']) . "</td>";
-                                echo "<td class='px-4 py-3'>" . htmlspecialchars($form['local']) . "</td>";
-                                echo "<td class='px-4 py-3'>" . htmlspecialchars($form['hora']) . "</td>";
-                                echo "<td class='px-4 py-3 text-center'>";
-                                echo "<div class='flex justify-center gap-2'>";
-                                // Botão Inscrever-se
-                                echo "<button onclick='showInscricaoModal(" . $form['id'] . ")' 
-                                          class='gradient-button text-white px-3 py-1 rounded-lg' 
-                                          title='Inscrever-se no processo seletivo'
-                                          aria-label='Inscrever-se no processo seletivo'>";
-                                echo "<i class='fas fa-user-plus'></i> Inscrever-se";
-                                echo "</button>";
-                                
-                                // Botão Ver Inscritos
-                                echo "<button onclick='showInscritosModal(" . $form['id'] . ")' 
-                                          class='bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-lg' 
-                                          title='Ver lista de inscritos'
-                                          aria-label='Ver lista de inscritos'>";
-                                echo "<i class='fas fa-users'></i> Ver Inscritos";
-                                echo "</button>";
-                                echo "</div>";
-                                echo "</td>";
-                                echo "</tr>";
+                        try {
+                            $pdo = new PDO('mysql:host=localhost;dbname=estagio', 'root', '');
+                            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                            
+                            $search = isset($_GET['search']) ? $_GET['search'] : '';
+                            
+                            $sql = 'SELECT DISTINCT s.id, s.local, s.hora, c.nome as nome_empresa,
+                                   (SELECT COUNT(*) FROM selecao WHERE id = s.id AND id_aluno IS NOT NULL) as total_inscritos
+                                   FROM selecao s 
+                                   INNER JOIN concedentes c ON s.id_concedente = c.id';
+                            
+                            if (!empty($search)) {
+                                $sql .= ' WHERE (c.nome LIKE :search OR s.local LIKE :search)';
                             }
-                        } else {
-                            echo "<tr><td colspan='4' class='px-4 py-3 text-center text-gray-500'>Nenhum processo seletivo disponível no momento.</td></tr>";
+                            
+                            $sql .= ' ORDER BY c.nome';
+                            
+                            $query = $pdo->prepare($sql);
+                            
+                            if (!empty($search)) {
+                                $query->bindValue(':search', '%' . $search . '%');
+                            }
+                            
+                            $query->execute();
+                            $result = $query->rowCount();
+
+                            if ($result > 0) {
+                                foreach ($query as $form) {
+                                    echo "<tr class='hover:bg-gray-50'>";
+                                    echo "<td class='px-4 py-3'>" . htmlspecialchars($form['nome_empresa']) . "</td>";
+                                    echo "<td class='px-4 py-3'>" . htmlspecialchars($form['local']) . "</td>";
+                                    echo "<td class='px-4 py-3'>" . htmlspecialchars($form['hora']) . "</td>";
+                                    echo "<td class='px-4 py-3 text-center'>";
+                                    echo "<div class='flex justify-center gap-2'>";
+                                        // Botão Inscrever-se
+                                    echo "<button onclick='showInscricaoModal(" . $form['id'] . ")' 
+                                              class='text-green-600 hover:text-green-800 bg-green-50 rounded-full p-2 transition-colors' 
+                                              title='Inscrever-se no processo seletivo'
+                                              aria-label='Inscrever-se no processo seletivo'>";
+                                    echo "<i class='fas fa-user-plus'></i>";
+                                    echo "</button>";
+                                        
+                                        // Botão Ver Inscritos
+                                    echo "<button onclick='showInscritosModal(" . $form['id'] . ")' 
+                                              class='text-blue-600 hover:text-blue-800 bg-blue-50 rounded-full p-2 transition-colors' 
+                                              title='Ver lista de inscritos (" . $form['total_inscritos'] . " inscritos)'
+                                              aria-label='Ver lista de inscritos'>";
+                                    echo "<i class='fas fa-users'></i>";
+                                    echo "</button>";
+                                    echo "</div>";
+                                        echo "</td>";
+                                    echo "</tr>";
+                                }
+                            } else {
+                                echo "<tr><td colspan='4' class='px-4 py-3 text-center text-gray-500'>Nenhum processo seletivo disponível no momento.</td></tr>";
+                            }
+                        } catch (PDOException $e) {
+                            echo "<tr><td colspan='4' class='px-4 py-3 text-center text-red-500'>Erro ao conectar ao banco de dados: " . $e->getMessage() . "</td></tr>";
                         }
                         ?>
                     </tbody>
@@ -365,8 +373,8 @@ session_start();
     </div>
 
     <!-- Modal de Lista de Inscritos -->
-    <div id="inscritosListaModal" class="fixed inset-0 modal hidden items-center justify-center z-50">
-        <div class="modal-content p-6 max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+    <div id="inscritosListaModal" class="fixed inset-0 bg-black bg-opacity-50 modal hidden items-center justify-center z-50">
+        <div class="modal-content p-6 max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto bg-white rounded-xl">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-xl font-bold text-gray-800">Alunos Inscritos</h3>
                 <button onclick="closeModal('inscritosListaModal')" class="text-gray-500 hover:text-gray-700">
@@ -544,10 +552,15 @@ session_start();
                                             <p class="font-medium text-gray-900">${aluno.nome}</p>
                                             <p class="text-sm text-gray-500">${aluno.curso}</p>
                                         </div>
-                                        <div class="text-sm text-gray-500 text-right">
+                                        <div class="flex items-center gap-3">
                                             <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs font-semibold">
                                                 ${aluno.perfil || 'Perfil não especificado'}
                                             </span>
+                                            <button onclick="excluirInscrito(${aluno.id_selecao}, ${processoId})" 
+                                                    class="text-red-600 hover:text-red-800 bg-red-50 rounded-full p-2 transition-colors"
+                                                    title="Excluir inscrição">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
                                         </div>
                                     </div>
                                 `).join('')}
@@ -561,6 +574,34 @@ session_start();
                     console.error('Error:', error);
                     inscritosList.innerHTML = '<p class="text-center text-red-500">Erro ao carregar inscritos.</p>';
                 });
+        }
+
+        function excluirInscrito(idSelecao, processoId) {
+            if (!confirm('Tem certeza que deseja excluir esta inscrição?')) {
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('id_selecao', idSelecao);
+
+            fetch('../controllers/controller_excluir_inscrito.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Inscrição removida com sucesso!');
+                    showInscritosModal(processoId); // Recarrega a lista
+                    window.location.reload(); // Recarrega a página para atualizar o contador
+                } else {
+                    alert(data.message || 'Erro ao remover inscrição');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Erro ao remover inscrição');
+            });
         }
     </script>
 </body>

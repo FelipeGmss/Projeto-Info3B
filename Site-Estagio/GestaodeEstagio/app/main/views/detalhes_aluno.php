@@ -12,17 +12,18 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#005A24',
-                        'primary-dark': '#004a1d',
-                        secondary: '#FF8C00',
-                        'secondary-dark': '#e67e00',
+                        'ceara-green': '#008C45',
+                        'ceara-orange': '#FFA500',
+                        'ceara-white': '#FFFFFF',
+                        'ceara-moss': '#2d4739',
+                        primary: '#008C45',
+                        secondary: '#FFA500',
                     }
                 }
             }
         }
     </script>
     <style>
-        /* Melhorias de Acessibilidade */
         @media (prefers-reduced-motion: reduce) {
             * {
                 animation: none !important;
@@ -37,13 +38,11 @@
             }
         }
 
-        /* Estilos para foco visível */
         *:focus {
-            outline: 3px solid #005A24;
+            outline: 3px solid #FFA500;
             outline-offset: 2px;
         }
 
-        /* Melhor contraste para leitores de tela */
         .sr-only {
             position: absolute;
             width: 1px;
@@ -55,20 +54,110 @@
             white-space: nowrap;
             border-width: 0;
         }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #f3f4f6;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: #FFFFFF;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(4px);
+        }
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .school-logo {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+
+        .header-moss {
+            background: #2d4739;
+        }
+        .header-moss * {
+            color: #fff !important;
+        }
+
+        .main-container {
+            background: #fff;
+            border-radius: 1.5rem;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            margin: 0 auto;
+            max-width: 1200px;
+            padding: 2rem;
+        }
+
+        .gradient-button {
+            background: linear-gradient(to right, #FFA500, #008C45);
+            transition: all 0.3s ease;
+        }
+        .gradient-button:hover {
+            background: linear-gradient(to right, #008C45, #FFA500);
+            transform: scale(1.05);
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 900px) {
+            .main-container {
+                padding: 1rem;
+            }
+        }
+        @media (max-width: 600px) {
+            .main-container {
+                padding: 0.5rem;
+            }
+        }
     </style>
 </head>
-<body class="bg-gray-50 min-h-screen font-['Roboto']">
-    <div class="container mx-auto px-4 py-8">
-        <!-- Botão Voltar -->
-        <a href="javascript:history.back()" 
-           class="inline-flex items-center text-primary hover:text-primary-dark mb-6 transition-colors duration-300"
-           aria-label="Voltar para a página anterior">
-            <i class="fas fa-arrow-left mr-2" aria-hidden="true"></i>
-            Voltar
-        </a>
+<body class="min-h-screen font-['Roboto'] select-none">
+    <!-- Cabeçalho verde musgo -->
+    <header class="header-moss w-full shadow-lg mb-8">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex flex-col md:flex-row md:items-center gap-3">
+                <!-- Left section with back button, logo and title -->
+                <div class="flex items-center gap-3 flex-shrink-0">
+                    <a href="javascript:history.back()" class="back-button">
+                        <i class="fas fa-arrow-left"></i> Voltar
+                    </a>
+                    <img src="../config/img/logo_Salaberga-removebg-preview.png" alt="Logo EEEP Salaberga" class="school-logo">
+                    <h1 class="text-xl md:text-2xl font-bold mb-0">Detalhes do Aluno</h1>
+                </div>
+            </div>
+        </div>
+    </header>
 
-        <!-- Detalhes do Aluno -->
-        <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+    <!-- Conteúdo Principal -->
+    <main class="container mx-auto px-4 py-4 md:py-8 fade-in">
+        <div class="main-container">
             <?php
             require("../models/model-function.php");
             $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
@@ -114,7 +203,7 @@
                                             <label class="block text-sm font-medium text-gray-500">E-mail</label>
                                             <p class="mt-1 text-gray-900">
                                                 <a href="mailto:<?php echo htmlspecialchars($aluno['email']); ?>" 
-                                                   class="text-primary hover:text-primary-dark transition-colors duration-300">
+                                                   class="text-ceara-green hover:text-ceara-moss transition-colors duration-300">
                                                     <?php echo htmlspecialchars($aluno['email']); ?>
                                                 </a>
                                             </p>
@@ -127,20 +216,20 @@
                                 </div>
 
                                 <!-- Botões de Ação -->
-                                <div class="flex flex-col sm:flex-row gap-4">
+                                <div class="flex flex-col sm:flex-row gap-3">
                                     <form action="../controllers/Controller-botao_acao.php" method="GET" class="w-full sm:w-auto">
                                         <input type="hidden" name="btn-editar" value="<?php echo htmlspecialchars($aluno['id']); ?>">
                                         <button type="submit" 
-                                                class="w-full px-4 py-2 bg-primary hover:bg-primary-dark text-white rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2"
+                                                class="w-full gradient-button text-white px-4 py-2 rounded-lg flex items-center justify-center gap-2"
                                                 aria-label="Editar informações do aluno">
-                                            <i class="fas fa-edit" aria-hidden="true"></i>
+                                            <i class="fas fa-edit"></i>
                                             Editar Aluno
                                         </button>
                                     </form>
                                     <a href="processoseletivo_aluno.php" 
-                                       class="w-full sm:w-auto px-4 py-2 bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-white rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2"
+                                       class="w-full sm:w-auto gradient-button text-white px-4 py-2 rounded-lg flex items-center justify-center gap-2"
                                        aria-label="Acessar processo seletivo">
-                                        <i class="fas fa-clipboard-list" aria-hidden="true"></i>
+                                        <i class="fas fa-clipboard-list"></i>
                                         Processo Seletivo
                                     </a>
                                     <form action="../controllers/Controller-excluir_alunos.php" method="POST" 
@@ -148,9 +237,9 @@
                                           class="w-full sm:w-auto">
                                         <input type="hidden" name="btn" value="<?php echo htmlspecialchars($aluno['id']); ?>">
                                         <button type="submit" 
-                                                class="w-full px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2"
+                                                class="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors flex items-center justify-center gap-2"
                                                 aria-label="Excluir aluno">
-                                            <i class="fas fa-trash" aria-hidden="true"></i>
+                                            <i class="fas fa-trash"></i>
                                             Excluir Aluno
                                         </button>
                                     </form>
@@ -167,7 +256,7 @@
             }
             ?>
         </div>
-    </div>
+    </main>
 
     <script>
     let horasTotais = 0;
