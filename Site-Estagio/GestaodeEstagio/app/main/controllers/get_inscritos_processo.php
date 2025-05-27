@@ -13,7 +13,7 @@ try {
 
     $processoId = $_GET['processo_id'];
 
-    $sql = 'SELECT s.id as id_selecao, a.nome, a.curso, s.hora, c.perfil, c.nome as nome_empresa
+    $sql = 'SELECT s.id as id_selecao, a.id as id_aluno, a.nome, a.curso, s.hora, c.perfil, c.nome as nome_empresa
             FROM selecao s
             INNER JOIN aluno a ON s.id_aluno = a.id
             INNER JOIN concedentes c ON s.id_concedente = c.id

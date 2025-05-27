@@ -375,6 +375,11 @@
                                             <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs font-semibold">
                                                 ${aluno.perfil || 'Perfil não especificado'}
                                             </span>
+                                            <button onclick="alocarAluno(${aluno.id_selecao}, ${aluno.id_aluno}, ${processoId})" 
+                                                    class="text-green-600 hover:text-green-800 bg-green-50 rounded-full p-2 transition-colors"
+                                                    title="Alocar aluno">
+                                                <i class="fas fa-check-circle"></i>
+                                            </button>
                                             <button onclick="excluirInscrito(${aluno.id_selecao}, ${processoId})" 
                                                     class="text-red-600 hover:text-red-800 bg-red-50 rounded-full p-2 transition-colors"
                                                     title="Excluir inscrição">
@@ -420,6 +425,34 @@
             .catch(error => {
                 console.error('Error:', error);
                 alert('Erro ao remover inscrição');
+            });
+        }
+
+        function alocarAluno(idSelecao, idAluno, processoId) {
+            if (!confirm('Tem certeza que deseja alocar este aluno?')) {
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('id_selecao', idSelecao);
+            formData.append('id_aluno', idAluno);
+
+            fetch('../controllers/controller_alocar_aluno.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Aluno alocado com sucesso!');
+                    showInscritosModal(processoId); // Recarrega a lista
+                } else {
+                    alert(data.message || 'Erro ao alocar aluno');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Erro ao alocar aluno');
             });
         }
 
