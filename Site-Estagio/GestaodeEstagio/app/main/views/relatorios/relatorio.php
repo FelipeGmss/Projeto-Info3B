@@ -1,6 +1,6 @@
 <?php
-require('../models/cadastros.class.php');
-require('../assets/fpdf/fpdf.php');
+require('../../models/model-function.php');
+require('../../assets/fpdf/fpdf.php');
 
 class PDF extends FPDF {
     // Page header
@@ -9,15 +9,12 @@ class PDF extends FPDF {
         $this->SetFont('Arial', 'B', 14);
         $this->SetTextColor(0, 90, 36); // Dark green
         // Title
-        $this->Cell(0, 10, 'Relatorio de Alunos', 0, 1, 'C');
+        $this->Cell(0, 10, 'Relatorio de Empresas', 0, 1, 'C');
         
-        // Line break for spacing
-        $this->Ln(5);
-
-        // Date and time
+        // Date
         $this->SetFont('Arial', '', 10);
         $this->SetTextColor(0, 0, 0);
-        $this->Cell(0, 8, 'Data: ' . date('d \d\e F \d\e Y, H:i'), 0, 1, 'C'); // e.g., "08 de Maio de 2025, 14:30"
+        $this->Cell(0, 8, 'Data: ' . date('d/m/Y H:i'), 0, 1, 'C');
         
         // Search term if exists
         if(isset($_GET['search']) && !empty($_GET['search'])) {
@@ -51,16 +48,10 @@ class PDF extends FPDF {
         $this->SetLineWidth(0.2);
         $this->SetFont('Arial', 'B', 10);
 
-        // Center table
-        $tableWidth = array_sum(array(40, 20, 25, 30, 30, 35));
-        $startX = ($this->w - $tableWidth) / 2;
-        $this->SetX($startX);
-
-        $header = array('Nome', 'Matricula', 'Contato', 'Curso', 'E-mail', 'Endereco');
-        $w = array(35, 25, 25, 30, 30, 35);
-        $align = array('J', 'C', 'C', 'L', 'L', 'J');
+        $header = array('Empresa', 'Contato', 'Endereco', 'Perfil', 'Vagas');
+        $w = array(40, 30, 50, 40, 20); // Adjusted for A4 portrait
         for($i = 0; $i < count($header); $i++) {
-            $this->Cell($w[$i], 7, $header[$i], 1, 0, $align[$i], true);
+            $this->Cell($w[$i], 7, $header[$i], 1, 0, 'C', true);
         }
         $this->Ln();
     }
@@ -72,7 +63,7 @@ class PDF extends FPDF {
         $this->SetFont('Arial', '', 9);
         $this->SetDrawColor(0, 90, 36);
 
-        $w = array(35, 25, 25, 30, 30, 35);
+        $w = array(40, 30, 50, 40, 20);
         $fill = false;
         foreach($data as $row) {
             if($this->GetY() > 260) { // Check for page break
@@ -80,49 +71,32 @@ class PDF extends FPDF {
                 $this->TableHeader();
             }
 
-            // Center table
-            $tableWidth = array_sum($w);
-            $startX = ($this->w - $tableWidth) / 2;
-            $this->SetX($startX);
-
             // Prepare texts
-            $nome = utf8_decode($row['nome']);
-            $matricula = utf8_decode($row['matricula']);
+            $empresa = utf8_decode($row['nome']);
             $contato = utf8_decode($row['contato']);
-            $curso = utf8_decode($row['curso']);
-            $email = utf8_decode($row['email']);
             $endereco = utf8_decode($row['endereco']);
+            $perfil = utf8_decode($row['perfil']);
+            $vagas = utf8_decode($row['numero_vagas']);
 
             // Truncate long texts
-            $endereco = (strlen($endereco) > 25) ? substr($endereco, 0, 22) . '...' : $endereco;
+            $endereco = (strlen($endereco) > 30) ? substr($endereco, 0, 27) . '...' : $endereco;
 
-            // Calculate height for nome and endereco
-            $nomeAltura = $this->NbLines($w[0], $nome) * 5;
-            $enderecoAltura = $this->NbLines($w[5], $endereco) * 5;
-            $altura = max(7, $nomeAltura, $enderecoAltura);
+            // Calculate height for profile
+            $perfilAltura = $this->NbLines($w[3], $perfil) * 5;
+            $altura = max(7, $perfilAltura);
 
             // Save position
             $x = $this->GetX();
             $y = $this->GetY();
 
-            // Nome (MultiCell)
-            $this->SetXY($x, $y);
-            $this->MultiCell($w[0], 7, $nome, 1, 'J', $fill);
-            $this->SetXY($x + $w[0], $y);
-            
-            // Matrícula
-            $this->Cell($w[1], $altura, $matricula, 1, 0, 'C', $fill);
-            // Contato
-            $this->Cell($w[2], $altura, $contato, 1, 0, 'C', $fill);
-            // Curso
-            $this->Cell($w[3], $altura, $curso, 1, 0, 'L', $fill);
-            // Email
-            $this->Cell($w[4], $altura, $email, 1, 0, 'L', $fill);
-            // Endereço (MultiCell)
-            $this->SetXY($x + $w[0] + $w[1] + $w[2] + $w[3] + $w[4], $y);
-            $this->MultiCell($w[5], 7, $endereco, 1, 'J', $fill);
-            
-            // New line
+            // Draw cells
+            $this->Cell($w[0], $altura, $empresa, 1, 0, 'L', $fill);
+            $this->Cell($w[1], $altura, $contato, 1, 0, 'L', $fill);
+            $this->Cell($w[2], $altura, $endereco, 1, 0, 'L', $fill);
+            $this->SetXY($x + $w[0] + $w[1] + $w[2], $y);
+            $this->MultiCell($w[3], 7, $perfil, 1, 'J', $fill); // Justified text
+            $this->SetXY($x + $w[0] + $w[1] + $w[2] + $w[3], $y);
+            $this->Cell($w[4], $altura, $vagas, 1, 0, 'C', $fill);
             $this->Ln($altura);
             $fill = !$fill;
         }
@@ -175,7 +149,7 @@ class PDF extends FPDF {
 
 // Create PDF document
 $pdf = new PDF();
-$pdf->SetMargins(20, 20, 20); // Equal margins
+$pdf->SetMargins(20, 20, 20); // Standard Word-like margins
 $pdf->AliasNbPages();
 $pdf->AddPage(); // A4 portrait
 $pdf->SetFont('Arial', '', 12);
@@ -188,17 +162,16 @@ $search = isset($_GET['search']) ? trim($_GET['search']) : '';
 
 // Prepare SQL query
 if (!empty($search)) {
-    $consulta = 'SELECT * FROM aluno WHERE 
-                nome LIKE :search OR 
-                matricula LIKE :search OR 
-                curso LIKE :search OR 
-                email LIKE :search OR 
-                contato LIKE :search OR 
-                endereco LIKE :search';
+    $consulta = 'SELECT * FROM concedentes WHERE 
+                 LOWER(nome) LIKE LOWER(:search) OR 
+                 LOWER(contato) LIKE LOWER(:search) OR 
+                 LOWER(endereco) LIKE LOWER(:search) OR 
+                 LOWER(perfil) LIKE LOWER(:search) 
+                 ORDER BY nome ASC';
     $query = $pdo->prepare($consulta);
-    $query->bindValue(':search', '%' . $search . '%');
+    $query->bindValue(':search', '%' . $search . '%', PDO::PARAM_STR);
 } else {
-    $consulta = 'SELECT * FROM aluno';
+    $consulta = 'SELECT * FROM concedentes ORDER BY nome ASC';
     $query = $pdo->prepare($consulta);
 }
 
@@ -211,5 +184,5 @@ $pdf->TableHeader();
 $pdf->TableContent($result);
 
 // Output PDF
-$pdf->Output('I', 'relatorio_alunos.pdf');
+$pdf->Output('I', 'relatorio_empresas.pdf');
 ?>

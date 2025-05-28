@@ -71,6 +71,9 @@
             font-family: 'Roboto', sans-serif;
             background: #f3f4f6;
             line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         .header-moss {
@@ -80,6 +83,7 @@
             top: 0;
             z-index: 50;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            width: 100%;
         }
 
         .header-moss * {
@@ -129,6 +133,9 @@
             margin: 2rem auto;
             max-width: 1200px;
             padding: 2rem;
+            flex: 1;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .card {
@@ -137,6 +144,9 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             transition: all var(--transition-speed) ease;
             border: 1px solid rgba(0,0,0,0.1);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
 
         .card:hover {
@@ -156,6 +166,14 @@
             color: white;
             transition: all var(--transition-speed) ease;
             font-weight: 500;
+            width: 100%;
+            text-align: center;
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
         }
 
         .btn-primary:hover {
@@ -168,6 +186,14 @@
             color: #008C45;
             transition: all var(--transition-speed) ease;
             font-weight: 500;
+            width: 100%;
+            text-align: center;
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
         }
 
         .btn-secondary:hover {
@@ -182,6 +208,7 @@
             gap: 0.5rem;
             align-items: center;
             flex-wrap: wrap;
+            justify-content: center;
         }
 
         .accessibility-btn {
@@ -189,6 +216,9 @@
             border-radius: 0.5rem;
             background: rgba(255, 255, 255, 0.1);
             transition: all var(--transition-speed) ease;
+            cursor: pointer;
+            border: none;
+            color: white;
         }
 
         .accessibility-btn:hover {
@@ -196,9 +226,16 @@
         }
 
         /* Responsive Design Improvements */
-        @media (max-width: 768px) {
+        @media (max-width: 1200px) {
             .main-container {
                 margin: 1rem;
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                margin: 0.5rem;
                 padding: 1rem;
             }
 
@@ -211,8 +248,26 @@
             }
 
             .accessibility-controls {
-                justify-content: center;
                 margin-top: 1rem;
+            }
+
+            .card {
+                margin-bottom: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-container {
+                padding: 0.75rem;
+            }
+
+            .btn-primary, .btn-secondary {
+                padding: 0.5rem;
+                font-size: 0.9rem;
+            }
+
+            .card-icon {
+                padding: 0.75rem;
             }
         }
 
@@ -231,9 +286,23 @@
         .skip-link:focus {
             top: 0;
         }
+
+        /* Grid Layout */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            width: 100%;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: auto;
+            width: 100%;
+        }
     </style>
 </head>
-<body class="min-h-screen">
+<body>
     <!-- Skip to main content link -->
     <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
 
@@ -274,7 +343,7 @@
     <!-- Conteúdo Principal -->
     <main id="main-content" class="container mx-auto px-4 py-8 fade-in" role="main">
         <div class="main-container">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="grid-container">
                 <!-- Seção de Relatórios -->
                 <div class="card p-6" role="region" aria-labelledby="relatorios-title">
                     <div class="flex items-center mb-6">
@@ -284,11 +353,11 @@
                         <h2 id="relatorios-title" class="text-xl font-bold text-gray-800">Relatórios</h2>
                     </div>
                     <div class="space-y-4">
-                        <a href="../views/relatorios.php" class="block w-full py-3 px-4 btn-primary rounded-xl flex items-center justify-center gap-2">
+                        <a href="../views/relatorios/Gerar_relatorios.php" class="btn-primary">
                             <i class="fas fa-file-alt" aria-hidden="true"></i>
                             Gerar Relatório
                         </a>
-                        <a href="../views/processoseletivo.php" class="block w-full py-3 px-4 btn-secondary rounded-xl flex items-center justify-center gap-2">
+                        <a href="../views/processoseletivo.php" class="btn-secondary">
                             <i class="fas fa-clipboard-list" aria-hidden="true"></i>
                             Processo Seletivo
                         </a>
@@ -304,11 +373,11 @@
                         <h2 id="alunos-title" class="text-xl font-bold text-gray-800">Alunos</h2>
                     </div>
                     <div class="space-y-4">
-                        <a href="../views/cadastroaluno.php" class="block w-full py-3 px-4 btn-primary rounded-xl flex items-center justify-center gap-2">
+                        <a href="../views/cadastroaluno.php" class="btn-primary">
                             <i class="fas fa-user-plus" aria-hidden="true"></i>
                             Cadastrar Aluno
                         </a>
-                        <a href="../views/perfildoaluno.php" class="block w-full py-3 px-4 btn-secondary rounded-xl flex items-center justify-center gap-2">
+                        <a href="../views/perfildoaluno.php" class="btn-secondary">
                             <i class="fas fa-user-circle" aria-hidden="true"></i>
                             Ver Perfil do Aluno
                         </a>
@@ -324,11 +393,11 @@
                         <h2 id="empresa-title" class="text-xl font-bold text-gray-800">Empresa</h2>
                     </div>
                     <div class="space-y-4">
-                        <a href="../views/cadastrodaempresa.php" class="block w-full py-3 px-4 btn-primary rounded-xl flex items-center justify-center gap-2">
+                        <a href="../views/cadastrodaempresa.php" class="btn-primary">
                             <i class="fas fa-plus-circle" aria-hidden="true"></i>
                             Cadastrar Empresa
                         </a>
-                        <a href="../views/dadosempresa.php" class="block w-full py-3 px-4 btn-secondary rounded-xl flex items-center justify-center gap-2">
+                        <a href="../views/dadosempresa.php" class="btn-secondary">
                             <i class="fas fa-building" aria-hidden="true"></i>
                             Ver Empresas
                         </a>
@@ -339,12 +408,12 @@
     </main>
 
     <!-- Rodapé -->
-    <footer class="bg-ceara-moss text-white shadow-lg mt-12">
+    <footer class="bg-ceara-moss text-white shadow-lg">
         <div class="container mx-auto px-4 py-6">
             <div class="flex flex-col sm:flex-row justify-between items-center">
                 <p class="text-gray-400 text-sm sm:text-base mb-4 sm:mb-0">© 2025 Sistema de Gestão de Estágio. Todos os direitos reservados.</p>
                 <div class="flex space-x-6">
-                    <a href="https://www.instagram.com/eeepsalabergampe/" class="text-gray-400 hover:text-ceara-orange transition-colors">
+                    <a href="https://www.instagram.com/eeepsalabergampe/" class="text-gray-400 hover:text-ceara-orange transition-colors" aria-label="Instagram da EEEP Salaberga">
                         <i class="fab fa-instagram text-xl"></i>
                     </a>
                 </div>
@@ -384,6 +453,21 @@
         document.addEventListener('mousedown', function() {
             document.body.classList.remove('keyboard-navigation');
         });
+
+        // Responsive adjustments
+        function adjustLayout() {
+            const container = document.querySelector('.main-container');
+            const cards = document.querySelectorAll('.card');
+            
+            if (window.innerWidth < 768) {
+                cards.forEach(card => {
+                    card.style.height = 'auto';
+                });
+            }
+        }
+
+        window.addEventListener('resize', adjustLayout);
+        window.addEventListener('load', adjustLayout);
     </script>
 </body>
 </html>

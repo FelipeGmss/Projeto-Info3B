@@ -244,7 +244,7 @@
 
                 <!-- Right section with action buttons -->
                 <div class="flex gap-2 flex-shrink-0">
-                    <a href="../views/relatorio_alunos.php?search=<?php echo isset($_GET['search']) && $_GET['search'] != '' ? urlencode($_GET['search']) : ''; ?>" class="bg-gradient-to-r from-ceara-orange to-ceara-green hover:from-ceara-green hover:to-ceara-orange text-white px-4 py-2 rounded-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 text-sm whitespace-nowrap">
+                    <a href="../views/relatorios/relatorio_alunos.php?search=<?php echo isset($_GET['search']) && $_GET['search'] != '' ? urlencode($_GET['search']) : ''; ?>" class="bg-gradient-to-r from-ceara-orange to-ceara-green hover:from-ceara-green hover:to-ceara-orange text-white px-4 py-2 rounded-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 text-sm whitespace-nowrap">
                         <i class="fas fa-file-pdf" aria-hidden="true"></i>
                         Gerar PDF
                     </a>
