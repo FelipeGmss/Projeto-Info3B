@@ -1,51 +1,46 @@
 <?php
 header('Content-Type: application/json');
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id_selecao = $_POST['id_selecao'];
-    $id_aluno = $_POST['id_aluno'];
+require_once __DIR__ . '/../config/database.php';
 
-    try {
-        $pdo = new PDO('mysql:host=localhost;dbname=estagio', 'root', '');
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        // Check if student is already allocated in any selection
-        $stmt = $pdo->prepare('SELECT id FROM selecao WHERE id_aluno = ? AND id != ? AND status_alocacao = "confirmado"');
-        $stmt->execute([$id_aluno, $id_selecao]);
-        if ($stmt->rowCount() > 0) {
-            echo json_encode([
-                'success' => false,
-                'message' => 'Aluno já está alocado em outro processo seletivo'
-            ]);
-            exit;
-        }
-
-        // Update the selecao table to allocate the student and mark as confirmed
-        $stmt = $pdo->prepare('UPDATE selecao SET id_aluno = ?, status_alocacao = "confirmado" WHERE id = ?');
-        $result = $stmt->execute([$id_aluno, $id_selecao]);
-
-        if ($result) {
-            echo json_encode([
-                'success' => true,
-                'message' => 'Aluno alocado com sucesso'
-            ]);
-        } else {
-            echo json_encode([
-                'success' => false,
-                'message' => 'Erro ao alocar aluno'
-            ]);
-        }
-
-    } catch (PDOException $e) {
-        echo json_encode([
-            'success' => false,
-            'message' => 'Erro ao alocar aluno: ' . $e->getMessage()
-        ]);
+try {
+    if (!isset($_POST['id_selecao']) || !isset($_POST['id_aluno'])) {
+        throw new Exception('Dados incompletos para alocação');
     }
-} else {
+
+    $id_selecao = intval($_POST['id_selecao']);
+    $id_aluno = intval($_POST['id_aluno']);
+
+    // Verificar se o aluno já está alocado em outra vaga
+    $conn = getConnection();
+    $stmt = $conn->prepare("SELECT id FROM selecao WHERE id_aluno = ? AND id != ?");
+    $stmt->bind_param("ii", $id_aluno, $id_selecao);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    if ($result->num_rows > 0) {
+        throw new Exception('Este aluno já está alocado em outra vaga');
+    }
+
+    // Atualizar a seleção para marcar o aluno como alocado
+    $stmt = $conn->prepare("UPDATE selecao SET id_aluno = ? WHERE id = ?");
+    $stmt->bind_param("ii", $id_aluno, $id_selecao);
+    
+    if (!$stmt->execute()) {
+        throw new Exception('Erro ao alocar aluno: ' . $stmt->error);
+    }
+
+    echo json_encode([
+        'success' => true,
+        'message' => 'Aluno alocado com sucesso',
+        'redirect' => '../views/alunos_alocados.php'
+    ]);
+
+} catch (Exception $e) {
+    http_response_code(400);
     echo json_encode([
         'success' => false,
-        'message' => 'Método não permitido'
+        'message' => $e->getMessage()
     ]);
 }
 ?> 
