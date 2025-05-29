@@ -46,7 +46,7 @@ if (isset($_GET['buscar_concedente']) && isset($_GET['id_concedente'])) {
                 <h2 class="text-2xl font-bold text-gray-800 mb-2">Cadastro de Seleção de Estágio</h2>
                 <p class="text-gray-600">Preencha os dados da seleção</p>
             </div>
-            <form method="POST" action="../controllers/Controller-form_selecao.php" class="space-y-4">
+            <form method="POST" action="../../controllers/Controller-form_selecao.php" class="space-y-4">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="input-group">
                         <label for="hora" class="block text-sm font-medium text-gray-700 mb-1">Hora</label>

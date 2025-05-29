@@ -12,7 +12,7 @@ if(isset($_POST['btn'])){
     $x = new Cadastro();
     $x->cadastrar_selecao($hora, $local, $id_concedente, $data_inscricao, $id_aluno, $id_vaga);
     if($x){
-        header("Location: ../views/processoseletivo.php");
+        header("Location: ../views/processo_selecao/processoseletivo.php");
     }else{
         echo "Erro ao cadastrar";
     }

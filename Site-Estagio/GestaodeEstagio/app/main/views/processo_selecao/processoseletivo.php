@@ -320,11 +320,11 @@
                                 echo "<td class='px-4 py-3'>" . htmlspecialchars($form['local']) . "</td>";
                                 echo "<td class='px-4 py-3'>" . htmlspecialchars($form['hora']) . "</td>";
                                 echo "<td class='px-4 py-3 flex gap-2 justify-center'>";
-                                echo "<form action='../controllers/Controller-excluir_formulario.php' method='POST' style='display:inline;' onsubmit='return confirm(\\'Tem certeza que deseja excluir este formulário?\\');'>";
+                                echo "<form action='../../controllers/Controller-excluir_formulario.php' method='POST' style='display:inline;' onsubmit='return confirm(\\'Tem certeza que deseja excluir este formulário?\\');'>";
                                 echo "<input type='hidden' name='id' value='" . $form['id'] . "'>";
                                 echo "<button type='submit' name='btn-excluir' class='text-red-600 hover:text-red-800 bg-red-50 rounded-full p-2' title='Excluir'><i class='fas fa-trash'></i></button>";
                                 echo "</form>";
-                                echo "<form action='controller_inscrever.php' method='POST' style='display:inline;'>";
+                                echo "<form action='../../controllers/controller_inscrever.php' method='POST' style='display:inline;'>";
                                 echo "<input type='hidden' name='id_formulario' value='" . $form['id'] . "'>";
                                 echo "<button type='submit' class='text-green-600 hover:text-green-800 bg-green-50 rounded-full p-2' title='Inscrever-se'><i class='fas fa-user-plus'></i></button>";
                                 echo "</form>";
