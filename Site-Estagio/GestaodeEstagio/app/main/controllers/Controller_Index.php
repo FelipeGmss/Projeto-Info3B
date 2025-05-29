@@ -5,7 +5,7 @@
  
      switch ($opc) {
          case 'Aluno':
-             header("Location: ../views/alunos/Login_Aluno.php");
+             header("Location: ../views/Login_Aluno.php");
              break;
          case 'Professor':
              header("Location: ../views/Login_Professor.php");

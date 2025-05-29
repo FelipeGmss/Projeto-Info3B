@@ -357,7 +357,7 @@
                             <i class="fas fa-file-alt" aria-hidden="true"></i>
                             Gerar Relatório
                         </a>
-                        <a href="../views/processo_selecao/processoseletivo.php" class="btn-secondary">
+                        <a href="../views/processoseletivo.php" class="btn-secondary">
                             <i class="fas fa-clipboard-list" aria-hidden="true"></i>
                             Processo Seletivo
                         </a>
@@ -373,11 +373,11 @@
                         <h2 id="alunos-title" class="text-xl font-bold text-gray-800">Alunos</h2>
                     </div>
                     <div class="space-y-4">
-                        <a href="../views/alunos/cadastroaluno.php" class="btn-primary">
+                        <a href="../views/cadastroaluno.php" class="btn-primary">
                             <i class="fas fa-user-plus" aria-hidden="true"></i>
                             Cadastrar Aluno
                         </a>
-                        <a href="../views/alunos/perfildoaluno.php" class="btn-secondary">
+                        <a href="../views/perfildoaluno.php" class="btn-secondary">
                             <i class="fas fa-user-circle" aria-hidden="true"></i>
                             Ver Perfil do Aluno
                         </a>
@@ -393,11 +393,11 @@
                         <h2 id="empresa-title" class="text-xl font-bold text-gray-800">Empresa</h2>
                     </div>
                     <div class="space-y-4">
-                        <a href="../views/concedentes/cadastrodaempresa.php" class="btn-primary">
+                        <a href="../views/cadastrodaempresa.php" class="btn-primary">
                             <i class="fas fa-plus-circle" aria-hidden="true"></i>
                             Cadastrar Empresa
                         </a>
-                        <a href="../views/concedentes/dadosempresa.php" class="btn-secondary">
+                        <a href="../views/dadosempresa.php" class="btn-secondary">
                             <i class="fas fa-building" aria-hidden="true"></i>
                             Ver Empresas
                         </a>

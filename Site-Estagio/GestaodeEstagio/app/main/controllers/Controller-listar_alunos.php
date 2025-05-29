@@ -248,7 +248,7 @@
                         <i class="fas fa-file-pdf" aria-hidden="true"></i>
                         Gerar PDF
                     </a>
-                    <a href="../views/alunos/cadastroaluno.php" class="bg-gradient-to-r from-ceara-orange to-ceara-green hover:from-ceara-green hover:to-ceara-orange text-white px-4 py-2 rounded-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 text-sm whitespace-nowrap">
+                    <a href="../views/cadastroaluno.php" class="bg-gradient-to-r from-ceara-orange to-ceara-green hover:from-ceara-green hover:to-ceara-orange text-white px-4 py-2 rounded-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 text-sm whitespace-nowrap">
                         <i class="fas fa-plus" aria-hidden="true"></i>
                         Novo Aluno
                     </a>

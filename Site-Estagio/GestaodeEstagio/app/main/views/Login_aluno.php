@@ -85,7 +85,7 @@
                 <p class="text-gray-600">Acesse sua conta para continuar</p>
             </div>
 
-            <form method="POST" action="../../controllers/Controller-login_alunos.php" class="space-y-4">
+            <form method="POST" action="../controllers/Controller-login_alunos.php" class="space-y-4">
                  <div>
                      <label for="email" class="block text-sm font-medium text-gray-700 mb-1">E-mail Institucional</label>
                      <input type="email" id="email" name="email" required

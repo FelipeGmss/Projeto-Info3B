@@ -8,6 +8,6 @@ if (isset($_POST['btn-excluir'])) {
 
    $x = new Cadastro();
    $x->excluir_empresa($id);
-header('location:../views/concedentes/dadosempresa.php?resultado=excluir');
+header('location:../views/dadosempresa.php?resultado=excluir');
 }
 ?>
