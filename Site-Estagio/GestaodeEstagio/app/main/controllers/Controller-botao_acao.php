@@ -12,7 +12,7 @@ if(isset($_GET['btn-editar'])){
     
     if($dados_aluno) {
         // Incluir a view de edição com os dados do aluno
-        include '../views/alunos/editar_aluno.php';
+        include '../views/editar_aluno.php';
     } else {
         // Redirecionar para a lista com mensagem de erro
         header('Location: Controller-listar_alunos.php?error=aluno_nao_encontrado');
@@ -24,7 +24,7 @@ if(isset($_GET['btn-editar'])){
     $empresa = new Cadastro();
     $dados_empresa = $empresa->editar_empresaById($id);
     if($dados_empresa) {
-        include '../views/concedentes/editar_empresa.php';
+        include '../views/editar_empresa.php';
     } else {
         header('Location: Controller-listar_empresa.php?error=empresa_nao_encontrada');
         exit;

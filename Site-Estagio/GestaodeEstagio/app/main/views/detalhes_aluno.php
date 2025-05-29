@@ -159,7 +159,7 @@
     <main class="container mx-auto px-4 py-4 md:py-8 fade-in">
         <div class="main-container">
             <?php
-            require("../../models/model-function.php");
+            require("../models/model-function.php");
             $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
             
             if (isset($_GET['id'])) {
@@ -217,7 +217,7 @@
 
                                 <!-- Botões de Ação -->
                                 <div class="flex flex-col sm:flex-row gap-3">
-                                    <form action="../../controllers/Controller-botao_acao.php" method="GET" class="w-full sm:w-auto">
+                                    <form action="../controllers/Controller-botao_acao.php" method="GET" class="w-full sm:w-auto">
                                         <input type="hidden" name="btn-editar" value="<?php echo htmlspecialchars($aluno['id']); ?>">
                                         <button type="submit" 
                                                 class="w-full gradient-button text-white px-4 py-2 rounded-lg flex items-center justify-center gap-2"
@@ -226,13 +226,13 @@
                                             Editar Aluno
                                         </button>
                                     </form>
-                                    <a href="../processo_selecao/processoseletivo_aluno.php" 
+                                    <a href="processoseletivo_aluno.php" 
                                        class="w-full sm:w-auto gradient-button text-white px-4 py-2 rounded-lg flex items-center justify-center gap-2"
                                        aria-label="Acessar processo seletivo">
                                         <i class="fas fa-clipboard-list"></i>
                                         Processo Seletivo
                                     </a>
-                                    <form action="../../controllers/Controller-excluir_alunos.php" method="POST" 
+                                    <form action="../controllers/Controller-excluir_alunos.php" method="POST" 
                                           onsubmit="return confirm('Tem certeza que deseja excluir este aluno?');"
                                           class="w-full sm:w-auto">
                                         <input type="hidden" name="btn" value="<?php echo htmlspecialchars($aluno['id']); ?>">
