@@ -35,9 +35,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
-        // Update the selecao table with student enrollment
-        $stmt = $pdo->prepare('UPDATE selecao SET id_aluno = ?, data_inscriçao = ? WHERE id = ?');
-        $result = $stmt->execute([$id_aluno, $data_inscricao, $id_formulario]);
+        // Criar uma nova inscrição sem marcar como alocado
+        $stmt = $pdo->prepare('INSERT INTO inscricoes (id_selecao, id_aluno, data_inscricao) VALUES (?, ?, ?)');
+        $result = $stmt->execute([$id_formulario, $id_aluno, $data_inscricao]);
 
         if ($result) {
             echo json_encode([

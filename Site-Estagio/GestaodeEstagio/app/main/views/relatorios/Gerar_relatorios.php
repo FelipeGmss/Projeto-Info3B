@@ -151,10 +151,11 @@
                             <div id="curso_select" class="hidden">
                                 <label class="block text-gray-700 text-sm font-medium mb-2">Selecione o Curso:</label>
                                 <select name="curso" class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-ceara-orange focus:border-transparent">
-                                    <option value="informatica">Informática</option>
                                     <option value="enfermagem">Enfermagem</option>
+                                    <option value="informatica">Informática</option>
                                     <option value="administracao">Administração</option>
-                                    <option value="contabilidade">Contabilidade</option>
+                                    <option value="edificacoes">Edificações</option>
+                                    <option value="meio_ambiente">Meio Ambiente</option>
                                 </select>
                             </div>
 
@@ -241,10 +242,11 @@
                                 <label class="block text-gray-700 text-sm font-medium mb-2">Curso:</label>
                                 <select name="curso_selecao" class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-ceara-orange focus:border-transparent">
                                     <option value="todos">Todos os Cursos</option>
-                                    <option value="informatica">Informática</option>
                                     <option value="enfermagem">Enfermagem</option>
+                                    <option value="informatica">Informática</option>
                                     <option value="administracao">Administração</option>
-                                    <option value="contabilidade">Contabilidade</option>
+                                    <option value="edificacoes">Edificações</option>
+                                    <option value="meio_ambiente">Meio Ambiente</option>
                                 </select>
                             </div>
                         </div>

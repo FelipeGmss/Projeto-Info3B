@@ -274,10 +274,10 @@
                             $search = isset($_GET['search']) ? $_GET['search'] : '';
                             
                             $sql = 'SELECT DISTINCT s.id, s.local, s.hora, c.nome as nome_empresa,
-                                   (SELECT COUNT(*) FROM selecao WHERE id = s.id AND id_aluno IS NOT NULL) as total_inscritos
+                                   (SELECT COUNT(*) FROM inscricoes WHERE id_selecao = s.id) as total_inscritos
                                    FROM selecao s 
                                    INNER JOIN concedentes c ON s.id_concedente = c.id
-                                   WHERE s.id_aluno IS NOT NULL';
+                                   WHERE EXISTS (SELECT 1 FROM inscricoes i WHERE i.id_selecao = s.id)';
                             
                             if (!empty($search)) {
                                 $sql .= ' AND (c.nome LIKE :search OR s.local LIKE :search)';
@@ -429,7 +429,7 @@
         }
 
         function alocarAluno(idSelecao, idAluno, processoId) {
-            if (!confirm('Tem certeza que deseja alocar este aluno?')) {
+            if (!confirm('Tem certeza que deseja alocar este aluno? Após a alocação, você será redirecionado para a página de alunos alocados.')) {
                 return;
             }
 
@@ -444,8 +444,10 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert('Aluno alocado com sucesso!');
-                    showInscritosModal(processoId); // Recarrega a lista
+                    alert('Aluno alocado com sucesso! Redirecionando para a página de alunos alocados...');
+                    if (data.redirect) {
+                        window.location.href = data.redirect;
+                    }
                 } else {
                     alert(data.message || 'Erro ao alocar aluno');
                 }
