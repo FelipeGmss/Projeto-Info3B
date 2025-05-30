@@ -14,9 +14,9 @@ if (isset($_POST['btn-editar'])) {
     $resultado = $x->editar_aluno_sem_senha($id, $nome, $matricula, $contato, $curso, $email, $endereco);
     
     if ($resultado) {
-        header("Location: Controller-listar_alunos.php?success=aluno_atualizado");
+        header("Location: ../views/editar_aluno.php?success=aluno_atualizado");
     } else {
-        header("Location: Controller-listar_alunos.php?error=erro_ao_atualizar");
+        header("Location: ../views/editar_aluno.php?error=erro_ao_atualizar");
     }
     exit;
 }

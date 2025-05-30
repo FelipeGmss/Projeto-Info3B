@@ -7,7 +7,7 @@ if (isset($_POST['btn-excluir'])) {
  
     $x = new Cadastro();
     $x->excluir_formulario($id);
-    header('location:../views/processo_selecao/processoseletivo.php?resultado=excluir');
+    header('location:../views/processoseletivo.php?resultado=excluir');
 }
 
 

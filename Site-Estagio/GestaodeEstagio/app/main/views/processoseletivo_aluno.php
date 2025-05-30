@@ -271,8 +271,10 @@ session_start();
                             
                             $search = isset($_GET['search']) ? $_GET['search'] : '';
                             
-                            $sql = 'SELECT DISTINCT s.id, s.local, s.hora, c.nome as nome_empresa,
-                                   (SELECT COUNT(*) FROM selecao WHERE id = s.id AND id_aluno IS NOT NULL) as total_inscritos
+                            $sql = 'SELECT DISTINCT c.id as id_concedente, c.nome as nome_empresa,
+                                   s.local, s.hora,
+                                   (SELECT COUNT(*) FROM selecao WHERE id_concedente = c.id AND id_aluno IS NOT NULL) as total_inscritos,
+                                   (SELECT MIN(id) FROM selecao WHERE id_concedente = c.id) as primeiro_id
                                    FROM selecao s 
                                    INNER JOIN concedentes c ON s.id_concedente = c.id';
                             
@@ -280,7 +282,7 @@ session_start();
                                 $sql .= ' WHERE (c.nome LIKE :search OR s.local LIKE :search)';
                             }
                             
-                            $sql .= ' ORDER BY c.nome';
+                            $sql .= ' GROUP BY c.id, c.nome, s.local, s.hora ORDER BY c.nome';
                             
                             $query = $pdo->prepare($sql);
                             
@@ -299,23 +301,23 @@ session_start();
                                     echo "<td class='px-4 py-3'>" . htmlspecialchars($form['hora']) . "</td>";
                                     echo "<td class='px-4 py-3 text-center'>";
                                     echo "<div class='flex justify-center gap-2'>";
-                                        // Botão Inscrever-se
-                                    echo "<button onclick='showInscricaoModal(" . $form['id'] . ")' 
+                                        // Botão Inscrever-se (apenas para aluno)
+                                        echo "<button onclick='showInscricaoModal(" . $form['primeiro_id'] . ")' 
                                               class='text-green-600 hover:text-green-800 bg-green-50 rounded-full p-2 transition-colors' 
                                               title='Inscrever-se no processo seletivo'
-                                              aria-label='Inscrever-se no processo seletivo'>";
-                                    echo "<i class='fas fa-user-plus'></i>";
-                                    echo "</button>";
+                                              aria-label='Inscrever-se'>";
+                                        echo "<i class='fas fa-user-plus'></i>";
+                                        echo "</button>";
                                         
                                         // Botão Ver Inscritos
-                                    echo "<button onclick='showInscritosModal(" . $form['id'] . ")' 
+                                        echo "<button onclick='showInscritosModal(" . $form['primeiro_id'] . ")' 
                                               class='text-blue-600 hover:text-blue-800 bg-blue-50 rounded-full p-2 transition-colors' 
                                               title='Ver lista de inscritos (" . $form['total_inscritos'] . " inscritos)'
                                               aria-label='Ver lista de inscritos'>";
-                                    echo "<i class='fas fa-users'></i>";
-                                    echo "</button>";
+                                        echo "<i class='fas fa-users'></i>";
+                                        echo "</button>";
                                     echo "</div>";
-                                        echo "</td>";
+                                    echo "</td>";
                                     echo "</tr>";
                                 }
                             } else {
@@ -372,12 +374,12 @@ session_start();
         </div>
     </div>
 
-    <!-- Modal de Lista de Inscritos -->
-    <div id="inscritosListaModal" class="fixed inset-0 bg-black bg-opacity-50 modal hidden items-center justify-center z-50">
+    <!-- Modal de Inscritos -->
+    <div id="inscritosModal" class="fixed inset-0 bg-black bg-opacity-50 modal hidden items-center justify-center z-50">
         <div class="modal-content p-6 max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto bg-white rounded-xl">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-xl font-bold text-gray-800">Alunos Inscritos</h3>
-                <button onclick="closeModal('inscritosListaModal')" class="text-gray-500 hover:text-gray-700">
+                <button onclick="closeModal('inscritosModal')" class="text-gray-500 hover:text-gray-700">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
@@ -521,7 +523,7 @@ session_start();
         });
 
         function showInscritosModal(processoId) {
-            const modal = document.getElementById('inscritosListaModal');
+            const modal = document.getElementById('inscritosModal');
             const inscritosList = document.getElementById('inscritosList');
             
             // Mostrar loading
@@ -556,11 +558,6 @@ session_start();
                                             <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs font-semibold">
                                                 ${aluno.perfil || 'Perfil não especificado'}
                                             </span>
-                                            <button onclick="excluirInscrito(${aluno.id_selecao}, ${processoId})" 
-                                                    class="text-red-600 hover:text-red-800 bg-red-50 rounded-full p-2 transition-colors"
-                                                    title="Excluir inscrição">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
                                         </div>
                                     </div>
                                 `).join('')}
@@ -574,34 +571,6 @@ session_start();
                     console.error('Error:', error);
                     inscritosList.innerHTML = '<p class="text-center text-red-500">Erro ao carregar inscritos.</p>';
                 });
-        }
-
-        function excluirInscrito(idSelecao, processoId) {
-            if (!confirm('Tem certeza que deseja excluir esta inscrição?')) {
-                return;
-            }
-
-            const formData = new FormData();
-            formData.append('id_selecao', idSelecao);
-
-            fetch('../controllers/controller_excluir_inscrito.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Inscrição removida com sucesso!');
-                    showInscritosModal(processoId); // Recarrega a lista
-                    window.location.reload(); // Recarrega a página para atualizar o contador
-                } else {
-                    alert(data.message || 'Erro ao remover inscrição');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Erro ao remover inscrição');
-            });
         }
     </script>
 </body>

@@ -13,15 +13,28 @@ try {
 
     $processoId = $_GET['processo_id'];
 
-    $sql = 'SELECT s.id as id_selecao, a.id as id_aluno, a.nome, a.curso, s.hora, c.perfil, c.nome as nome_empresa
+    // Primeiro, buscar o id_concedente do processo selecionado
+    $sql_concedente = 'SELECT id_concedente FROM selecao WHERE id = :processo_id';
+    $query_concedente = $pdo->prepare($sql_concedente);
+    $query_concedente->bindValue(':processo_id', $processoId, PDO::PARAM_INT);
+    $query_concedente->execute();
+    $concedente = $query_concedente->fetch(PDO::FETCH_ASSOC);
+
+    if (!$concedente) {
+        echo json_encode(['error' => 'Processo não encontrado.']);
+        exit();
+    }
+
+    // Agora buscar todos os inscritos deste concedente
+    $sql = 'SELECT s.id as id_selecao, a.id as id_aluno, a.nome, a.curso, s.hora, c.perfil, c.nome as nome_empresa, s.status
             FROM selecao s
             INNER JOIN aluno a ON s.id_aluno = a.id
             INNER JOIN concedentes c ON s.id_concedente = c.id
-            WHERE s.id = :processo_id AND s.id_aluno IS NOT NULL
-            ORDER BY a.nome';
+            WHERE s.id_concedente = :id_concedente AND s.id_aluno IS NOT NULL
+            ORDER BY s.id DESC';
 
     $query = $pdo->prepare($sql);
-    $query->bindValue(':processo_id', $processoId, PDO::PARAM_INT);
+    $query->bindValue(':id_concedente', $concedente['id_concedente'], PDO::PARAM_INT);
     $query->execute();
     $inscritos = $query->fetchAll(PDO::FETCH_ASSOC);
 

@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         // Check if student is already allocated in any selection
-        $stmt = $pdo->prepare('SELECT id FROM selecao WHERE id_aluno = ? AND id != ? AND status_alocacao = "confirmado"');
+        $stmt = $pdo->prepare('SELECT id FROM selecao WHERE id_aluno = ? AND id != ? AND status = "alocado"');
         $stmt->execute([$id_aluno, $id_selecao]);
         if ($stmt->rowCount() > 0) {
             echo json_encode([
@@ -21,8 +21,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         // Update the selecao table to allocate the student and mark as confirmed
-        $stmt = $pdo->prepare('UPDATE selecao SET id_aluno = ?, status_alocacao = "confirmado" WHERE id = ?');
-        $result = $stmt->execute([$id_aluno, $id_selecao]);
+        $stmt = $pdo->prepare('UPDATE selecao SET status = "alocado" WHERE id = ?');
+        $result = $stmt->execute([$id_selecao]);
 
         if ($result) {
             echo json_encode([

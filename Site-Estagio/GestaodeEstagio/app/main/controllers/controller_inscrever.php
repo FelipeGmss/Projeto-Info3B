@@ -2,107 +2,75 @@
 session_start();
 require_once '../models/model-function.php';
 
-if (!isset($_SESSION['idAluno'])) {
-    header("Location: ../views/Login_aluno.php");
-    exit;
-}
+// Removendo a verificação de sessão inicial, o id_aluno virá do formulário via POST
+// if (!isset($_SESSION['idAluno'])) {
+//     header("Location: ../views/Login_aluno.php");
+//     exit;
+// }
 
 header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id_formulario = $_POST['id_formulario'];
-    $id_aluno = $_SESSION['idAluno'];
-    $data_inscricao = date('Y-m-d');
+    $id_formulario = $_POST['id_formulario'] ?? null; // Este é o ID na tabela `selecao`
+    $id_aluno = $_POST['id_aluno'] ?? null; // ID do aluno selecionado
+    // $data_inscricao = date('Y-m-d H:i:s'); // Data e hora atuais da inscrição - não usada mais na query
 
-    $pdo = new PDO('mysql:host=localhost;dbname=estagio', 'root', '');
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
+    if (!$id_formulario || !$id_aluno) {
+        echo json_encode([
+            'success' => false,
+            'message' => 'Dados incompletos: ID do formulário ou ID do aluno faltando.'
+        ]);
+        exit;
+    }
+    
     try {
-        // Get form and company details
-        $stmt = $pdo->prepare('
-            SELECT s.*, c.nome as nome_empresa, c.contato, c.endereco, c.numero_vagas, c.perfil 
-            FROM selecao s 
-            INNER JOIN concedentes c ON s.id_concedente = c.id 
-            WHERE s.id = ?
-        ');
-        $stmt->execute([$id_formulario]);
-        $form = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if (!$form) {
+        $pdo = new PDO("mysql:host=localhost;dbname=estagio", "root", "");
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        
+        // Verifica apenas se o mesmo aluno já está inscrito neste processo
+        $check_query = $pdo->prepare("
+            SELECT id_aluno FROM selecao 
+            WHERE id = :id_formulario AND id_aluno = :id_aluno
+        ");
+        $check_query->bindValue(":id_formulario", $id_formulario);
+        $check_query->bindValue(":id_aluno", $id_aluno);
+        $check_query->execute();
+        
+        if ($check_query->rowCount() > 0) {
             echo json_encode([
                 'success' => false,
-                'message' => 'Formulário não encontrado'
+                'message' => 'Você já está inscrito neste processo seletivo.'
             ]);
             exit;
         }
-
-        // Check if student is already enrolled
-        $stmt = $pdo->prepare('SELECT id FROM selecao WHERE id_aluno = ? AND id = ?');
-        $stmt->execute([$id_aluno, $id_formulario]);
-        if ($stmt->rowCount() > 0) {
-            echo json_encode([
-                'success' => false,
-                'message' => 'Você já está inscrito neste processo seletivo'
-            ]);
-            exit;
-        }
-
-        // Check if there are available positions
-        if ($form['numero_vagas'] <= 0) {
-            echo json_encode([
-                'success' => false,
-                'message' => 'Não há mais vagas disponíveis'
-            ]);
-            exit;
-        }
-
-        // Begin transaction
-        $pdo->beginTransaction();
-
-        try {
-            // Update selecao with student information
-            $stmt = $pdo->prepare('UPDATE selecao SET id_aluno = ?, data_inscricao = ? WHERE id = ?');
-            $result = $stmt->execute([$id_aluno, $data_inscricao, $id_formulario]);
-
-            if ($result) {
-                // Update available positions
-                $stmt = $pdo->prepare('UPDATE concedentes SET numero_vagas = numero_vagas - 1 WHERE id = ?');
-                $stmt->execute([$form['id_concedente']]);
-
-                $pdo->commit();
-
-                echo json_encode([
-                    'success' => true,
-                    'message' => 'Inscrição realizada com sucesso',
-                    'data' => [
-                        'empresa' => $form['nome_empresa'],
-                        'contato' => $form['contato'],
-                        'endereco' => $form['endereco'],
-                        'perfil' => $form['perfil'],
-                        'data_inscricao' => $data_inscricao
-                    ]
-                ]);
-            } else {
-                throw new Exception('Erro ao realizar inscrição');
-            }
-        } catch (Exception $e) {
-            $pdo->rollBack();
-            throw $e;
-        }
-
-    } catch (Exception $e) {
+        
+        // Insere uma nova inscrição
+        $query = $pdo->prepare("
+            INSERT INTO selecao (id_concedente, id_aluno, hora, local, status)
+            SELECT id_concedente, :id_aluno, hora, local, 'pendente'
+            FROM selecao 
+            WHERE id = :id_formulario
+        ");
+        
+        $query->bindValue(":id_aluno", $id_aluno);
+        $query->bindValue(":id_formulario", $id_formulario);
+        $query->execute();
+        
+        echo json_encode([
+            'success' => true,
+            'message' => 'Inscrição realizada com sucesso!'
+        ]);
+    } catch (PDOException $e) {
         echo json_encode([
             'success' => false,
             'message' => 'Erro ao realizar inscrição: ' . $e->getMessage()
         ]);
     }
-    exit;
+} else {
+    echo json_encode([
+        'success' => false,
+        'message' => 'Método não permitido'
+    ]);
 }
-
-// If not POST request, return error
-echo json_encode([
-    'success' => false,
-    'message' => 'Método não permitido'
-]);
-exit; 
+?> 
 

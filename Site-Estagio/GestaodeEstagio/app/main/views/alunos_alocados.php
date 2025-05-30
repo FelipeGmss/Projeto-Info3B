@@ -6,7 +6,8 @@ try {
     // Buscar todos os alunos com seus status de alocação usando apenas as tabelas existentes
     $sql = 'SELECT DISTINCT a.id, a.nome, c.perfil, c.nome as nome_empresa,
             CASE 
-                WHEN s.id_aluno IS NOT NULL THEN "alocado"
+                WHEN s.status = "alocado" THEN "alocado"
+                WHEN s.status = "pendente" THEN "pendente"
                 ELSE "nao_alocado"
             END as status
             FROM aluno a
@@ -99,6 +100,9 @@ try {
         .student-card.alocado {
             border-left-color: #008C45;
         }
+        .student-card.pendente {
+            border-left-color: #FFA500;
+        }
         .student-card.nao-alocado {
             border-left-color: #DC2626;
         }
@@ -115,6 +119,10 @@ try {
         .status-badge.alocado {
             background-color: #D1FAE5;
             color: #065F46;
+        }
+        .status-badge.pendente {
+            background-color: #FEF3C7;
+            color: #92400E;
         }
         .status-badge.nao-alocado {
             background-color: #FEE2E2;
@@ -145,6 +153,10 @@ try {
                 <span class="text-sm text-gray-600">Alocado</span>
             </div>
             <div class="flex items-center gap-2">
+                <div class="w-3 h-3 rounded-full bg-[#FFA500]"></div>
+                <span class="text-sm text-gray-600">Em Espera</span>
+            </div>
+            <div class="flex items-center gap-2">
                 <div class="w-3 h-3 rounded-full bg-[#DC2626]"></div>
                 <span class="text-sm text-gray-600">Não Alocado</span>
             </div>
@@ -163,6 +175,10 @@ try {
                                 <?php if ($aluno['status'] === 'alocado'): ?>
                                     <span class="status-badge alocado">
                                         <i class="fas fa-check-circle"></i> Alocado
+                                    </span>
+                                <?php elseif ($aluno['status'] === 'pendente'): ?>
+                                    <span class="status-badge pendente">
+                                        <i class="fas fa-clock"></i> Em Espera
                                     </span>
                                 <?php else: ?>
                                     <span class="status-badge nao-alocado">

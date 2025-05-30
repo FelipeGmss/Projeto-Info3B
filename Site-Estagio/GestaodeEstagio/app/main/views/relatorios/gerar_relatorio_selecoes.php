@@ -45,35 +45,43 @@ try {
     // Construir a query base de acordo com o tipo de relatório
     switch ($tipo_relatorio) {
         case 'processo_seletivo':
-            $sql = "SELECT ps.*, c.nome as concedente_nome 
-                    FROM processo_seletivo ps 
-                    JOIN concedentes c ON ps.concedente_id = c.id 
+            $sql = "SELECT c.*, c.nome as concedente_nome, c.perfil as titulo
+                    FROM concedentes c 
                     WHERE 1=1";
+            if ($curso !== 'todos') {
+                $sql .= " AND c.perfil = ?";
+            }
             break;
         case 'inscricoes':
-            $sql = "SELECT i.*, a.nome as aluno_nome, ps.titulo as processo_titulo 
-                    FROM inscricao i 
-                    JOIN aluno a ON i.aluno_id = a.id 
-                    JOIN processo_seletivo ps ON i.processo_id = ps.id 
+            $sql = "SELECT s.*, a.nome as aluno_nome, c.perfil as processo_titulo 
+                    FROM selecao s 
+                    JOIN aluno a ON s.id_aluno = a.id 
+                    JOIN concedentes c ON s.id_concedente = c.id 
                     WHERE 1=1";
+            if ($curso !== 'todos') {
+                $sql .= " AND a.curso = ?";
+            }
             break;
         case 'alunos_alocados':
             $sql = "SELECT a.nome as aluno_nome, c.nome as concedente_nome, 
-                           ps.titulo as processo_titulo, i.data_inscricao 
+                           c.perfil as processo_titulo, s.hora as data_selecao 
                     FROM aluno a 
-                    JOIN inscricao i ON a.id = i.aluno_id 
-                    JOIN processo_seletivo ps ON i.processo_id = ps.id 
-                    JOIN concedentes c ON ps.concedente_id = c.id 
-                    WHERE i.status = 'aprovado'";
+                    JOIN selecao s ON a.id = s.id_aluno 
+                    JOIN concedentes c ON s.id_concedente = c.id 
+                    WHERE s.status = 'alocado'";
+            if ($curso !== 'todos') {
+                $sql .= " AND a.curso = ?";
+            }
             break;
     }
 
+    $stmt = $conn->prepare($sql);
+    if ($stmt === false) {
+        throw new Exception("Erro ao preparar a query: " . $conn->error);
+    }
+
     if ($curso !== 'todos') {
-        $sql .= " AND a.curso = ?";
-        $stmt = $conn->prepare($sql);
         $stmt->bind_param("s", $curso);
-    } else {
-        $stmt = $conn->prepare($sql);
     }
 
     $stmt->execute();
@@ -98,24 +106,24 @@ try {
     // Definir colunas de acordo com o tipo de relatório
     switch ($tipo_relatorio) {
         case 'processo_seletivo':
-            $pdf->Cell(60, 10, 'Título', 1, 0, 'C', true);
+            $pdf->Cell(60, 10, 'Perfil', 1, 0, 'C', true);
             $pdf->Cell(60, 10, 'Concedente', 1, 0, 'C', true);
-            $pdf->Cell(40, 10, 'Data Início', 1, 0, 'C', true);
-            $pdf->Cell(40, 10, 'Data Fim', 1, 0, 'C', true);
-            $pdf->Cell(40, 10, 'Status', 1, 1, 'C', true);
+            $pdf->Cell(40, 10, 'Vagas', 1, 0, 'C', true);
+            $pdf->Cell(40, 10, 'Status', 1, 0, 'C', true);
+            $pdf->Cell(40, 10, 'Local', 1, 1, 'C', true);
             break;
         case 'inscricoes':
             $pdf->Cell(60, 10, 'Aluno', 1, 0, 'C', true);
-            $pdf->Cell(60, 10, 'Processo Seletivo', 1, 0, 'C', true);
-            $pdf->Cell(40, 10, 'Data Inscrição', 1, 0, 'C', true);
+            $pdf->Cell(60, 10, 'Perfil', 1, 0, 'C', true);
+            $pdf->Cell(40, 10, 'Data Seleção', 1, 0, 'C', true);
             $pdf->Cell(40, 10, 'Status', 1, 0, 'C', true);
-            $pdf->Cell(40, 10, 'Nota', 1, 1, 'C', true);
+            $pdf->Cell(40, 10, 'Local', 1, 1, 'C', true);
             break;
         case 'alunos_alocados':
             $pdf->Cell(60, 10, 'Aluno', 1, 0, 'C', true);
             $pdf->Cell(60, 10, 'Concedente', 1, 0, 'C', true);
-            $pdf->Cell(60, 10, 'Processo Seletivo', 1, 0, 'C', true);
-            $pdf->Cell(40, 10, 'Data Alocação', 1, 1, 'C', true);
+            $pdf->Cell(60, 10, 'Perfil', 1, 0, 'C', true);
+            $pdf->Cell(40, 10, 'Data Seleção', 1, 1, 'C', true);
             break;
     }
 
@@ -129,24 +137,24 @@ try {
         
         switch ($tipo_relatorio) {
             case 'processo_seletivo':
-                $pdf->Cell(60, 8, utf8_decode($row['titulo']), 1, 0, 'L', $fill);
+                $pdf->Cell(60, 8, utf8_decode($row['perfil']), 1, 0, 'L', $fill);
                 $pdf->Cell(60, 8, utf8_decode($row['concedente_nome']), 1, 0, 'L', $fill);
-                $pdf->Cell(40, 8, date('d/m/Y', strtotime($row['data_inicio'])), 1, 0, 'C', $fill);
-                $pdf->Cell(40, 8, date('d/m/Y', strtotime($row['data_fim'])), 1, 0, 'C', $fill);
-                $pdf->Cell(40, 8, utf8_decode($row['status']), 1, 1, 'C', $fill);
+                $pdf->Cell(40, 8, $row['vagas'] ?? '-', 1, 0, 'C', $fill);
+                $pdf->Cell(40, 8, utf8_decode($row['status'] ?? 'Ativo'), 1, 0, 'C', $fill);
+                $pdf->Cell(40, 8, utf8_decode($row['local'] ?? '-'), 1, 1, 'C', $fill);
                 break;
             case 'inscricoes':
                 $pdf->Cell(60, 8, utf8_decode($row['aluno_nome']), 1, 0, 'L', $fill);
                 $pdf->Cell(60, 8, utf8_decode($row['processo_titulo']), 1, 0, 'L', $fill);
-                $pdf->Cell(40, 8, date('d/m/Y', strtotime($row['data_inscricao'])), 1, 0, 'C', $fill);
+                $pdf->Cell(40, 8, date('d/m/Y H:i', strtotime($row['hora'])), 1, 0, 'C', $fill);
                 $pdf->Cell(40, 8, utf8_decode($row['status']), 1, 0, 'C', $fill);
-                $pdf->Cell(40, 8, $row['nota'] ?? '-', 1, 1, 'C', $fill);
+                $pdf->Cell(40, 8, utf8_decode($row['local'] ?? '-'), 1, 1, 'C', $fill);
                 break;
             case 'alunos_alocados':
                 $pdf->Cell(60, 8, utf8_decode($row['aluno_nome']), 1, 0, 'L', $fill);
                 $pdf->Cell(60, 8, utf8_decode($row['concedente_nome']), 1, 0, 'L', $fill);
                 $pdf->Cell(60, 8, utf8_decode($row['processo_titulo']), 1, 0, 'L', $fill);
-                $pdf->Cell(40, 8, date('d/m/Y', strtotime($row['data_inscricao'])), 1, 1, 'C', $fill);
+                $pdf->Cell(40, 8, date('d/m/Y H:i', strtotime($row['data_selecao'])), 1, 1, 'C', $fill);
                 break;
         }
         $fill = !$fill;
