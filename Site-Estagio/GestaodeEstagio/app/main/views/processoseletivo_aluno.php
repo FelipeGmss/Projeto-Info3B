@@ -58,284 +58,335 @@ session_start();
             border-width: 0;
         }
 
-        @media (max-width: 768px) {
-            .mobile-stack {
-                display: flex;
-                flex-direction: column;
-            }
-            
-            .mobile-full {
-                width: 100%;
-            }
-            
-            .mobile-padding {
-                padding: 1rem;
-            }
-            
-            .mobile-text-center {
-                text-align: center;
-            }
-            
-            .mobile-margin {
-                margin-bottom: 1rem;
-            }
-            
-            .mobile-table {
-                display: block;
-                overflow-x: auto;
-                white-space: nowrap;
-            }
-            
-            .mobile-table th,
-            .mobile-table td {
-                min-width: 120px;
-            }
-        }
-
         body {
             font-family: 'Roboto', sans-serif;
             background: #f3f4f6;
         }
 
-        .hover-scale {
-            transition: transform 0.3s ease-in-out;
-        }
-        .hover-scale:hover {
-            transform: scale(1.05);
-        }
-
-        .fade-in {
-            animation: fadeIn 1s ease-out forwards;
-        }
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .back-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 16px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            color: #FFFFFF;
-            font-size: 0.9rem;
-            font-weight: 500;
-            text-decoration: none;
-            transition: all 0.2s ease;
-            backdrop-filter: blur(4px);
-        }
-        .back-button:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-        .back-button:focus {
-            outline: none;
-            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
-        }
-
-        .school-logo {
-            width: 40px;
-            height: 40px;
-            object-fit: contain;
-        }
-
-        .school-name {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #fff;
-            line-height: 1.2;
-        }
-
-        .header-moss {
+        .header {
             background: #2d4739;
-        }
-        .header-moss * {
-            color: #fff !important;
-        }
-        .header-moss input,
-        .header-moss input:focus {
-            color: #222 !important;
-            background: #fff !important;
-        }
-        .header-moss .fa-search {
-            color: #888 !important;
+            padding: 0.5rem 0;
         }
 
-        .main-list-container {
-            background: #fff;
-            border-radius: 1.5rem;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-            margin: 0 auto;
-            max-width: 1200px;
-            padding: 2rem;
+        .header * {
+            color: #ffffff !important;
         }
 
-        .table th, .table td {
-            white-space: normal !important;
+        .transparent-button {
+            background: none;
+            transition: all 0.3s ease;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.9rem;
+            color: #ffffff;
         }
 
-        @media (max-width: 900px) {
-            .main-list-container {
-                padding: 1rem;
-            }
-        }
-        @media (max-width: 600px) {
-            .main-list-container {
-                padding: 0.5rem;
-            }
+        .transparent-button:hover {
+            color: #FFA500;
+            transform: translateY(-1px);
         }
 
-        .gradient-button {
-            background: linear-gradient(to right, #FFA500, #008C45);
+        .search-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+            margin: 0.75rem 0;
+        }
+
+        .search-input {
+            background: #ffffff;
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem 0.5rem 2.5rem;
+            width: 100%;
             transition: all 0.3s ease;
         }
-        .gradient-button:hover {
-            background: linear-gradient(to right, #008C45, #FFA500);
-            transform: scale(1.05);
+
+        .search-input:focus {
+            box-shadow: 0 0 0 2px rgba(255, 165, 0, 0.3);
         }
 
-        .modal {
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
-        }
-
-        .modal-content {
+        .table-container {
             background: white;
-            border-radius: 1rem;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        .table-header {
+            background: #f8fafc;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .table-row {
+            transition: all 0.2s ease;
+        }
+
+        .table-row:hover {
+            background: #f8fafc;
+        }
+
+        .action-button {
+            padding: 0.4rem;
+            border-radius: 0.4rem;
+            transition: all 0.2s ease;
+            border: none;
+            background: none;
+        }
+
+        .action-button:hover {
+            transform: scale(1.1);
+        }
+
+        .modal-button {
+            background: none;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.4rem;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+
+        .modal-button.cancel {
+            color: #6B7280;
+        }
+
+        .modal-button.cancel:hover {
+            background: #F3F4F6;
+        }
+
+        .modal-button.submit {
+            background: linear-gradient(to right, #FFA500, #008C45);
+            color: white;
+        }
+
+        .modal-button.submit:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .card {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .table-container {
+                display: none;
+            }
+
+            .card {
+                display: block;
+                background: white;
+                border-radius: 0.75rem;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+                margin-bottom: 1rem;
+                padding: 1rem;
+            }
+
+            .card:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+
+            .card-content {
+                padding: 0.5rem;
+            }
+
+            .card-actions {
+                display: flex;
+                justify-content: flex-end;
+                gap: 0.5rem;
+                margin-top: 0.75rem;
+            }
         }
     </style>
 </head>
 <body class="min-h-screen font-['Roboto'] select-none">
-    <!-- Cabeçalho verde musgo -->
-    <header class="header-moss w-full shadow-lg mb-8">
-        <div class="container mx-auto px-4 py-4">
+    <!-- Cabeçalho -->
+    <header class="header w-full mb-4">
+        <div class="container mx-auto px-4">
             <!-- Main header content -->
-            <div class="flex flex-col md:flex-row md:items-center gap-3">
+            <div class="flex items-center justify-between">
                 <!-- Left section with back button, logo and school name -->
-                <div class="flex items-center gap-3 flex-shrink-0">
-                    <a href="javascript:history.back()" class="back-button">
+                <div class="flex items-center gap-3">
+                    <a href="javascript:history.back()" class="transparent-button">
                         <i class="fas fa-arrow-left"></i> Voltar
                     </a>
-                    <img src="../config/img/logo_Salaberga-removebg-preview.png" alt="Logo EEEP Salaberga" class="school-logo">
-                    <h1 class="text-xl md:text-2xl font-bold mb-0">Processo Seletivo</h1>
+                    <img src="../config/img/logo_Salaberga-removebg-preview.png" alt="Logo EEEP Salaberga" class="w-10 h-10 object-contain">
+                    <div class="flex flex-col">
+                        <span class="text-sm font-medium">EEEP Salaberga</span>
+                        <h1 class="text-lg font-bold">Processo Seletivo</h1>
+                    </div>
                 </div>
-
-                <!-- Search bar -->
-                <form action="" method="GET" class="relative flex-1 min-w-[300px]" role="search">
-                    <label for="search" class="sr-only">Pesquisar vagas</label>
-                    <input type="text" 
-                           id="search"
-                           name="search"
-                           class="w-full px-4 py-2 pl-10 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-ceara-orange focus:border-transparent"
-                           placeholder="Pesquisar empresa, local ou horário..."
-                           value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>"
-                           aria-label="Pesquisar vagas">
-                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2" aria-hidden="true"></i>
-                </form>
             </div>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <div class="container mx-auto px-4 py-4 md:py-8 fade-in">
-        <div class="main-list-container">
-            <div class="overflow-x-auto mobile-table">
-                <table class="min-w-full table" role="grid">
-                    <thead class="bg-gray-50">
-                        <tr>
-                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Empresa</th>
-                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Local</th>
-                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Horário</th>
-                            <th scope="col" class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
-                        <?php
-                        error_reporting(E_ALL);
-                        ini_set('display_errors', 1);
-                        
-                        try {
-                            $pdo = new PDO('mysql:host=localhost;dbname=estagio', 'root', '');
-                            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                            
-                            $search = isset($_GET['search']) ? $_GET['search'] : '';
-                            
-                            $sql = 'SELECT DISTINCT c.id as id_concedente, c.nome as nome_empresa,
-                                   s.local, s.hora,
-                                   (SELECT COUNT(*) FROM selecao WHERE id_concedente = c.id AND id_aluno IS NOT NULL) as total_inscritos,
-                                   (SELECT MIN(id) FROM selecao WHERE id_concedente = c.id) as primeiro_id
-                                   FROM selecao s 
-                                   INNER JOIN concedentes c ON s.id_concedente = c.id';
-                            
-                            if (!empty($search)) {
-                                $sql .= ' WHERE (c.nome LIKE :search OR s.local LIKE :search)';
-                            }
-                            
-                            $sql .= ' GROUP BY c.id, c.nome, s.local, s.hora ORDER BY c.nome';
-                            
-                            $query = $pdo->prepare($sql);
-                            
-                            if (!empty($search)) {
-                                $query->bindValue(':search', '%' . $search . '%');
-                            }
-                            
-                            $query->execute();
-                            $result = $query->rowCount();
+    <!-- Search Bar -->
+    <div class="container mx-auto px-4">
+        <div class="search-container">
+            <form action="" method="GET" class="relative" role="search">
+                <label for="search" class="sr-only">Pesquisar vagas</label>
+                <input type="text" 
+                       id="search"
+                       name="search"
+                       class="search-input"
+                       placeholder="Pesquisar empresa, local ou horário..."
+                       value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>"
+                       aria-label="Pesquisar vagas">
+                <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" aria-hidden="true"></i>
+            </form>
+        </div>
+    </div>
 
-                            if ($result > 0) {
-                                foreach ($query as $form) {
-                                    echo "<tr class='hover:bg-gray-50'>";
-                                    echo "<td class='px-4 py-3'>" . htmlspecialchars($form['nome_empresa']) . "</td>";
-                                    echo "<td class='px-4 py-3'>" . htmlspecialchars($form['local']) . "</td>";
-                                    echo "<td class='px-4 py-3'>" . htmlspecialchars($form['hora']) . "</td>";
-                                    echo "<td class='px-4 py-3 text-center'>";
-                                    echo "<div class='flex justify-center gap-2'>";
-                                        // Botão Inscrever-se (apenas para aluno)
-                                        echo "<button onclick='showInscricaoModal(" . $form['primeiro_id'] . ")' 
-                                              class='text-green-600 hover:text-green-800 bg-green-50 rounded-full p-2 transition-colors' 
-                                              title='Inscrever-se no processo seletivo'
-                                              aria-label='Inscrever-se'>";
-                                        echo "<i class='fas fa-user-plus'></i>";
-                                        echo "</button>";
-                                        
-                                        // Botão Ver Inscritos
-                                        echo "<button onclick='showInscritosModal(" . $form['primeiro_id'] . ")' 
-                                              class='text-blue-600 hover:text-blue-800 bg-blue-50 rounded-full p-2 transition-colors' 
-                                              title='Ver lista de inscritos (" . $form['total_inscritos'] . " inscritos)'
-                                              aria-label='Ver lista de inscritos'>";
-                                        echo "<i class='fas fa-users'></i>";
-                                        echo "</button>";
-                                    echo "</div>";
-                                    echo "</td>";
-                                    echo "</tr>";
-                                }
-                            } else {
-                                echo "<tr><td colspan='4' class='px-4 py-3 text-center text-gray-500'>Nenhum processo seletivo disponível no momento.</td></tr>";
-                            }
-                        } catch (PDOException $e) {
-                            echo "<tr><td colspan='4' class='px-4 py-3 text-center text-red-500'>Erro ao conectar ao banco de dados: " . $e->getMessage() . "</td></tr>";
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-4">
+        <!-- Table View (Desktop) -->
+        <div class="table-container">
+            <table class="min-w-full">
+                <thead class="table-header">
+                    <tr>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Empresa</th>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Local</th>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Horário</th>
+                        <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase">Ações</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    <?php
+                    error_reporting(E_ALL);
+                    ini_set('display_errors', 1);
+                    
+                    try {
+                        $pdo = new PDO('mysql:host=localhost;dbname=estagio', 'root', '');
+                        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                        
+                        $search = isset($_GET['search']) ? $_GET['search'] : '';
+                        
+                        $sql = 'SELECT DISTINCT c.id as id_concedente, c.nome as nome_empresa,
+                               s.local, s.hora,
+                               (SELECT COUNT(*) FROM selecao WHERE id_concedente = c.id AND id_aluno IS NOT NULL) as total_inscritos,
+                               (SELECT MIN(id) FROM selecao WHERE id_concedente = c.id) as primeiro_id
+                               FROM selecao s 
+                               INNER JOIN concedentes c ON s.id_concedente = c.id';
+                        
+                        if (!empty($search)) {
+                            $sql .= ' WHERE (c.nome LIKE :search OR s.local LIKE :search)';
                         }
-                        ?>
-                    </tbody>
-                </table>
-            </div>
+                        
+                        $sql .= ' GROUP BY c.id, c.nome, s.local, s.hora ORDER BY c.nome';
+                        
+                        $query = $pdo->prepare($sql);
+                        
+                        if (!empty($search)) {
+                            $query->bindValue(':search', '%' . $search . '%');
+                        }
+                        
+                        $query->execute();
+                        $result = $query->rowCount();
+
+                        if ($result > 0) {
+                            foreach ($query as $form) {
+                                echo "<tr class='hover:bg-gray-50'>";
+                                echo "<td class='px-4 py-3'>" . htmlspecialchars($form['nome_empresa']) . "</td>";
+                                echo "<td class='px-4 py-3'>" . htmlspecialchars($form['local']) . "</td>";
+                                echo "<td class='px-4 py-3'>" . htmlspecialchars($form['hora']) . "</td>";
+                                echo "<td class='px-4 py-3 text-center'>";
+                                echo "<div class='flex justify-center gap-2'>";
+                                    // Botão Inscrever-se (apenas para aluno)
+                                    echo "<button onclick='showInscricaoModal(" . $form['primeiro_id'] . ")' 
+                                          class='text-green-600 hover:text-green-800 bg-green-50 rounded-full p-2 transition-colors' 
+                                          title='Inscrever-se no processo seletivo'
+                                          aria-label='Inscrever-se'>";
+                                    echo "<i class='fas fa-user-plus'></i>";
+                                    echo "</button>";
+                                    
+                                    // Botão Ver Inscritos
+                                    echo "<button onclick='showInscritosModal(" . $form['primeiro_id'] . ")' 
+                                          class='text-blue-600 hover:text-blue-800 bg-blue-50 rounded-full p-2 transition-colors' 
+                                          title='Ver lista de inscritos (" . $form['total_inscritos'] . " inscritos)'
+                                          aria-label='Ver lista de inscritos'>";
+                                    echo "<i class='fas fa-users'></i>";
+                                    echo "</button>";
+                                echo "</div>";
+                                echo "</td>";
+                                echo "</tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='4' class='px-4 py-3 text-center text-gray-500'>Nenhum processo seletivo disponível no momento.</td></tr>";
+                        }
+                    } catch (PDOException $e) {
+                        echo "<tr><td colspan='4' class='px-4 py-3 text-center text-red-500'>Erro ao conectar ao banco de dados: " . $e->getMessage() . "</td></tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Card View (Mobile) -->
+        <div class="md:hidden">
+            <?php
+            error_reporting(E_ALL);
+            ini_set('display_errors', 1);
+            
+            try {
+                $pdo = new PDO('mysql:host=localhost;dbname=estagio', 'root', '');
+                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                
+                $search = isset($_GET['search']) ? $_GET['search'] : '';
+                
+                $sql = 'SELECT DISTINCT c.id as id_concedente, c.nome as nome_empresa,
+                               s.local, s.hora,
+                               (SELECT COUNT(*) FROM selecao WHERE id_concedente = c.id AND id_aluno IS NOT NULL) as total_inscritos,
+                               (SELECT MIN(id) FROM selecao WHERE id_concedente = c.id) as primeiro_id
+                               FROM selecao s 
+                               INNER JOIN concedentes c ON s.id_concedente = c.id';
+                
+                if (!empty($search)) {
+                    $sql .= ' WHERE (c.nome LIKE :search OR s.local LIKE :search)';
+                }
+                
+                $sql .= ' GROUP BY c.id, c.nome, s.local, s.hora ORDER BY c.nome';
+                
+                $query = $pdo->prepare($sql);
+                
+                if (!empty($search)) {
+                    $query->bindValue(':search', '%' . $search . '%');
+                }
+                
+                $query->execute();
+                $result = $query->rowCount();
+
+                if ($result > 0) {
+                    foreach ($query as $form) {
+                        echo "<div class='card'>";
+                        echo "<div class='card-content'>";
+                        echo "<p class='text-lg font-semibold text-gray-800'>" . htmlspecialchars($form['nome_empresa']) . "</p>";
+                        echo "<p class='text-sm text-gray-600'>" . htmlspecialchars($form['local']) . "</p>";
+                        echo "<p class='text-sm text-gray-600'>" . htmlspecialchars($form['hora']) . "</p>";
+                        echo "</div>";
+                        echo "<div class='card-actions'>";
+                        echo "<button onclick='showInscricaoModal(" . $form['primeiro_id'] . ")' class='text-green-600 hover:text-green-800 bg-green-50 rounded-full p-2 transition-colors' title='Inscrever-se no processo seletivo' aria-label='Inscrever-se'>";
+                        echo "<i class='fas fa-user-plus'></i>";
+                        echo "</button>";
+                        echo "<button onclick='showInscritosModal(" . $form['primeiro_id'] . ")' class='text-blue-600 hover:text-blue-800 bg-blue-50 rounded-full p-2 transition-colors' title='Ver lista de inscritos (" . $form['total_inscritos'] . " inscritos)' aria-label='Ver lista de inscritos'>";
+                        echo "<i class='fas fa-users'></i>";
+                        echo "</button>";
+                        echo "</div>";
+                        echo "</div>";
+                    }
+                } else {
+                    echo "<div class='card'><div class='card-content'><p class='text-center text-gray-500'>Nenhum processo seletivo disponível no momento.</p></div></div>";
+                }
+            } catch (PDOException $e) {
+                echo "<div class='card'><div class='card-content'><p class='text-center text-red-500'>Erro ao conectar ao banco de dados: " . $e->getMessage() . "</p></div></div>";
+            }
+            ?>
         </div>
     </div>
 
     <!-- Modal de Inscrição -->
-    <div id="inscricaoModal" class="fixed inset-0 modal hidden items-center justify-center z-50">
-        <div class="modal-content p-6 max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+    <div id="inscricaoModal" class="fixed inset-0 bg-black bg-opacity-50 modal hidden items-center justify-center z-50">
+        <div class="modal-content p-6 max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto bg-white rounded-xl">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-xl font-bold text-gray-800">Inscrição no Processo Seletivo</h3>
                 <button onclick="closeModal('inscricaoModal')" class="text-gray-500 hover:text-gray-700">
@@ -343,7 +394,7 @@ session_start();
                 </button>
             </div>
             
-            <div id="empresaDetails" class="space-y-4">
+            <div id="empresaDetails" class="space-y-4 mb-6">
                 <!-- Detalhes da empresa serão preenchidos via JavaScript -->
             </div>
 
@@ -359,16 +410,17 @@ session_start();
                            class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-ceara-orange focus:border-transparent" 
                            autocomplete="off" 
                            placeholder="Digite o nome do aluno">
-                    <div id="alunoSuggestions" class="bg-white border rounded-lg shadow mt-1 hidden"></div>
+                    <div id="alunoSuggestions" class="bg-white border rounded-lg shadow mt-1 hidden absolute z-10 w-full max-h-48 overflow-y-auto"></div>
                 </div>
                 
                 <div class="mb-4">
                     <label class="block text-sm font-medium text-gray-700 mb-2">Perfis Disponíveis:</label>
                     <div id="perfisContainer" class="space-y-2"></div>
                 </div>
+
                 <div class="flex justify-end gap-4 mt-6">
-                    <button type="button" onclick="closeModal('inscricaoModal')" class="px-4 py-2 text-gray-600 hover:text-gray-800">Cancelar</button>
-                    <button type="submit" class="gradient-button text-white px-4 py-2 rounded-lg">Confirmar Inscrição</button>
+                    <button type="button" onclick="closeModal('inscricaoModal')" class="modal-button cancel">Cancelar</button>
+                    <button type="submit" class="modal-button submit">Confirmar Inscrição</button>
                 </div>
             </form>
         </div>

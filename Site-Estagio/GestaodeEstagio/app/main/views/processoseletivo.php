@@ -55,308 +55,308 @@
             border-width: 0;
         }
 
-        @media (max-width: 768px) {
-            .container {
-                padding-left: 1rem;
-                padding-right: 1rem;
-            }
-            
-            .grid {
-                display: grid;
-                gap: 1rem;
-            }
-            
-            .grid-cols-1 {
-                grid-template-columns: repeat(1, minmax(0, 1fr));
-            }
-            
-            .mobile-stack {
-                display: flex;
-                flex-direction: column;
-            }
-            
-            .mobile-full {
-                width: 100%;
-            }
-            
-            .mobile-padding {
-                padding: 1rem;
-            }
-            
-            .mobile-text-center {
-                text-align: center;
-            }
-            
-            .mobile-margin {
-                margin-bottom: 1rem;
-            }
-            
-            .mobile-table {
-                display: block;
-                overflow-x: auto;
-                white-space: nowrap;
-            }
-            
-            .mobile-table th,
-            .mobile-table td {
-                min-width: 120px;
-            }
-        }
-
         body {
             font-family: 'Roboto', sans-serif;
-            background: #f3f4f6; /* cinza claro */
+            background: #f3f4f6;
         }
-        .hover-scale {
-            transition: transform 0.3s ease-in-out;
-        }
-        .hover-scale:hover {
-            transform: scale(1.05);
-        }
-        .fade-in {
-            animation: fadeIn 1s ease-out forwards;
-        }
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        .back-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 16px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            color: #FFFFFF;
-            font-size: 0.9rem;
-            font-weight: 500;
-            text-decoration: none;
-            transition: all 0.2s ease;
-            backdrop-filter: blur(4px);
-        }
-        .back-button:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-        .back-button:focus {
-            outline: none;
-            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
-        }
-        .school-logo {
-            width: 40px;
-            height: 40px;
-            object-fit: contain;
-        }
-        .school-name {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #fff;
-            line-height: 1.2;
-        }
-        .header-moss {
+
+        .header {
             background: #2d4739;
-        }
-        .header-moss * {
-            color: #fff !important;
-        }
-        .header-moss input,
-        .header-moss input:focus {
-            color: #222 !important;
-            background: #fff !important;
-        }
-        .header-moss .fa-search {
-            color: #888 !important;
-        }
-        .main-list-container {
-            background: #fff;
-            border-radius: 1.5rem;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-            margin: 0 auto;
-            max-width: 1200px;
-            padding: 2rem 2rem 2rem 2rem;
-        }
-        .table th, .table td {
-            white-space: normal !important;
-        }
-        @media (max-width: 900px) {
-            .main-list-container {
-                padding: 1rem;
-            }
-        }
-        @media (max-width: 600px) {
-            .main-list-container {
-                padding: 0.5rem;
-            }
-        }
-        .grid {
-            display: grid;
-            gap: 1rem;
-        }
-        
-        @media (min-width: 640px) {
-            .grid-cols-2 {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-        }
-        
-        @media (min-width: 1024px) {
-            .grid-cols-3 {
-                grid-template-columns: repeat(3, minmax(0, 1fr));
-            }
+            padding: 0.5rem 0;
         }
 
-        .card-hover {
+        .header * {
+            color: #ffffff !important;
+        }
+
+        .transparent-button {
+            background: none;
             transition: all 0.3s ease;
-        }
-        
-        .card-hover:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            padding: 0.4rem 0.8rem;
+            font-size: 0.9rem;
+            color: #ffffff;
         }
 
-        .info-box {
-            background: #f9fafb;
+        .transparent-button:hover {
+            color: #FFA500;
+            transform: translateY(-1px);
+        }
+
+        .search-container {
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 0.5rem;
             padding: 0.75rem;
-            transition: background-color 0.2s ease;
+            margin: 0.75rem 0;
         }
-        
-        .info-box:hover {
-            background: #f3f4f6;
+
+        .search-input {
+            background: #ffffff;
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem 0.5rem 2.5rem;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            box-shadow: 0 0 0 2px rgba(255, 165, 0, 0.3);
+        }
+
+        .table-container {
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        .table-header {
+            background: #f8fafc;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .table-row {
+            transition: all 0.2s ease;
+        }
+
+        .table-row:hover {
+            background: #f8fafc;
+        }
+
+        .action-button {
+            padding: 0.4rem;
+            border-radius: 0.4rem;
+            transition: all 0.2s ease;
+            border: none;
+            background: none;
+        }
+
+        .action-button:hover {
+            transform: scale(1.1);
+        }
+
+        .card {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .table-container {
+                display: none;
+            }
+
+            .card {
+                display: block;
+                background: white;
+                border-radius: 0.75rem;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+                margin-bottom: 1rem;
+                padding: 1rem;
+            }
+
+            .card:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+
+            .card-content {
+                padding: 0.5rem;
+            }
+
+            .card-actions {
+                display: flex;
+                justify-content: flex-end;
+                gap: 0.5rem;
+                margin-top: 0.75rem;
+            }
+        }
+
+        .modal-button {
+            background: none;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.4rem;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+
+        .modal-button.cancel {
+            color: #6B7280;
+        }
+
+        .modal-button.cancel:hover {
+            background: #F3F4F6;
+        }
+
+        .modal-button.submit {
+            background: linear-gradient(to right, #FFA500, #008C45);
+            color: white;
+        }
+
+        .modal-button.submit:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
         }
     </style>
 </head>
 <body class="min-h-screen font-['Roboto'] select-none">
-    <!-- Cabeçalho verde musgo -->
-    <header class="header-moss w-full shadow-lg mb-8">
-        <div class="container mx-auto px-4 py-4">
+    <!-- Cabeçalho -->
+    <header class="header w-full mb-4">
+        <div class="container mx-auto px-4">
             <!-- Main header content -->
-            <div class="flex flex-col md:flex-row md:items-center gap-3">
+            <div class="flex items-center justify-between">
                 <!-- Left section with back button, logo and school name -->
-                <div class="flex items-center gap-3 flex-shrink-0">
-                    <a href="javascript:history.back()" class="back-button">
+                <div class="flex items-center gap-3">
+                    <a href="javascript:history.back()" class="transparent-button">
                         <i class="fas fa-arrow-left"></i> Voltar
                     </a>
-                    <img src="../config/img/logo_Salaberga-removebg-preview.png" alt="Logo EEEP Salaberga" class="school-logo">
+                    <img src="../config/img/logo_Salaberga-removebg-preview.png" alt="Logo EEEP Salaberga" class="w-10 h-10 object-contain">
                     <div class="flex flex-col">
-                        <span class="school-name">EEEP Salaberga</span>
-                        <h1 class="text-xl md:text-2xl font-bold mb-0">Formulários de Seleção</h1>
+                        <span class="text-sm font-medium">EEEP Salaberga</span>
+                        <h1 class="text-lg font-bold">Formulários de Seleção</h1>
                     </div>
                 </div>
 
-                <!-- Search bar - now takes more space -->
-                <form action="" method="GET" class="relative flex-1 min-w-[300px]" role="search">
-                    <label for="search" class="sr-only">Pesquisar formulários</label>
-                    <input type="text" 
-                           id="search"
-                           name="search"
-                           class="w-full px-4 py-2 pl-10 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-ceara-orange focus:border-transparent"
-                           placeholder="Pesquisar local, concedente, aluno..."
-                           value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>"
-                           aria-label="Pesquisar formulários">
-                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2" aria-hidden="true"></i>
-                </form>
-
                 <!-- Right section with action buttons -->
-                <div class="flex gap-2 flex-shrink-0">
-                    <a href="novo_formulario.php" class="bg-gradient-to-r from-ceara-orange to-ceara-green hover:from-ceara-green hover:to-ceara-orange text-white px-4 py-2 rounded-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 text-sm whitespace-nowrap">
-                        <i class="fas fa-plus" aria-hidden="true"></i>
-                        Novo Formulário
+                <div class="flex gap-2">
+                    <a href="novo_formulario.php" class="transparent-button flex items-center gap-1">
+                        <i class="fas fa-plus"></i>
+                        Novo
                     </a>
-                    <a href="Listar_inscricoes.php" class="bg-gradient-to-r from-ceara-orange to-ceara-green hover:from-ceara-green hover:to-ceara-orange text-white px-4 py-2 rounded-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 text-sm whitespace-nowrap">
-                        <i class="fas fa-list" aria-hidden="true"></i>
-                        Ver Inscrições
+                    <a href="Listar_inscricoes.php" class="transparent-button flex items-center gap-1">
+                        <i class="fas fa-list"></i>
+                        Inscrições
                     </a>
                 </div>
             </div>
         </div>
     </header>
-    <!-- Fim do cabeçalho -->
+
+    <!-- Search Bar -->
+    <div class="container mx-auto px-4">
+        <div class="search-container">
+            <form action="" method="GET" class="relative" role="search">
+                <label for="search" class="sr-only">Pesquisar formulários</label>
+                <input type="text" 
+                       id="search"
+                       name="search"
+                       class="search-input"
+                       placeholder="Pesquisar local, concedente, aluno..."
+                       value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>"
+                       aria-label="Pesquisar formulários">
+                <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" aria-hidden="true"></i>
+            </form>
+        </div>
+    </div>
 
     <!-- Lista centralizada -->
-    <div class="container mx-auto px-4 py-4 md:py-8 fade-in">
-        <div class="bg-white rounded-xl shadow-md p-4">
-            <div class="overflow-x-auto">
-                <table class="min-w-full table" role="grid">
-                    <thead class="bg-gray-50">
-                        <tr>
-                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Concedente</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Local</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Hora</th>
-                            <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase">Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-200">
-                        <?php
-                        $pdo = new PDO('mysql:host=localhost;dbname=estagio', 'root', '');
-                        $search = isset($_GET['search']) ? $_GET['search'] : '';
-                        if (!empty($search)) {
-                            $sql = 'SELECT DISTINCT c.id as id_concedente, c.nome as nome_concedente,
-                                   s.local, s.hora,
-                                   (SELECT COUNT(*) FROM selecao WHERE id_concedente = c.id AND id_aluno IS NOT NULL) as total_inscritos,
-                                   (SELECT MIN(id) FROM selecao WHERE id_concedente = c.id) as primeiro_id
-                                   FROM selecao s 
-                                   INNER JOIN concedentes c ON s.id_concedente = c.id 
-                                   WHERE c.nome LIKE :search OR s.local LIKE :search OR s.hora LIKE :search
-                                   GROUP BY c.id, c.nome, s.local, s.hora';
-                            $query = $pdo->prepare($sql);
-                            $query->bindValue(':search', '%' . $search . '%');
-                        } else {
-                            $sql = 'SELECT DISTINCT c.id as id_concedente, c.nome as nome_concedente,
-                                   s.local, s.hora,
-                                   (SELECT COUNT(*) FROM selecao WHERE id_concedente = c.id AND id_aluno IS NOT NULL) as total_inscritos,
-                                   (SELECT MIN(id) FROM selecao WHERE id_concedente = c.id) as primeiro_id
-                                   FROM selecao s 
-                                   INNER JOIN concedentes c ON s.id_concedente = c.id 
-                                   GROUP BY c.id, c.nome, s.local, s.hora
-                                   ORDER BY c.nome';
-                            $query = $pdo->prepare($sql);
-                        }
-                        $query->execute();
-                        $result = $query->rowCount();
+    <div class="container mx-auto px-4 py-4">
+        <!-- Table View (Desktop) -->
+        <div class="table-container">
+            <table class="min-w-full">
+                <thead class="table-header">
+                    <tr>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Concedente</th>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Local</th>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Hora</th>
+                        <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase">Inscritos</th>
+                        <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase">Ações</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    <?php
+                    $pdo = new PDO('mysql:host=localhost;dbname=estagio', 'root', '');
+                    $search = isset($_GET['search']) ? $_GET['search'] : '';
+                    if (!empty($search)) {
+                        $sql = 'SELECT DISTINCT c.id as id_concedente, c.nome as nome_concedente,
+                               s.local, s.hora,
+                               (SELECT COUNT(*) FROM selecao WHERE id_concedente = c.id AND id_aluno IS NOT NULL) as total_inscritos,
+                               (SELECT MIN(id) FROM selecao WHERE id_concedente = c.id) as primeiro_id
+                               FROM selecao s 
+                               INNER JOIN concedentes c ON s.id_concedente = c.id 
+                               WHERE c.nome LIKE :search OR s.local LIKE :search OR s.hora LIKE :search
+                               GROUP BY c.id, c.nome, s.local, s.hora';
+                        $query = $pdo->prepare($sql);
+                        $query->bindValue(':search', '%' . $search . '%');
+                    } else {
+                        $sql = 'SELECT DISTINCT c.id as id_concedente, c.nome as nome_concedente,
+                               s.local, s.hora,
+                               (SELECT COUNT(*) FROM selecao WHERE id_concedente = c.id AND id_aluno IS NOT NULL) as total_inscritos,
+                               (SELECT MIN(id) FROM selecao WHERE id_concedente = c.id) as primeiro_id
+                               FROM selecao s 
+                               INNER JOIN concedentes c ON s.id_concedente = c.id 
+                               GROUP BY c.id, c.nome, s.local, s.hora
+                               ORDER BY c.nome';
+                        $query = $pdo->prepare($sql);
+                    }
+                    $query->execute();
+                    $result = $query->rowCount();
 
-                        if ($result > 0) {
-                            foreach ($query as $form) {
-                                echo "<tr class='hover:bg-gray-50'>";
-                                echo "<td class='px-4 py-3'>" . htmlspecialchars($form['nome_concedente']) . "</td>";
-                                echo "<td class='px-4 py-3'>" . htmlspecialchars($form['local']) . "</td>";
-                                echo "<td class='px-4 py-3'>" . htmlspecialchars($form['hora']) . "</td>";
-                                echo "<td class='px-4 py-3 text-center'>";
-                                echo "<div class='flex justify-center gap-2'>";
-                                    // Botão Inscrever-se (apenas para admin)
-                                    echo "<button onclick='showInscricaoModal(" . $form['primeiro_id'] . ")' 
-                                          class='text-green-600 hover:text-green-800 bg-green-50 rounded-full p-2 transition-colors' 
-                                          title='Inscrever aluno no processo seletivo'
-                                          aria-label='Inscrever aluno'>";
-                                    echo "<i class='fas fa-user-plus'></i>";
-                                    echo "</button>";
-                                        
-                                    // Botão Ver Inscritos
-                                    echo "<button onclick='showInscritosModal(" . $form['primeiro_id'] . ")' 
-                                          class='text-blue-600 hover:text-blue-800 bg-blue-50 rounded-full p-2 transition-colors' 
-                                          title='Ver lista de inscritos (" . $form['total_inscritos'] . " inscritos)'
-                                          aria-label='Ver lista de inscritos'>";
-                                    echo "<i class='fas fa-users'></i>";
-                                    echo "</button>";
-                                echo "</div>";
-                                echo "</td>";
-                                echo "</tr>";
-                            }
-                        } else {
-                            echo "<tr><td colspan='4' class='text-center text-gray-500 py-4'>Nenhum formulário encontrado.</td></tr>";
+                    if ($result > 0) {
+                        foreach ($query as $form) {
+                            echo "<tr class='table-row'>";
+                            echo "<td class='px-4 py-3 text-sm'>" . htmlspecialchars($form['nome_concedente']) . "</td>";
+                            echo "<td class='px-4 py-3 text-sm'>" . htmlspecialchars($form['local']) . "</td>";
+                            echo "<td class='px-4 py-3 text-sm'>" . htmlspecialchars($form['hora']) . "</td>";
+                            echo "<td class='px-4 py-3 text-sm text-center'>" . $form['total_inscritos'] . "</td>";
+                            echo "<td class='px-4 py-3 text-center'>";
+                            echo "<div class='flex justify-center gap-2'>";
+                            echo "<button onclick='showInscricaoModal(" . $form['primeiro_id'] . ")' 
+                                  class='action-button text-green-600 hover:text-green-800 bg-green-50' 
+                                  title='Inscrever aluno no processo seletivo'
+                                  aria-label='Inscrever aluno'>";
+                            echo "<i class='fas fa-user-plus'></i>";
+                            echo "</button>";
+                            echo "<button onclick='showInscritosModal(" . $form['primeiro_id'] . ")' 
+                                  class='action-button text-blue-600 hover:text-blue-800 bg-blue-50' 
+                                  title='Ver lista de inscritos'
+                                  aria-label='Ver lista de inscritos'>";
+                            echo "<i class='fas fa-users'></i>";
+                            echo "</button>";
+                            echo "</div>";
+                            echo "</td>";
+                            echo "</tr>";
                         }
-                        ?>
-                    </tbody>
-                </table>
-            </div>
+                    } else {
+                        echo "<tr><td colspan='5' class='text-center text-gray-500 py-4'>Nenhum formulário encontrado.</td></tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Card View (Mobile) -->
+        <div class="md:hidden">
+            <?php
+            if ($result > 0) {
+                foreach ($query as $form) {
+                    echo '<div class="card">';
+                    echo '<div class="card-content">';
+                    echo '<h3 class="text-base font-semibold text-gray-800 mb-2">' . htmlspecialchars($form['nome_concedente']) . '</h3>';
+                    echo '<div class="space-y-1">';
+                    echo '<p class="text-sm text-gray-600"><i class="fas fa-map-marker-alt mr-2"></i>' . htmlspecialchars($form['local']) . '</p>';
+                    echo '<p class="text-sm text-gray-600"><i class="fas fa-clock mr-2"></i>' . htmlspecialchars($form['hora']) . '</p>';
+                    echo '<p class="text-sm text-gray-600"><i class="fas fa-users mr-2"></i>' . $form['total_inscritos'] . ' inscritos</p>';
+                    echo '</div>';
+                    echo '<div class="card-actions">';
+                    echo '<button onclick="showInscricaoModal(' . $form['primeiro_id'] . ')" 
+                          class="action-button text-green-600 hover:text-green-800 bg-green-50" 
+                          title="Inscrever aluno no processo seletivo"
+                          aria-label="Inscrever aluno">';
+                    echo '<i class="fas fa-user-plus"></i>';
+                    echo '</button>';
+                    echo '<button onclick="showInscritosModal(' . $form['primeiro_id'] . ')" 
+                          class="action-button text-blue-600 hover:text-blue-800 bg-blue-50" 
+                          title="Ver lista de inscritos"
+                          aria-label="Ver lista de inscritos">';
+                    echo '<i class="fas fa-users"></i>';
+                    echo '</button>';
+                    echo '</div>';
+                    echo '</div>';
+                    echo '</div>';
+                }
+            } else {
+                echo '<div class="text-center text-gray-500 py-4">Nenhum formulário encontrado.</div>';
+            }
+            ?>
         </div>
     </div>
 
@@ -410,8 +410,8 @@
                 </div>
 
                 <div class="flex justify-end gap-4 mt-6">
-                    <button type="button" onclick="closeModal('inscricaoModal')" class="px-4 py-2 text-gray-600 hover:text-gray-800">Cancelar</button>
-                    <button type="submit" class="px-4 py-2 bg-gradient-to-r from-ceara-orange to-ceara-green hover:from-ceara-green hover:to-ceara-orange text-white rounded-lg transition-all duration-300">Confirmar Inscrição</button>
+                    <button type="button" onclick="closeModal('inscricaoModal')" class="modal-button cancel">Cancelar</button>
+                    <button type="submit" class="modal-button submit">Confirmar Inscrição</button>
                 </div>
             </form>
         </div>

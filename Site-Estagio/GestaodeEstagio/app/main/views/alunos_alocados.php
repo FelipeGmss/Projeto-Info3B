@@ -54,55 +54,54 @@ try {
             background: #f3f4f6;
         }
 
-        .header-moss {
+        .header {
             background: #2d4739;
+            padding: 0.5rem 0;
         }
-        .header-moss * {
-            color: #fff !important;
+
+        .header * {
+            color: #ffffff !important;
+        }
+
+        .transparent-button {
+            background: none;
+            transition: all 0.3s ease;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.9rem;
+            color: #ffffff;
+        }
+
+        .transparent-button:hover {
+            color: #FFA500;
+            transform: translateY(-1px);
         }
 
         .main-list-container {
-            background: #fff;
-            border-radius: 1.5rem;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-            margin: 0 auto;
-            max-width: 1200px;
-            padding: 2rem;
-        }
-
-        .back-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 16px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            color: #FFFFFF;
-            font-size: 0.9rem;
-            font-weight: 500;
-            text-decoration: none;
-            transition: all 0.2s ease;
-        }
-        .back-button:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-1px);
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            padding: 1.5rem;
         }
 
         .student-card {
             transition: all 0.2s ease;
             border-left: 4px solid transparent;
         }
+
         .student-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
+
         .student-card.alocado {
             border-left-color: #008C45;
         }
+
         .student-card.pendente {
             border-left-color: #FFA500;
         }
+
         .student-card.nao-alocado {
             border-left-color: #DC2626;
         }
@@ -116,14 +115,17 @@ try {
             font-size: 0.75rem;
             font-weight: 500;
         }
+
         .status-badge.alocado {
             background-color: #D1FAE5;
             color: #065F46;
         }
+
         .status-badge.pendente {
             background-color: #FEF3C7;
             color: #92400E;
         }
+
         .status-badge.nao-alocado {
             background-color: #FEE2E2;
             color: #991B1B;
@@ -132,14 +134,17 @@ try {
 </head>
 <body class="min-h-screen">
     <!-- Cabeçalho -->
-    <header class="header-moss w-full shadow-lg mb-8">
-        <div class="container mx-auto px-4 py-4">
-            <div class="flex flex-col md:flex-row md:items-center gap-3">
+    <header class="header w-full mb-4">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between">
                 <div class="flex items-center gap-3">
-                    <a href="javascript:history.back()" class="back-button">
+                    <a href="javascript:history.back()" class="transparent-button">
                         <i class="fas fa-arrow-left"></i> Voltar
                     </a>
-                    <h1 class="text-xl md:text-2xl font-bold mb-0">Status de Alocação dos Alunos</h1>
+                    <div class="flex flex-col">
+                        <span class="text-sm font-medium">EEEP Salaberga</span>
+                        <h1 class="text-lg font-bold">Status de Alocação dos Alunos</h1>
+                    </div>
                 </div>
             </div>
         </div>

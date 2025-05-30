@@ -232,17 +232,6 @@
                                         <i class="fas fa-clipboard-list"></i>
                                         Processo Seletivo
                                     </a>
-                                    <form action="../controllers/Controller-excluir_alunos.php" method="POST" 
-                                          onsubmit="return confirm('Tem certeza que deseja excluir este aluno?');"
-                                          class="w-full sm:w-auto">
-                                        <input type="hidden" name="btn" value="<?php echo htmlspecialchars($aluno['id']); ?>">
-                                        <button type="submit" 
-                                                class="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors flex items-center justify-center gap-2"
-                                                aria-label="Excluir aluno">
-                                            <i class="fas fa-trash"></i>
-                                            Excluir Aluno
-                                        </button>
-                                    </form>
                                 </div>
                             </div>
                         </div>

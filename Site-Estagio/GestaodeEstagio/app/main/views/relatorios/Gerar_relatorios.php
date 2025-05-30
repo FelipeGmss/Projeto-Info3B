@@ -36,31 +36,17 @@
             color: #fff !important;
         }
 
-        .back-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 16px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            color: #FFFFFF;
+        .transparent-button {
+            background: none;
+            transition: all 0.3s ease;
+            padding: 0.4rem 0.8rem;
             font-size: 0.9rem;
-            font-weight: 500;
-            text-decoration: none;
-            transition: all 0.2s ease;
-            backdrop-filter: blur(4px);
-        }
-        .back-button:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            color: #ffffff;
         }
 
-        .school-logo {
-            width: 40px;
-            height: 40px;
-            object-fit: contain;
+        .transparent-button:hover {
+            color: #FFA500;
+            transform: translateY(-1px);
         }
 
         .main-container {
@@ -111,15 +97,16 @@
     <!-- Cabeçalho verde musgo -->
     <header class="header-moss w-full shadow-lg mb-8">
         <div class="container mx-auto px-4 py-4">
-            <div class="flex flex-col md:flex-row md:items-center gap-3">
+            <div class="flex items-center justify-between">
+                <!-- Left section with back button, logo and school name -->
                 <div class="flex items-center gap-3">
-                    <a href="javascript:history.back()" class="back-button">
+                    <a href="javascript:history.back()" class="transparent-button">
                         <i class="fas fa-arrow-left"></i> Voltar
                     </a>
-                    <img src="../config/img/logo_Salaberga-removebg-preview.png" alt="Logo EEEP Salaberga" class="school-logo">
+                    <img src="../../config/img/logo_Salaberga-removebg-preview.png" alt="Logo EEEP Salaberga" class="w-10 h-10 object-contain">
                     <div class="flex flex-col">
-                        <span class="text-sm font-semibold">EEEP Salaberga</span>
-                        <h1 class="text-xl md:text-2xl font-bold mb-0">Geração de Relatórios</h1>
+                        <span class="text-sm font-medium">EEEP Salaberga</span>
+                        <h1 class="text-lg font-bold">Geração de Relatórios</h1>
                     </div>
                 </div>
             </div>
@@ -168,7 +155,7 @@
                                 <input type="text" name="local_aluno" class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-ceara-orange focus:border-transparent" placeholder="Local do aluno">
                             </div>
                         </div>
-                        <button type="submit" class="gradient-button text-white px-6 py-2 rounded-lg w-full flex items-center justify-center gap-2">
+                        <button type="submit" class="bg-gradient-to-r from-ceara-orange to-ceara-green hover:from-ceara-green hover:to-ceara-orange text-white px-4 py-2 rounded-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 text-sm whitespace-nowrap">
                             <i class="fas fa-file-pdf"></i>
                             Gerar Relatório
                         </button>
@@ -213,7 +200,7 @@
                                 </select>
                             </div>
                         </div>
-                        <button type="submit" class="gradient-button text-white px-6 py-2 rounded-lg w-full flex items-center justify-center gap-2">
+                        <button type="submit" class="bg-gradient-to-r from-ceara-orange to-ceara-green hover:from-ceara-green hover:to-ceara-orange text-white px-4 py-2 rounded-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 text-sm whitespace-nowrap">
                             <i class="fas fa-file-pdf"></i>
                             Gerar Relatório
                         </button>
@@ -248,7 +235,7 @@
                                 </select>
                             </div>
                         </div>
-                        <button type="submit" class="gradient-button text-white px-6 py-2 rounded-lg w-full flex items-center justify-center gap-2">
+                        <button type="submit" class="bg-gradient-to-r from-ceara-orange to-ceara-green hover:from-ceara-green hover:to-ceara-orange text-white px-4 py-2 rounded-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 text-sm whitespace-nowrap">
                             <i class="fas fa-file-pdf"></i>
                             Gerar Relatório
                         </button>

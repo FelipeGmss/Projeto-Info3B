@@ -15,6 +15,7 @@
                         'ceara-green': '#008C45',
                         'ceara-orange': '#FFA500',
                         'ceara-white': '#FFFFFF',
+                        'ceara-moss': '#2d4739',
                         primary: '#008C45',
                         secondary: '#FFA500',
                     }
@@ -210,66 +211,178 @@
                 padding: 0.5rem;
             }
         }
+
+        .header {
+            background: #2d4739;
+            padding: 0.5rem 0;
+        }
+
+        .header * {
+            color: #ffffff !important;
+        }
+
+        .transparent-button {
+            background: none;
+            transition: all 0.3s ease;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.9rem;
+            color: #ffffff;
+        }
+
+        .transparent-button:hover {
+            color: #FFA500;
+            transform: translateY(-1px);
+        }
+
+        .search-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+            margin: 0.75rem 0;
+        }
+
+        .search-input {
+            background: #ffffff;
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem 0.5rem 2.5rem;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            box-shadow: 0 0 0 2px rgba(255, 165, 0, 0.3);
+        }
+
+        .table-container {
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        .table-header {
+            background: #f8fafc;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .table-row {
+            transition: all 0.2s ease;
+        }
+
+        .table-row:hover {
+            background: #f8fafc;
+        }
+
+        .action-button {
+            padding: 0.4rem;
+            border-radius: 0.4rem;
+            transition: all 0.2s ease;
+            border: none;
+            background: none;
+        }
+
+        .action-button:hover {
+            transform: scale(1.1);
+        }
+
+        .card {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .table-container {
+                display: none;
+            }
+
+            .card {
+                display: block;
+                background: white;
+                border-radius: 0.75rem;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+                margin-bottom: 1rem;
+                padding: 1rem;
+            }
+
+            .card:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+
+            .card-content {
+                padding: 0.5rem;
+            }
+
+            .card-actions {
+                display: flex;
+                justify-content: flex-end;
+                gap: 0.5rem;
+                margin-top: 0.75rem;
+            }
+        }
     </style>
 </head>
 <body class="min-h-screen font-['Roboto'] select-none">
-    <!-- Cabeçalho verde musgo -->
-    <header class="header-moss w-full shadow-lg mb-8">
-        <div class="container mx-auto px-4 py-4">
+    <!-- Cabeçalho -->
+    <header class="header w-full mb-4">
+        <div class="container mx-auto px-4">
             <!-- Main header content -->
-            <div class="flex flex-col md:flex-row md:items-center gap-3">
+            <div class="flex items-center justify-between">
                 <!-- Left section with back button, logo and school name -->
-                <div class="flex items-center gap-3 flex-shrink-0">
-                    <a href="javascript:history.back()" class="back-button">
+                <div class="flex items-center gap-3">
+                    <a href="javascript:history.back()" class="transparent-button">
                         <i class="fas fa-arrow-left"></i> Voltar
                     </a>
-                    <img src="../config/img/logo_Salaberga-removebg-preview.png" alt="Logo EEEP Salaberga" class="school-logo">
+                    <img src="../config/img/logo_Salaberga-removebg-preview.png" alt="Logo EEEP Salaberga" class="w-10 h-10 object-contain">
                     <div class="flex flex-col">
-                        <span class="school-name">EEEP Salaberga</span>
-                        <h1 class="text-xl md:text-2xl font-bold mb-0">Dados das Empresas</h1>
+                        <span class="text-sm font-medium">EEEP Salaberga</span>
+                        <h1 class="text-lg font-bold">Dados das Empresas</h1>
                     </div>
                 </div>
 
-                <!-- Search bar - now takes more space -->
-                <form action="" method="GET" class="relative flex-1 min-w-[300px]" role="search">
-                    <label for="search" class="sr-only">Pesquisar empresas</label>
-                    <input type="text" 
-                           id="search"
-                           name="search"
-                           class="w-full px-4 py-2 pl-10 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-ceara-orange focus:border-transparent"
-                           placeholder="Pesquisar empresas..."
-                           value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>"
-                           aria-label="Pesquisar empresas">
-                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2" aria-hidden="true"></i>
-                </form>
-
                 <!-- Right section with action buttons -->
-                <div class="flex gap-2 flex-shrink-0">
-                    <a href="../views/relatorios/relatorio.php?php echo isset($_GET['search']) && $_GET['search'] != '' ? '?search=' . urlencode($_GET['search']) : ''; ?>" class="bg-gradient-to-r from-ceara-orange to-ceara-green hover:from-ceara-green hover:to-ceara-orange text-white px-4 py-2 rounded-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 text-sm whitespace-nowrap">
-                        <i class="fas fa-file-pdf" aria-hidden="true"></i>
-                        Gerar PDF
+                <div class="flex gap-2">
+                    <a href="../views/relatorios/relatorio.php" class="transparent-button">
+                        <i class="fas fa-file-pdf"></i> Gerar PDF
                     </a>
-                    <a href="../views/cadastrodaempresa.php" class="bg-gradient-to-r from-ceara-orange to-ceara-green hover:from-ceara-green hover:to-ceara-orange text-white px-4 py-2 rounded-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 text-sm whitespace-nowrap">
-                        <i class="fas fa-plus" aria-hidden="true"></i>
-                        Nova Empresa
+                    <a href="../views/cadastrodaempresa.php" class="transparent-button">
+                        <i class="fas fa-plus"></i> Nova Empresa
                     </a>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Lista centralizada -->
-    <div class="main-list-container mt-4 mb-8">
-        <div class="overflow-x-auto">
-            <table class="min-w-full table" role="grid">
-                <thead class="bg-gray-50">
+    <!-- Search Bar -->
+    <div class="container mx-auto px-4">
+        <div class="search-container">
+            <form action="" method="GET" class="relative" role="search">
+                <label for="search" class="sr-only">Pesquisar empresas</label>
+                <input type="text" 
+                       id="search"
+                       name="search"
+                       class="search-input"
+                       placeholder="Pesquisar por nome, contato, endereço..."
+                       value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>"
+                       aria-label="Pesquisar empresas">
+                <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" aria-hidden="true"></i>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-4">
+        <!-- Table View (Desktop) -->
+        <div class="table-container">
+            <table class="min-w-full">
+                <thead class="table-header">
                     <tr>
-                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Empresa</th>
-                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Contato</th>
-                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Endereço</th>
-                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Perfil</th>
-                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Vagas</th>
-                        <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase">Ações</th>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Empresa</th>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Contato</th>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Endereço</th>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Perfil</th>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Vagas</th>
+                        <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase">Ações</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200">
@@ -293,41 +406,33 @@
 
                     if ($result > 0) {
                         foreach ($query as $value) {
-                            echo "<tr class='table-row hover:bg-gray-50 transition-colors cursor-pointer' role='row'>";
-                            echo "<td class='px-4 py-3 whitespace-nowrap' role='cell' onclick='showCompanyDetails(" . json_encode($value) . ")'>";
+                            echo "<tr class='table-row cursor-pointer hover:bg-gray-50' onclick='showCompanyDetails(" . json_encode($value) . ")'>";
+                            echo "<td class='px-4 py-3'>";
                             echo "<div class='flex items-center'>";
-                            echo "<div class='flex-shrink-0 h-8 w-8 md:h-10 md:w-10'>";
-                            echo "<img class='h-8 w-8 md:h-10 md:w-10 rounded-full' src='https://ui-avatars.com/api/?name=" . urlencode($value['nome']) . "' alt='Logo da empresa " . htmlspecialchars($value['nome']) . "'>";
+                            echo "<div class='flex-shrink-0 h-8 w-8'>";
+                            echo "<img class='h-8 w-8 rounded-full' src='https://ui-avatars.com/api/?name=" . urlencode($value['nome']) . "' alt='Logo da empresa " . htmlspecialchars($value['nome']) . "'>";
                             echo "</div>";
-                            echo "<div class='ml-2 md:ml-4'>";
+                            echo "<div class='ml-3'>";
                             echo "<div class='text-sm font-medium text-gray-900'>" . htmlspecialchars($value['nome']) . "</div>";
                             echo "</div>";
                             echo "</div>";
                             echo "</td>";
-                            echo "<td class='px-4 py-3 whitespace-nowrap' role='cell' onclick='showCompanyDetails(" . json_encode($value) . ")'>";
-                            echo "<div class='text-sm text-gray-900'>" . htmlspecialchars($value['contato']) . "</div>";
-                            echo "</td>";
-                            echo "<td class='px-4 py-3 whitespace-nowrap' role='cell' onclick='showCompanyDetails(" . json_encode($value) . ")'>";
-                            echo "<div class='text-sm text-gray-900'>" . htmlspecialchars($value['endereco']) . "</div>";
-                            echo "</td>";
-                            echo "<td class='px-4 py-3 whitespace-nowrap' role='cell' onclick='showCompanyDetails(" . json_encode($value) . ")'>";
-                            echo "<div class='text-sm text-gray-900'>" . htmlspecialchars($value['perfil']) . "</div>";
-                            echo "</td>";
-                            echo "<td class='px-4 py-3 whitespace-nowrap' role='cell' onclick='showCompanyDetails(" . json_encode($value) . ")'>";
-                            echo "<div class='text-sm text-gray-900'>" . htmlspecialchars($value['numero_vagas']) . "</div>";
-                            echo "</td>";
-                            echo "<td class='px-4 py-3 whitespace-nowrap text-sm font-medium' role='cell'>";
-                            echo "<div class='flex items-center justify-center gap-2'>";
+                            echo "<td class='px-4 py-3 text-sm text-gray-900'>" . htmlspecialchars($value['contato']) . "</td>";
+                            echo "<td class='px-4 py-3 text-sm text-gray-900'>" . htmlspecialchars($value['endereco']) . "</td>";
+                            echo "<td class='px-4 py-3 text-sm text-gray-900'>" . htmlspecialchars($value['perfil']) . "</td>";
+                            echo "<td class='px-4 py-3 text-sm text-gray-900'>" . htmlspecialchars($value['numero_vagas']) . "</td>";
+                            echo "<td class='px-4 py-3 text-center' onclick='event.stopPropagation();'>";
+                            echo "<div class='flex justify-center gap-2'>";
                             echo "<form action='../controllers/Controller-botao_acao.php' method='GET' style='display: inline;'>";
                             echo "<input type='hidden' name='btn-editar_empresa' value='" . htmlspecialchars($value['id']) . "'>";
                             echo "<button type='submit' class='text-ceara-orange hover:text-ceara-green' aria-label='Editar empresa " . htmlspecialchars($value['nome']) . "'>";
-                            echo "<i class='fas fa-edit' aria-hidden='true'></i>";
+                            echo "<i class='fas fa-edit'></i>";
                             echo "</button>";
                             echo "</form>";
                             echo "<form action='../controllers/Controller-excluir_empresa.php' method='POST' style='display: inline;' onsubmit='return confirm(\"Tem certeza que deseja excluir esta empresa?\");'>";
                             echo "<input type='hidden' name='btn-excluir' value='" . htmlspecialchars($value['id']) . "'>";
                             echo "<button type='submit' class='text-red-600 hover:text-red-800' aria-label='Excluir empresa " . htmlspecialchars($value['nome']) . "'>";
-                            echo "<i class='fas fa-trash' aria-hidden='true'></i>";
+                            echo "<i class='fas fa-trash'></i>";
                             echo "</button>";
                             echo "</form>";
                             echo "</div>";
@@ -335,11 +440,51 @@
                             echo "</tr>";
                         }
                     } else {
-                        echo "<tr><td colspan='6' class='px-4 py-3 text-center text-gray-500' role='cell'>Nenhuma empresa cadastrada</td></tr>";
+                        echo "<tr><td colspan='6' class='px-4 py-3 text-center text-gray-500'>Nenhuma empresa cadastrada</td></tr>";
                     }
                     ?>
                 </tbody>
             </table>
+        </div>
+
+        <!-- Card View (Mobile) -->
+        <div class="md:hidden">
+            <?php
+            if ($result > 0) {
+                foreach ($query as $value) {
+                    echo "<div class='card'>";
+                    echo "<div class='card-content'>";
+                    echo "<div class='flex items-center gap-3 mb-2'>";
+                    echo "<img class='h-10 w-10 rounded-full' src='https://ui-avatars.com/api/?name=" . urlencode($value['nome']) . "' alt='Logo da empresa " . htmlspecialchars($value['nome']) . "'>";
+                    echo "<div>";
+                    echo "<p class='text-lg font-semibold text-gray-800'>" . htmlspecialchars($value['nome']) . "</p>";
+                    echo "<p class='text-sm text-gray-600'>" . htmlspecialchars($value['perfil']) . "</p>";
+                    echo "</div>";
+                    echo "</div>";
+                    echo "<p class='text-sm text-gray-600'><i class='fas fa-phone mr-2'></i>" . htmlspecialchars($value['contato']) . "</p>";
+                    echo "<p class='text-sm text-gray-600'><i class='fas fa-map-marker-alt mr-2'></i>" . htmlspecialchars($value['endereco']) . "</p>";
+                    echo "<p class='text-sm text-gray-600'><i class='fas fa-users mr-2'></i>" . htmlspecialchars($value['numero_vagas']) . " vagas</p>";
+                    echo "</div>";
+                    echo "<div class='card-actions'>";
+                    echo "<form action='../controllers/Controller-botao_acao.php' method='GET' style='display: inline;'>";
+                    echo "<input type='hidden' name='btn-editar_empresa' value='" . htmlspecialchars($value['id']) . "'>";
+                    echo "<button type='submit' class='text-ceara-orange hover:text-ceara-green' aria-label='Editar empresa " . htmlspecialchars($value['nome']) . "'>";
+                    echo "<i class='fas fa-edit'></i>";
+                    echo "</button>";
+                    echo "</form>";
+                    echo "<form action='../controllers/Controller-excluir_empresa.php' method='POST' style='display: inline;' onsubmit='return confirm(\"Tem certeza que deseja excluir esta empresa?\");'>";
+                    echo "<input type='hidden' name='btn-excluir' value='" . htmlspecialchars($value['id']) . "'>";
+                    echo "<button type='submit' class='text-red-600 hover:text-red-800' aria-label='Excluir empresa " . htmlspecialchars($value['nome']) . "'>";
+                    echo "<i class='fas fa-trash'></i>";
+                    echo "</button>";
+                    echo "</form>";
+                    echo "</div>";
+                    echo "</div>";
+                }
+            } else {
+                echo "<div class='card'><div class='card-content'><p class='text-center text-gray-500'>Nenhuma empresa cadastrada</p></div></div>";
+            }
+            ?>
         </div>
     </div>
 
