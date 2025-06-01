@@ -198,6 +198,74 @@ session_start();
                 margin-top: 0.75rem;
             }
         }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+        }
+
+        .modal.flex {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .modal-button {
+            background: none;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.4rem;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+
+        .modal-button.cancel {
+            color: #6B7280;
+        }
+
+        .modal-button.cancel:hover {
+            background: #F3F4F6;
+        }
+
+        .modal-button.submit {
+            background: linear-gradient(to right, #FFA500, #008C45);
+            color: white;
+        }
+
+        .modal-button.submit:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .suggestions-container {
+            position: absolute;
+            width: 100%;
+            max-height: 200px;
+            overflow-y: auto;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            z-index: 50;
+        }
+
+        .suggestion-item {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .suggestion-item:hover {
+            background-color: #f3f4f6;
+        }
+
+        .suggestion-item.selected {
+            background-color: #e5e7eb;
+        }
     </style>
 </head>
 <body class="min-h-screen font-['Roboto'] select-none">
@@ -295,16 +363,16 @@ session_start();
                                     // Botão Inscrever-se (apenas para aluno)
                                     echo "<button onclick='showInscricaoModal(" . $form['primeiro_id'] . ")' 
                                           class='text-green-600 hover:text-green-800 bg-green-50 rounded-full p-2 transition-colors' 
-                                          title='Inscrever-se no processo seletivo'
-                                          aria-label='Inscrever-se'>";
+                                          title='Inscrever aluno no processo seletivo'
+                                          aria-label='Inscrever aluno'>";
                                     echo "<i class='fas fa-user-plus'></i>";
                                     echo "</button>";
                                     
                                     // Botão Ver Inscritos
                                     echo "<button onclick='showInscritosModal(" . $form['primeiro_id'] . ")' 
                                           class='text-blue-600 hover:text-blue-800 bg-blue-50 rounded-full p-2 transition-colors' 
-                                          title='Ver lista de inscritos (" . $form['total_inscritos'] . " inscritos)'
-                                          aria-label='Ver lista de inscritos'>";
+                                          title='Ver alunos inscritos'
+                                          aria-label='Ver inscritos'>";
                                     echo "<i class='fas fa-users'></i>";
                                     echo "</button>";
                                 echo "</div>";
@@ -365,10 +433,16 @@ session_start();
                         echo "<p class='text-sm text-gray-600'>" . htmlspecialchars($form['hora']) . "</p>";
                         echo "</div>";
                         echo "<div class='card-actions'>";
-                        echo "<button onclick='showInscricaoModal(" . $form['primeiro_id'] . ")' class='text-green-600 hover:text-green-800 bg-green-50 rounded-full p-2 transition-colors' title='Inscrever-se no processo seletivo' aria-label='Inscrever-se'>";
+                        echo "<button onclick='showInscricaoModal(" . $form['primeiro_id'] . ")' 
+                              class='text-green-600 hover:text-green-800 bg-green-50 rounded-full p-2 transition-colors' 
+                              title='Inscrever aluno no processo seletivo'
+                              aria-label='Inscrever aluno'>";
                         echo "<i class='fas fa-user-plus'></i>";
                         echo "</button>";
-                        echo "<button onclick='showInscritosModal(" . $form['primeiro_id'] . ")' class='text-blue-600 hover:text-blue-800 bg-blue-50 rounded-full p-2 transition-colors' title='Ver lista de inscritos (" . $form['total_inscritos'] . " inscritos)' aria-label='Ver lista de inscritos'>";
+                        echo "<button onclick='showInscritosModal(" . $form['primeiro_id'] . ")' 
+                              class='text-blue-600 hover:text-blue-800 bg-blue-50 rounded-full p-2 transition-colors' 
+                              title='Ver alunos inscritos'
+                              aria-label='Ver inscritos'>";
                         echo "<i class='fas fa-users'></i>";
                         echo "</button>";
                         echo "</div>";
@@ -381,48 +455,6 @@ session_start();
                 echo "<div class='card'><div class='card-content'><p class='text-center text-red-500'>Erro ao conectar ao banco de dados: " . $e->getMessage() . "</p></div></div>";
             }
             ?>
-        </div>
-    </div>
-
-    <!-- Modal de Inscrição -->
-    <div id="inscricaoModal" class="fixed inset-0 bg-black bg-opacity-50 modal hidden items-center justify-center z-50">
-        <div class="modal-content p-6 max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto bg-white rounded-xl">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-xl font-bold text-gray-800">Inscrição no Processo Seletivo</h3>
-                <button onclick="closeModal('inscricaoModal')" class="text-gray-500 hover:text-gray-700">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            
-            <div id="empresaDetails" class="space-y-4 mb-6">
-                <!-- Detalhes da empresa serão preenchidos via JavaScript -->
-            </div>
-
-            <form id="inscricaoForm" action="../controllers/controller_inscrever.php" method="POST" class="mt-6">
-                <input type="hidden" name="id_formulario" id="modal_form_id">
-                <input type="hidden" name="data_inscricao" id="data_inscricao">
-                <input type="hidden" name="id_aluno" id="id_aluno">
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Nome do Aluno:</label>
-                    <input type="text" 
-                           id="nome_aluno" 
-                           name="nome_aluno" 
-                           class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-ceara-orange focus:border-transparent" 
-                           autocomplete="off" 
-                           placeholder="Digite o nome do aluno">
-                    <div id="alunoSuggestions" class="bg-white border rounded-lg shadow mt-1 hidden absolute z-10 w-full max-h-48 overflow-y-auto"></div>
-                </div>
-                
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Perfis Disponíveis:</label>
-                    <div id="perfisContainer" class="space-y-2"></div>
-                </div>
-
-                <div class="flex justify-end gap-4 mt-6">
-                    <button type="button" onclick="closeModal('inscricaoModal')" class="modal-button cancel">Cancelar</button>
-                    <button type="submit" class="modal-button submit">Confirmar Inscrição</button>
-                </div>
-            </form>
         </div>
     </div>
 
@@ -441,139 +473,58 @@ session_start();
         </div>
     </div>
 
+    <!-- Modal de Inscrição -->
+    <div id="inscricaoModal" class="fixed inset-0 bg-black bg-opacity-50 modal hidden items-center justify-center z-50">
+        <div class="modal-content p-6 max-w-2xl w-full mx-4 bg-white rounded-xl">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-gray-800">Nova Inscrição</h3>
+                <button onclick="closeModal('inscricaoModal')" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form id="inscricaoForm" class="space-y-4">
+                <input type="hidden" id="modal_form_id" name="id_formulario">
+                <input type="hidden" id="id_aluno" name="id_aluno">
+                
+                <div id="empresaDetails" class="bg-gray-50 p-4 rounded-lg mb-4">
+                    <!-- Detalhes da empresa serão preenchidos via JavaScript -->
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label for="nome_aluno" class="block text-sm font-medium text-gray-700 mb-1">Nome do Aluno</label>
+                        <div class="relative">
+                            <input type="text" 
+                                   id="nome_aluno" 
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ceara-green focus:border-transparent"
+                                   placeholder="Digite o nome do aluno"
+                                   autocomplete="off">
+                            <div id="alunoSuggestions" class="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg hidden max-h-60 overflow-y-auto"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Perfis Disponíveis</label>
+                        <div id="perfisContainer" class="space-y-2 bg-gray-50 p-4 rounded-lg">
+                            <!-- Checkboxes dos perfis serão preenchidos via JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-3 mt-6">
+                    <button type="button" onclick="closeModal('inscricaoModal')" class="modal-button cancel">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="modal-button submit">
+                        Confirmar Inscrição
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
-        function showInscricaoModal(formId) {
-            const modal = document.getElementById('inscricaoModal');
-            const formIdInput = document.getElementById('modal_form_id');
-            const dataInscricaoInput = document.getElementById('data_inscricao');
-            
-            // Set current date and time
-            const now = new Date();
-            dataInscricaoInput.value = now.toISOString().slice(0, 19).replace('T', ' ');
-            
-            // Set form ID
-            formIdInput.value = formId;
-            
-            // Fetch company details
-            fetch(`get_empresa_details.php?id=${formId}`)
-                .then(response => response.json())
-                .then(data => {
-                    const empresaDetails = document.getElementById('empresaDetails');
-                    const perfisContainer = document.getElementById('perfisContainer');
-                    
-                    // Display company details
-                    empresaDetails.innerHTML = `
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <p class="text-sm text-gray-600">Nome da Empresa</p>
-                                <p class="font-medium">${data.nome}</p>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-600">Contato</p>
-                                <p class="font-medium">${data.contato}</p>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-600">Endereço</p>
-                                <p class="font-medium">${data.endereco}</p>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-600">Vagas Disponíveis</p>
-                                <p class="font-medium">${data.numero_vagas}</p>
-                            </div>
-                        </div>
-                    `;
-                    
-                    // Create profile checkboxes
-                    const perfis = data.perfil.split(',').map(p => p.trim());
-                    perfisContainer.innerHTML = perfis.map((perfil, index) => `
-                        <div class="flex items-center">
-                            <input type="checkbox" 
-                                   id="perfil_${index}" 
-                                   name="perfis[]" 
-                                   value="${perfil}"
-                                   class="h-4 w-4 text-ceara-green focus:ring-ceara-green border-gray-300 rounded">
-                            <label for="perfil_${index}" class="ml-2 text-sm text-gray-700">${perfil}</label>
-                        </div>
-                    `).join('');
-                });
-            
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-        }
-
-        function closeModal(modalId) {
-            const modal = document.getElementById(modalId);
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-        }
-
-        // Busca AJAX de alunos pelo nome
-        const nomeAlunoInput = document.getElementById('nome_aluno');
-        const alunoSuggestions = document.getElementById('alunoSuggestions');
-        const idAlunoInput = document.getElementById('id_aluno');
-
-        nomeAlunoInput.addEventListener('input', function() {
-            const nome = this.value.trim();
-            if (nome.length < 2) {
-                alunoSuggestions.classList.add('hidden');
-                return;
-            }
-            fetch(`buscar_alunos.php?nome=${encodeURIComponent(nome)}`)
-                .then(res => res.json())
-                .then(data => {
-                    if (data.length > 0) {
-                        alunoSuggestions.innerHTML = data.map(aluno => 
-                            `<div class='p-2 cursor-pointer hover:bg-gray-100' 
-                                  data-id='${aluno.id}' 
-                                  data-nome='${aluno.nome}'>${aluno.nome}</div>`
-                        ).join('');
-                        alunoSuggestions.classList.remove('hidden');
-                    } else {
-                        alunoSuggestions.innerHTML = '<div class="p-2 text-gray-500">Nenhum aluno encontrado</div>';
-                        alunoSuggestions.classList.remove('hidden');
-                    }
-                });
-        });
-
-        alunoSuggestions.addEventListener('click', function(e) {
-            if (e.target.dataset.id) {
-                nomeAlunoInput.value = e.target.dataset.nome;
-                idAlunoInput.value = e.target.dataset.id;
-                alunoSuggestions.classList.add('hidden');
-            }
-        });
-
-        // Form submission
-        document.getElementById('inscricaoForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            if (!idAlunoInput.value) {
-                alert('Por favor, selecione um aluno da lista');
-                return;
-            }
-
-            const formData = new FormData(this);
-            
-            fetch('../controllers/controller_inscrever.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Inscrição realizada com sucesso!');
-                    closeModal('inscricaoModal');
-                    window.location.reload();
-                } else {
-                    alert(data.message || 'Erro ao realizar inscrição');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Erro ao realizar inscrição');
-            });
-        });
-
         function showInscritosModal(processoId) {
             const modal = document.getElementById('inscritosModal');
             const inscritosList = document.getElementById('inscritosList');
@@ -607,8 +558,13 @@ session_start();
                                             <p class="text-sm text-gray-500">${aluno.curso}</p>
                                         </div>
                                         <div class="flex items-center gap-3">
-                                            <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs font-semibold">
-                                                ${aluno.perfil || 'Perfil não especificado'}
+                                            ${aluno.perfil ? `
+                                                <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs font-semibold">
+                                                    ${aluno.perfil}
+                                                </span>
+                                            ` : ''}
+                                            <span class="px-2 py-1 ${aluno.alocado ? 'bg-blue-100 text-blue-800' : 'bg-yellow-100 text-yellow-800'} rounded-full text-xs font-semibold">
+                                                ${aluno.alocado ? 'Alocado' : 'Inscrito'}
                                             </span>
                                         </div>
                                     </div>
@@ -623,6 +579,163 @@ session_start();
                     console.error('Error:', error);
                     inscritosList.innerHTML = '<p class="text-center text-red-500">Erro ao carregar inscritos.</p>';
                 });
+        }
+
+        // Função para mostrar o modal de inscrição
+        function showInscricaoModal(id) {
+            const modal = document.getElementById('inscricaoModal');
+            document.getElementById('modal_form_id').value = id;
+            
+            // Limpar campos anteriores
+            document.getElementById('nome_aluno').value = '';
+            document.getElementById('id_aluno').value = '';
+            document.getElementById('perfisContainer').innerHTML = '';
+            
+            // Buscar detalhes do processo e perfis da empresa
+            fetch(`../controllers/get_processo_details.php?id=${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    const empresaDetails = document.getElementById('empresaDetails');
+                    empresaDetails.innerHTML = `
+                        <div class="space-y-2">
+                            <h4 class="text-lg font-semibold mb-3">Detalhes do Processo</h4>
+                            <p><span class="text-gray-600">Empresa:</span> <span class="font-medium">${data.nome_empresa}</span></p>
+                            <p><span class="text-gray-600">Local:</span> <span class="font-medium">${data.local}</span></p>
+                            <p><span class="text-gray-600">Hora:</span> <span class="font-medium">${data.hora}</span></p>
+                        </div>
+                    `;
+
+                    // Preencher os perfis disponíveis
+                    if (data.perfis) {
+                        const perfis = JSON.parse(data.perfis);
+                        const perfisContainer = document.getElementById('perfisContainer');
+                        perfisContainer.innerHTML = perfis.map((perfil, index) => `
+                            <div class="flex items-center">
+                                <input type="checkbox" 
+                                       id="perfil_${index}" 
+                                       name="perfis[]" 
+                                       value="${perfil}"
+                                       class="h-4 w-4 text-ceara-green focus:ring-ceara-green border-gray-300 rounded">
+                                <label for="perfil_${index}" class="ml-2 text-sm text-gray-700">${perfil}</label>
+                            </div>
+                        `).join('');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                    const empresaDetails = document.getElementById('empresaDetails');
+                    empresaDetails.innerHTML = `
+                        <div class="text-center text-red-500 py-4">
+                            <i class="fas fa-exclamation-circle text-xl mb-2"></i>
+                            <p>Erro ao carregar detalhes da empresa</p>
+                        </div>
+                    `;
+                });
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        // Buscar sugestões de alunos
+        const nomeAlunoInput = document.getElementById('nome_aluno');
+        const alunoSuggestions = document.getElementById('alunoSuggestions');
+        const idAlunoInput = document.getElementById('id_aluno');
+
+        nomeAlunoInput.addEventListener('input', function() {
+            const search = this.value.trim();
+            if (search.length < 2) {
+                alunoSuggestions.classList.add('hidden');
+                return;
+            }
+
+            fetch(`buscar_alunos.php?nome=${encodeURIComponent(search)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.length > 0) {
+                        alunoSuggestions.innerHTML = data.map(aluno => `
+                            <div class="suggestion-item p-2 hover:bg-gray-100 cursor-pointer" 
+                                 data-id="${aluno.id}" 
+                                 data-nome="${aluno.nome}"
+                                 data-curso="${aluno.curso}"
+                                 data-matricula="${aluno.matricula}">
+                                <div class="font-medium">${aluno.nome}</div>
+                                <div class="text-sm text-gray-600">${aluno.curso} - ${aluno.matricula}</div>
+                            </div>
+                        `).join('');
+                        alunoSuggestions.classList.remove('hidden');
+                    } else {
+                        alunoSuggestions.innerHTML = '<div class="p-2 text-gray-500">Nenhum aluno encontrado</div>';
+                        alunoSuggestions.classList.remove('hidden');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alunoSuggestions.innerHTML = '<div class="p-2 text-red-500">Erro ao buscar alunos</div>';
+                    alunoSuggestions.classList.remove('hidden');
+                });
+        });
+
+        // Form submission
+        document.getElementById('inscricaoForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!idAlunoInput.value) {
+                alert('Por favor, selecione um aluno da lista');
+                return;
+            }
+
+            const perfisSelecionados = document.querySelectorAll('input[name="perfis[]"]:checked');
+            if (perfisSelecionados.length === 0) {
+                alert('Por favor, selecione pelo menos um perfil');
+                return;
+            }
+
+            const formData = new FormData(this);
+            formData.append('perfis', JSON.stringify(Array.from(perfisSelecionados).map(cb => cb.value)));
+            
+            // Mostrar loading
+            const submitButton = this.querySelector('button[type="submit"]');
+            const originalText = submitButton.innerHTML;
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processando...';
+            
+            fetch('../controllers/controller_inscrever.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Inscrição realizada com sucesso!');
+                    closeModal('inscricaoModal');
+                    window.location.reload();
+                } else {
+                    alert(data.message || 'Erro ao realizar inscrição');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Erro ao realizar inscrição');
+            })
+            .finally(() => {
+                submitButton.disabled = false;
+                submitButton.innerHTML = originalText;
+            });
+        });
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            
+            if (modalId === 'inscricaoModal') {
+                document.getElementById('inscricaoForm').reset();
+                document.getElementById('id_aluno').value = '';
+                document.getElementById('nome_aluno').value = '';
+                document.getElementById('alunoSuggestions').innerHTML = '';
+                document.getElementById('alunoSuggestions').classList.add('hidden');
+                document.getElementById('perfisContainer').innerHTML = '';
+            }
         }
     </script>
 </body>
