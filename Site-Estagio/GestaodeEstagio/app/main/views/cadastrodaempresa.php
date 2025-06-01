@@ -101,11 +101,35 @@
                     </div>
 
                     <div class="input-group">
-                        <label for="perfil" class="block text-sm font-medium text-gray-700 mb-1">Perfil da Empresa</label>
-                        <input type="text" id="perfil" name="perfil" required
-                            class="w-full input-field px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#005A24] transition-all duration-300"
-                            placeholder="Descreva o perfil da empresa">
-                        <span class="error-message" id="perfilError">Por favor, insira um perfil válido</span>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Quantidade de Tipos de Perfil</label>
+                        <div class="flex gap-4">
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="quantidade_perfis" value="1" class="form-radio" checked>
+                                <span class="ml-2">1</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="quantidade_perfis" value="2" class="form-radio">
+                                <span class="ml-2">2</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="quantidade_perfis" value="3" class="form-radio">
+                                <span class="ml-2">3</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="quantidade_perfis" value="4" class="form-radio">
+                                <span class="ml-2">4</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div id="perfis-container" class="col-span-2">
+                        <div class="input-group">
+                            <label for="perfil1" class="block text-sm font-medium text-gray-700 mb-1">Perfil 1</label>
+                            <input type="text" id="perfil1" name="perfis[]" required
+                                class="w-full input-field px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#005A24] transition-all duration-300"
+                                placeholder="Digite o primeiro perfil">
+                            <span class="error-message" id="perfil1Error">Por favor, insira um perfil válido</span>
+                        </div>
                     </div>
 
                     <div class="input-group">
@@ -127,6 +151,31 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.querySelector('form');
+            const perfisContainer = document.getElementById('perfis-container');
+            const radioButtons = document.querySelectorAll('input[name="quantidade_perfis"]');
+
+            function updatePerfisInputs() {
+                const selectedValue = document.querySelector('input[name="quantidade_perfis"]:checked').value;
+                perfisContainer.innerHTML = '';
+
+                for (let i = 1; i <= selectedValue; i++) {
+                    const div = document.createElement('div');
+                    div.className = 'input-group';
+                    div.innerHTML = `
+                        <label for="perfil${i}" class="block text-sm font-medium text-gray-700 mb-1">Perfil ${i}</label>
+                        <input type="text" id="perfil${i}" name="perfis[]" required
+                            class="w-full input-field px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#005A24] transition-all duration-300"
+                            placeholder="Digite o perfil ${i}">
+                        <span class="error-message" id="perfil${i}Error">Por favor, insira um perfil válido</span>
+                    `;
+                    perfisContainer.appendChild(div);
+                }
+            }
+
+            radioButtons.forEach(radio => {
+                radio.addEventListener('change', updatePerfisInputs);
+            });
+
             form.addEventListener('submit', function(e) {
                 let isValid = true;
                 const inputs = form.querySelectorAll('input[required]');
@@ -134,7 +183,11 @@
                 inputs.forEach(input => {
                     if (!input.value) {
                         input.parentElement.classList.add('error');
-                        document.getElementById(input.id + 'Error').textContent = 'Por favor, preencha este campo';
+                        const errorId = input.id + 'Error';
+                        const errorElement = document.getElementById(errorId);
+                        if (errorElement) {
+                            errorElement.textContent = 'Por favor, preencha este campo';
+                        }
                         isValid = false;
                     } else {
                         input.parentElement.classList.remove('error');

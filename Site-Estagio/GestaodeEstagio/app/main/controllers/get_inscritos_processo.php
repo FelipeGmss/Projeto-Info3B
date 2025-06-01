@@ -26,7 +26,8 @@ try {
     }
 
     // Agora buscar todos os inscritos deste concedente
-    $sql = 'SELECT s.id as id_selecao, a.id as id_aluno, a.nome, a.curso, s.hora, c.perfil, c.nome as nome_empresa, s.status
+    $sql = 'SELECT s.id as id_selecao, a.id as id_aluno, a.nome, a.curso, 
+                   s.hora, c.nome as nome_empresa, s.status, s.perfis_selecionados
             FROM selecao s
             INNER JOIN aluno a ON s.id_aluno = a.id
             INNER JOIN concedentes c ON s.id_concedente = c.id
@@ -37,6 +38,11 @@ try {
     $query->bindValue(':id_concedente', $concedente['id_concedente'], PDO::PARAM_INT);
     $query->execute();
     $inscritos = $query->fetchAll(PDO::FETCH_ASSOC);
+
+    // Converter os perfis selecionados de JSON para array
+    foreach ($inscritos as &$inscrito) {
+        $inscrito['perfis_selecionados'] = json_decode($inscrito['perfis_selecionados'], true);
+    }
 
     echo json_encode($inscritos);
 } catch (PDOException $e) {

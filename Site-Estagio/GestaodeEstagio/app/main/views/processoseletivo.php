@@ -221,9 +221,9 @@
                         <i class="fas fa-plus"></i>
                         Novo
                     </a>
-                    <a href="Listar_inscricoes.php" class="transparent-button flex items-center gap-1">
-                        <i class="fas fa-list"></i>
-                        Inscrições
+                    <a href="alunos_alocados.php" class="transparent-button flex items-center gap-1">
+                        <i class="fas fa-user-graduate"></i>
+                        Alunos Alocados
                     </a>
                 </div>
             </div>
@@ -299,18 +299,29 @@
                             echo "<td class='px-4 py-3 text-sm text-center'>" . $form['total_inscritos'] . "</td>";
                             echo "<td class='px-4 py-3 text-center'>";
                             echo "<div class='flex justify-center gap-2'>";
-                            echo "<button onclick='showInscricaoModal(" . $form['primeiro_id'] . ")' 
-                                  class='action-button text-green-600 hover:text-green-800 bg-green-50' 
-                                  title='Inscrever aluno no processo seletivo'
-                                  aria-label='Inscrever aluno'>";
-                            echo "<i class='fas fa-user-plus'></i>";
-                            echo "</button>";
-                            echo "<button onclick='showInscritosModal(" . $form['primeiro_id'] . ")' 
-                                  class='action-button text-blue-600 hover:text-blue-800 bg-blue-50' 
-                                  title='Ver lista de inscritos'
-                                  aria-label='Ver lista de inscritos'>";
-                            echo "<i class='fas fa-users'></i>";
-                            echo "</button>";
+                                // Botão Inscrever-se
+                                echo "<button onclick='showInscricaoModal(" . $form['primeiro_id'] . ")' 
+                                      class='text-green-600 hover:text-green-800 bg-green-50 rounded-full p-2 transition-colors' 
+                                      title='Inscrever aluno no processo seletivo'
+                                      aria-label='Inscrever aluno'>";
+                                echo "<i class='fas fa-user-plus'></i>";
+                                echo "</button>";
+                                
+                                // Botão Ver Inscritos
+                                echo "<button onclick='showInscritosModal(" . $form['primeiro_id'] . ")' 
+                                      class='text-blue-600 hover:text-blue-800 bg-blue-50 rounded-full p-2 transition-colors' 
+                                      title='Ver alunos inscritos'
+                                      aria-label='Ver inscritos'>";
+                                echo "<i class='fas fa-users'></i>";
+                                echo "</button>";
+                                
+                                // Botão Excluir Formulário
+                                echo "<button onclick='excluirFormulario(" . $form['primeiro_id'] . ")' 
+                                      class='text-red-600 hover:text-red-800 bg-red-50 rounded-full p-2 transition-colors' 
+                                      title='Excluir formulário'
+                                      aria-label='Excluir formulário'>";
+                                echo "<i class='fas fa-trash'></i>";
+                                echo "</button>";
                             echo "</div>";
                             echo "</td>";
                             echo "</tr>";
@@ -345,9 +356,15 @@
                     echo '</button>';
                     echo '<button onclick="showInscritosModal(' . $form['primeiro_id'] . ')" 
                           class="action-button text-blue-600 hover:text-blue-800 bg-blue-50" 
-                          title="Ver lista de inscritos"
-                          aria-label="Ver lista de inscritos">';
+                          title="Ver alunos inscritos"
+                          aria-label="Ver inscritos">';
                     echo '<i class="fas fa-users"></i>';
+                    echo '</button>';
+                    echo '<button onclick="excluirFormulario(' . $form['primeiro_id'] . ')" 
+                          class="action-button text-red-600 hover:text-red-800 bg-red-50" 
+                          title="Excluir formulário"
+                          aria-label="Excluir formulário">';
+                    echo '<i class="fas fa-trash"></i>';
                     echo '</button>';
                     echo '</div>';
                     echo '</div>';
@@ -377,41 +394,50 @@
 
     <!-- Modal de Inscrição -->
     <div id="inscricaoModal" class="fixed inset-0 bg-black bg-opacity-50 modal hidden items-center justify-center z-50">
-        <div class="modal-content p-6 max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto bg-white rounded-xl">
+        <div class="modal-content p-6 max-w-2xl w-full mx-4 bg-white rounded-xl">
             <div class="flex justify-between items-center mb-4">
-                <h3 class="text-xl font-bold text-gray-800">Inscrição no Processo Seletivo</h3>
+                <h3 class="text-xl font-bold text-gray-800">Nova Inscrição</h3>
                 <button onclick="closeModal('inscricaoModal')" class="text-gray-500 hover:text-gray-700">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
             
-            <div id="empresaDetails" class="space-y-4 mb-6">
-                <!-- Detalhes da empresa serão preenchidos via JavaScript -->
-            </div>
-
-            <form id="inscricaoForm" action="../controllers/controller_inscrever.php" method="POST" class="mt-6">
-                <input type="hidden" name="id_formulario" id="modal_form_id">
-                <input type="hidden" name="data_inscricao" id="data_inscricao">
-                <input type="hidden" name="id_aluno" id="id_aluno">
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Nome do Aluno:</label>
-                    <input type="text" 
-                           id="nome_aluno" 
-                           name="nome_aluno" 
-                           class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-ceara-orange focus:border-transparent" 
-                           autocomplete="off" 
-                           placeholder="Digite o nome do aluno">
-                    <div id="alunoSuggestions" class="bg-white border rounded-lg shadow mt-1 hidden absolute z-10 w-full max-h-48 overflow-y-auto"></div>
-                </div>
+            <form id="inscricaoForm" class="space-y-4">
+                <input type="hidden" id="modal_form_id" name="id_formulario">
+                <input type="hidden" id="id_aluno" name="id_aluno">
                 
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Perfis Disponíveis:</label>
-                    <div id="perfisContainer" class="space-y-2"></div>
+                <div id="empresaDetails" class="bg-gray-50 p-4 rounded-lg mb-4">
+                    <!-- Detalhes da empresa serão preenchidos via JavaScript -->
                 </div>
 
-                <div class="flex justify-end gap-4 mt-6">
-                    <button type="button" onclick="closeModal('inscricaoModal')" class="modal-button cancel">Cancelar</button>
-                    <button type="submit" class="modal-button submit">Confirmar Inscrição</button>
+                <div class="space-y-4">
+                    <div>
+                        <label for="nome_aluno" class="block text-sm font-medium text-gray-700 mb-1">Nome do Aluno</label>
+                        <div class="relative">
+                            <input type="text" 
+                                   id="nome_aluno" 
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ceara-green focus:border-transparent"
+                                   placeholder="Digite o nome do aluno"
+                                   autocomplete="off">
+                            <div id="alunoSuggestions" class="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg hidden max-h-60 overflow-y-auto"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Perfis Disponíveis</label>
+                        <div id="perfisContainer" class="space-y-2 bg-gray-50 p-4 rounded-lg">
+                            <!-- Checkboxes dos perfis serão preenchidos via JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-3 mt-6">
+                    <button type="button" onclick="closeModal('inscricaoModal')" class="modal-button cancel">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="modal-button submit">
+                        Confirmar Inscrição
+                    </button>
                 </div>
             </form>
         </div>
@@ -451,9 +477,20 @@
                                             <p class="text-sm text-gray-500">${aluno.curso}</p>
                                         </div>
                                         <div class="flex items-center gap-3">
-                                            <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs font-semibold">
-                                                ${aluno.perfil || 'Perfil não especificado'}
+                                            <span class="px-2 py-1 rounded-full text-xs font-semibold ${
+                                                aluno.status === 'alocado' 
+                                                    ? 'bg-green-100 text-green-800' 
+                                                    : 'bg-yellow-100 text-yellow-800'
+                                            }">
+                                                ${aluno.status === 'alocado' ? 'Alocado' : 'Em Espera'}
                                             </span>
+                                            ${aluno.status === 'pendente' ? `
+                                                <button onclick="alocarAluno(${aluno.id_selecao}, ${processoId}, ${aluno.id_aluno})" 
+                                                        class="text-green-600 hover:text-green-800 bg-green-50 rounded-full p-2 transition-colors"
+                                                        title="Alocar aluno na empresa">
+                                                    <i class="fas fa-check-circle"></i>
+                                                </button>
+                                            ` : ''}
                                             <button onclick="excluirInscrito(${aluno.id_selecao}, ${processoId})" 
                                                     class="text-red-600 hover:text-red-800 bg-red-50 rounded-full p-2 transition-colors"
                                                     title="Excluir inscrição">
@@ -502,123 +539,118 @@
             });
         }
 
-        function showInscricaoModal(formId) {
-            const modal = document.getElementById('inscricaoModal');
-            const formIdInput = document.getElementById('modal_form_id');
-            const dataInscricaoInput = document.getElementById('data_inscricao');
-            const empresaDetails = document.getElementById('empresaDetails');
-            const perfisContainer = document.getElementById('perfisContainer');
+        function alocarAluno(idSelecao, processoId, idAluno) {
+            if (!confirm('Tem certeza que deseja alocar este aluno na empresa?')) {
+                return;
+            }
 
-            // Set current date and time
-            const now = new Date();
-            dataInscricaoInput.value = now.toISOString().slice(0, 19).replace('T', ' ');
+            const formData = new FormData();
+            formData.append('id_selecao', idSelecao);
+            formData.append('id_aluno', idAluno);
+
+            fetch('../controllers/controller_alocar_aluno.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Aluno alocado com sucesso!');
+                    showInscritosModal(processoId); // Recarrega a lista
+                    window.location.reload(); // Recarrega a página para atualizar o contador
+                } else {
+                    alert(data.message || 'Erro ao alocar aluno');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Erro ao alocar aluno');
+            });
+        }
+
+        // Variáveis globais para o formulário de inscrição
+        const nomeAlunoInput = document.getElementById('nome_aluno');
+        const alunoSuggestions = document.getElementById('alunoSuggestions');
+        const idAlunoInput = document.getElementById('id_aluno');
+
+        // Função para mostrar o modal de inscrição
+        function showInscricaoModal(id) {
+            const modal = document.getElementById('inscricaoModal');
+            document.getElementById('modal_form_id').value = id;
             
-            // Set form ID
-            formIdInput.value = formId;
+            // Limpar campos anteriores
+            document.getElementById('nome_aluno').value = '';
+            document.getElementById('id_aluno').value = '';
+            document.getElementById('perfisContainer').innerHTML = '';
             
-            // Buscar detalhes da empresa
-            fetch(`get_empresa_details.php?id=${formId}`)
+            // Buscar detalhes do processo e perfis da empresa
+            fetch(`../controllers/get_processo_details.php?id=${id}`)
                 .then(response => response.json())
                 .then(data => {
-                    if (data.error) {
-                        alert('Erro ao carregar dados da empresa: ' + data.error);
-                        return;
-                    }
-                    
-                    // Display company details
+                    const empresaDetails = document.getElementById('empresaDetails');
                     empresaDetails.innerHTML = `
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <p class="text-sm text-gray-600">Nome da Empresa</p>
-                                <p class="font-medium">${data.nome}</p>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-600">Contato</p>
-                                <p class="font-medium">${data.contato}</p>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-600">Endereço</p>
-                                <p class="font-medium">${data.endereco}</p>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-600">Vagas Disponíveis</p>
-                                <p class="font-medium">${data.numero_vagas}</p>
-                            </div>
+                        <div class="space-y-2">
+                            <h4 class="text-lg font-semibold mb-3">Detalhes do Processo</h4>
+                            <p><span class="text-gray-600">Empresa:</span> <span class="font-medium">${data.nome_empresa}</span></p>
+                            <p><span class="text-gray-600">Local:</span> <span class="font-medium">${data.local}</span></p>
+                            <p><span class="text-gray-600">Hora:</span> <span class="font-medium">${data.hora}</span></p>
                         </div>
                     `;
-                    
-                    // Create profile checkboxes
-                    perfisContainer.innerHTML = ''; // Limpa perfis anteriores
-                    if (data.perfil) {
-                        const perfis = data.perfil.split(',').map(p => p.trim());
-                        perfis.forEach((perfil, index) => {
-                            const checkboxDiv = document.createElement('div');
-                            checkboxDiv.className = 'flex items-center';
-                            checkboxDiv.innerHTML = `
+
+                    // Preencher os perfis disponíveis
+                    if (data.perfis) {
+                        const perfis = JSON.parse(data.perfis);
+                        const perfisContainer = document.getElementById('perfisContainer');
+                        perfisContainer.innerHTML = perfis.map((perfil, index) => `
+                            <div class="flex items-center">
                                 <input type="checkbox" 
                                        id="perfil_${index}" 
                                        name="perfis[]" 
                                        value="${perfil}"
                                        class="h-4 w-4 text-ceara-green focus:ring-ceara-green border-gray-300 rounded">
                                 <label for="perfil_${index}" class="ml-2 text-sm text-gray-700">${perfil}</label>
-                            `;
-                            perfisContainer.appendChild(checkboxDiv);
-                        });
+                            </div>
+                        `).join('');
                     }
-
-                    modal.classList.remove('hidden');
-                    modal.classList.add('flex');
                 })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Erro ao carregar dados da empresa');
-                });
+                .catch(error => console.error('Erro:', error));
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
         }
 
-        // Busca AJAX de alunos pelo nome
-        const nomeAlunoInput = document.getElementById('nome_aluno');
-        const alunoSuggestions = document.getElementById('alunoSuggestions');
-        const idAlunoInput = document.getElementById('id_aluno');
-
+        // Buscar sugestões de alunos
         nomeAlunoInput.addEventListener('input', function() {
-            const nome = this.value.trim();
-            if (nome.length < 2) {
+            const search = this.value.trim();
+            if (search.length < 2) {
                 alunoSuggestions.classList.add('hidden');
                 return;
             }
-            
-            fetch(`buscar_alunos.php?nome=${encodeURIComponent(nome)}`)
-                .then(res => res.json())
+
+            fetch(`../controllers/get_alunos_suggestions.php?search=${encodeURIComponent(search)}`)
+                .then(response => response.json())
                 .then(data => {
                     if (data.length > 0) {
-                        alunoSuggestions.innerHTML = data.map(aluno => 
-                            `<div class='p-2 cursor-pointer hover:bg-gray-100' 
-                                  data-id='${aluno.id}' 
-                                  data-nome='${aluno.nome}'>
-                                ${aluno.nome}
-                            </div>`
-                        ).join('');
+                        alunoSuggestions.innerHTML = data.map(aluno => `
+                            <div class="p-2 hover:bg-gray-100 cursor-pointer" 
+                                 onclick="selectAluno('${aluno.id}', '${aluno.nome.replace(/'/g, "\\'")}')">
+                                ${aluno.nome} - ${aluno.curso}
+                            </div>
+                        `).join('');
                         alunoSuggestions.classList.remove('hidden');
                     } else {
-                        alunoSuggestions.innerHTML = '<div class="p-2 text-gray-500">Nenhum aluno encontrado</div>';
-                        alunoSuggestions.classList.remove('hidden');
+                        alunoSuggestions.classList.add('hidden');
                     }
                 })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alunoSuggestions.innerHTML = '<div class="p-2 text-red-500">Erro ao buscar alunos</div>';
-                    alunoSuggestions.classList.remove('hidden');
-                });
+                .catch(error => console.error('Erro:', error));
         });
 
-        alunoSuggestions.addEventListener('click', function(e) {
-            const div = e.target.closest('div[data-id]');
-            if (div) {
-                nomeAlunoInput.value = div.dataset.nome;
-                idAlunoInput.value = div.dataset.id;
-                alunoSuggestions.classList.add('hidden');
-            }
-        });
+        // Selecionar aluno da lista de sugestões
+        function selectAluno(id, nome) {
+            idAlunoInput.value = id;
+            nomeAlunoInput.value = nome;
+            alunoSuggestions.classList.add('hidden');
+        }
 
         // Fechar sugestões ao clicar fora
         document.addEventListener('click', function(e) {
@@ -627,7 +659,7 @@
             }
         });
 
-        // Form submission
+        // Adicionar o event listener para o formulário de inscrição
         document.getElementById('inscricaoForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -636,7 +668,15 @@
                 return;
             }
 
+            // Verificar se pelo menos um perfil foi selecionado
+            const perfisSelecionados = document.querySelectorAll('input[name="perfis[]"]:checked');
+            if (perfisSelecionados.length === 0) {
+                alert('Por favor, selecione pelo menos um perfil');
+                return;
+            }
+
             const formData = new FormData(this);
+            formData.append('perfis', JSON.stringify(Array.from(perfisSelecionados).map(cb => cb.value)));
             
             fetch('../controllers/controller_inscrever.php', {
                 method: 'POST',
@@ -671,6 +711,32 @@
                 document.getElementById('alunoSuggestions').classList.add('hidden'); // Esconder sugestões
                 document.getElementById('perfisContainer').innerHTML = ''; // Limpar perfis ao fechar
             }
+        }
+
+        function excluirFormulario(id) {
+            if (!confirm('Tem certeza que deseja excluir este formulário? Esta ação não pode ser desfeita.')) {
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('id', id);
+            formData.append('btn-excluir', true);
+
+            fetch('../controllers/Controller-excluir_formulario.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.reload();
+                } else {
+                    throw new Error('Erro ao excluir formulário');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Erro ao excluir formulário');
+            });
         }
     </script>
 </body>

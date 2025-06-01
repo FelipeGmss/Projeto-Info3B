@@ -48,8 +48,8 @@ class PDF extends FPDF {
         $this->SetLineWidth(0.2);
         $this->SetFont('Arial', 'B', 10);
 
-        $header = array('Empresa', 'Contato', 'Endereco', 'Perfil', 'Vagas');
-        $w = array(40, 30, 50, 40, 20); // Adjusted for A4 portrait
+        $header = array('Empresa', 'Contato', 'Endereco', 'Perfis', 'Vagas');
+        $w = array(35, 30, 45, 50, 20); // Adjusted widths for better profile display
         for($i = 0; $i < count($header); $i++) {
             $this->Cell($w[$i], 7, $header[$i], 1, 0, 'C', true);
         }
@@ -63,7 +63,7 @@ class PDF extends FPDF {
         $this->SetFont('Arial', '', 9);
         $this->SetDrawColor(0, 90, 36);
 
-        $w = array(40, 30, 50, 40, 20);
+        $w = array(35, 30, 45, 50, 20);
         $fill = false;
         foreach($data as $row) {
             if($this->GetY() > 260) { // Check for page break
@@ -75,7 +75,15 @@ class PDF extends FPDF {
             $empresa = utf8_decode($row['nome']);
             $contato = utf8_decode($row['contato']);
             $endereco = utf8_decode($row['endereco']);
-            $perfil = utf8_decode($row['perfil']);
+            
+            // Handle JSON profiles
+            $perfis = json_decode($row['perfis'], true);
+            if (is_array($perfis)) {
+                $perfil = utf8_decode(implode(', ', $perfis));
+            } else {
+                $perfil = utf8_decode($row['perfis']);
+            }
+            
             $vagas = utf8_decode($row['numero_vagas']);
 
             // Truncate long texts
@@ -94,7 +102,7 @@ class PDF extends FPDF {
             $this->Cell($w[1], $altura, $contato, 1, 0, 'L', $fill);
             $this->Cell($w[2], $altura, $endereco, 1, 0, 'L', $fill);
             $this->SetXY($x + $w[0] + $w[1] + $w[2], $y);
-            $this->MultiCell($w[3], 7, $perfil, 1, 'J', $fill); // Justified text
+            $this->MultiCell($w[3], 5, $perfil, 1, 'L', $fill); // Left-aligned text, reduced line height
             $this->SetXY($x + $w[0] + $w[1] + $w[2] + $w[3], $y);
             $this->Cell($w[4], $altura, $vagas, 1, 0, 'C', $fill);
             $this->Ln($altura);
@@ -166,7 +174,7 @@ if (!empty($search)) {
                  LOWER(nome) LIKE LOWER(:search) OR 
                  LOWER(contato) LIKE LOWER(:search) OR 
                  LOWER(endereco) LIKE LOWER(:search) OR 
-                 LOWER(perfil) LIKE LOWER(:search) 
+                 LOWER(perfis) LIKE LOWER(:search) 
                  ORDER BY nome ASC';
     $query = $pdo->prepare($consulta);
     $query->bindValue(':search', '%' . $search . '%', PDO::PARAM_STR);

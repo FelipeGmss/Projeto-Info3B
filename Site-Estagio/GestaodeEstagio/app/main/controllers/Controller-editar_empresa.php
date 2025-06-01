@@ -7,11 +7,11 @@ if(isset($_POST['btn-editar'])){
     $nome = $_POST['nome'];
     $contato = $_POST['contato'];
     $endereco = $_POST['endereco'];
-    $perfil = $_POST['perfil'];
+    $perfis = isset($_POST['perfis']) ? json_encode($_POST['perfis']) : json_encode([]);
     $vagas = $_POST['numero_vagas'];
 
     $x = new Cadastro();
-    $resultado = $x->editar_empresa($id, $nome, $contato, $endereco, $perfil, $vagas);
+    $resultado = $x->editar_empresa($id, $nome, $contato, $endereco, $perfis, $vagas);
     
     if($resultado){
         header('location:Controller-listar_empresa.php?resultado=editar');

@@ -112,12 +112,56 @@ if (!isset(
                     </div>
 
                     <div class="input-group">
-                        <label for="perfil" class="block text-sm font-medium text-gray-700 mb-1">Perfil da Empresa</label>
-                        <input type="text" id="perfil" name="perfil" required
-                            class="w-full input-field px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#005A24] transition-all duration-300"
-                            placeholder="Descreva o perfil da empresa"
-                            value="<?php echo htmlspecialchars($dados_empresa['perfil']) ?>">
-                        <span class="error-message" id="perfilError">Por favor, insira um perfil válido</span>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Quantidade de Tipos de Perfil</label>
+                        <div class="flex gap-4">
+                            <?php
+                            $perfis = json_decode($dados_empresa['perfis'], true);
+                            $num_perfis = is_array($perfis) ? count($perfis) : 1;
+                            ?>
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="quantidade_perfis" value="1" class="form-radio" <?php echo $num_perfis == 1 ? 'checked' : ''; ?>>
+                                <span class="ml-2">1</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="quantidade_perfis" value="2" class="form-radio" <?php echo $num_perfis == 2 ? 'checked' : ''; ?>>
+                                <span class="ml-2">2</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="quantidade_perfis" value="3" class="form-radio" <?php echo $num_perfis == 3 ? 'checked' : ''; ?>>
+                                <span class="ml-2">3</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="quantidade_perfis" value="4" class="form-radio" <?php echo $num_perfis == 4 ? 'checked' : ''; ?>>
+                                <span class="ml-2">4</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div id="perfis-container" class="col-span-2">
+                        <?php
+                        if (is_array($perfis)) {
+                            foreach ($perfis as $index => $perfil) {
+                                $i = $index + 1;
+                                echo "<div class='input-group'>";
+                                echo "<label for='perfil{$i}' class='block text-sm font-medium text-gray-700 mb-1'>Perfil {$i}</label>";
+                                echo "<input type='text' id='perfil{$i}' name='perfis[]' required
+                                    class='w-full input-field px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#005A24] transition-all duration-300'
+                                    placeholder='Digite o perfil {$i}'
+                                    value='" . htmlspecialchars($perfil) . "'>";
+                                echo "<span class='error-message' id='perfil{$i}Error'>Por favor, insira um perfil válido</span>";
+                                echo "</div>";
+                            }
+                        } else {
+                            echo "<div class='input-group'>";
+                            echo "<label for='perfil1' class='block text-sm font-medium text-gray-700 mb-1'>Perfil 1</label>";
+                            echo "<input type='text' id='perfil1' name='perfis[]' required
+                                class='w-full input-field px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#005A24] transition-all duration-300'
+                                placeholder='Digite o primeiro perfil'
+                                value='" . htmlspecialchars($dados_empresa['perfis']) . "'>";
+                            echo "<span class='error-message' id='perfil1Error'>Por favor, insira um perfil válido</span>";
+                            echo "</div>";
+                        }
+                        ?>
                     </div>
 
                     <div class="input-group">
@@ -140,6 +184,31 @@ if (!isset(
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.querySelector('form');
+            const perfisContainer = document.getElementById('perfis-container');
+            const radioButtons = document.querySelectorAll('input[name="quantidade_perfis"]');
+
+            function updatePerfisInputs() {
+                const selectedValue = document.querySelector('input[name="quantidade_perfis"]:checked').value;
+                perfisContainer.innerHTML = '';
+
+                for (let i = 1; i <= selectedValue; i++) {
+                    const div = document.createElement('div');
+                    div.className = 'input-group';
+                    div.innerHTML = `
+                        <label for="perfil${i}" class="block text-sm font-medium text-gray-700 mb-1">Perfil ${i}</label>
+                        <input type="text" id="perfil${i}" name="perfis[]" required
+                            class="w-full input-field px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#005A24] transition-all duration-300"
+                            placeholder="Digite o perfil ${i}">
+                        <span class="error-message" id="perfil${i}Error">Por favor, insira um perfil válido</span>
+                    `;
+                    perfisContainer.appendChild(div);
+                }
+            }
+
+            radioButtons.forEach(radio => {
+                radio.addEventListener('change', updatePerfisInputs);
+            });
+
             form.addEventListener('submit', function(e) {
                 let isValid = true;
                 const inputs = form.querySelectorAll('input[required]');
@@ -147,7 +216,11 @@ if (!isset(
                 inputs.forEach(input => {
                     if (!input.value) {
                         input.parentElement.classList.add('error');
-                        document.getElementById(input.id + 'Error').textContent = 'Por favor, preencha este campo';
+                        const errorId = input.id + 'Error';
+                        const errorElement = document.getElementById(errorId);
+                        if (errorElement) {
+                            errorElement.textContent = 'Por favor, preencha este campo';
+                        }
                         isValid = false;
                     } else {
                         input.parentElement.classList.remove('error');

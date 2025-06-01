@@ -372,6 +372,40 @@
 
     <!-- Main Content -->
     <div class="container mx-auto px-4 py-4">
+        <?php
+        // Mensagens de resultado
+        if(isset($_GET['resultado'])) {
+            $mensagem = '';
+            $tipo = '';
+            
+            switch($_GET['resultado']) {
+                case 'excluir':
+                    $mensagem = 'Empresa excluída com sucesso!';
+                    $tipo = 'success';
+                    break;
+                case 'erro':
+                    $mensagem = 'Ocorreu um erro ao processar a operação.';
+                    $tipo = 'error';
+                    break;
+                case 'erro_fk':
+                    $mensagem = 'Não foi possível excluir a empresa pois existem registros vinculados a ela.';
+                    $tipo = 'error';
+                    break;
+                case 'editar':
+                    $mensagem = 'Empresa atualizada com sucesso!';
+                    $tipo = 'success';
+                    break;
+            }
+            
+            if($mensagem) {
+                $bgColor = $tipo === 'success' ? 'bg-green-100 border-green-400 text-green-700' : 'bg-red-100 border-red-400 text-red-700';
+                echo "<div class='mb-4 p-4 rounded-lg border {$bgColor}'>";
+                echo htmlspecialchars($mensagem);
+                echo "</div>";
+            }
+        }
+        ?>
+        
         <!-- Table View (Desktop) -->
         <div class="table-container">
             <table class="min-w-full">
@@ -419,7 +453,14 @@
                             echo "</td>";
                             echo "<td class='px-4 py-3 text-sm text-gray-900'>" . htmlspecialchars($value['contato']) . "</td>";
                             echo "<td class='px-4 py-3 text-sm text-gray-900'>" . htmlspecialchars($value['endereco']) . "</td>";
-                            echo "<td class='px-4 py-3 text-sm text-gray-900'>" . htmlspecialchars($value['perfil']) . "</td>";
+                            echo "<td class='px-4 py-3 text-sm text-gray-900'>";
+                            $perfis = json_decode($value['perfis'], true);
+                            if (is_array($perfis)) {
+                                echo implode(', ', array_map('htmlspecialchars', $perfis));
+                            } else {
+                                echo htmlspecialchars($value['perfis']);
+                            }
+                            echo "</td>";
                             echo "<td class='px-4 py-3 text-sm text-gray-900'>" . htmlspecialchars($value['numero_vagas']) . "</td>";
                             echo "<td class='px-4 py-3 text-center' onclick='event.stopPropagation();'>";
                             echo "<div class='flex justify-center gap-2'>";
@@ -458,7 +499,14 @@
                     echo "<img class='h-10 w-10 rounded-full' src='https://ui-avatars.com/api/?name=" . urlencode($value['nome']) . "' alt='Logo da empresa " . htmlspecialchars($value['nome']) . "'>";
                     echo "<div>";
                     echo "<p class='text-lg font-semibold text-gray-800'>" . htmlspecialchars($value['nome']) . "</p>";
-                    echo "<p class='text-sm text-gray-600'>" . htmlspecialchars($value['perfil']) . "</p>";
+                    echo "<p class='text-sm text-gray-600'>";
+                    $perfis = json_decode($value['perfis'], true);
+                    if (is_array($perfis)) {
+                        echo implode(', ', array_map('htmlspecialchars', $perfis));
+                    } else {
+                        echo htmlspecialchars($value['perfis']);
+                    }
+                    echo "</p>";
                     echo "</div>";
                     echo "</div>";
                     echo "<p class='text-sm text-gray-600'><i class='fas fa-phone mr-2'></i>" . htmlspecialchars($value['contato']) . "</p>";
@@ -540,7 +588,8 @@
             document.getElementById('companyImage').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(company.nome)}`;
             document.getElementById('companyImage').alt = `Logo da empresa ${company.nome}`;
             document.getElementById('companyName').textContent = company.nome;
-            document.getElementById('companyProfile').textContent = company.perfil;
+            document.getElementById('companyProfile').textContent = Array.isArray(JSON.parse(company.perfis)) ? 
+                JSON.parse(company.perfis).join(', ') : company.perfis;
             document.getElementById('companyContact').textContent = company.contato;
             document.getElementById('companyAddress').textContent = company.endereco;
             document.getElementById('companyVacancies').textContent = company.numero_vagas;

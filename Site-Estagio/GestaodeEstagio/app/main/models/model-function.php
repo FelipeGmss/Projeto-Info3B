@@ -48,27 +48,25 @@ Class Usuarios {
 
 Class Cadastro{
 
-    public function Cadastrar_empresa($nome, $contato, $endereco, $perfil, $vagas){
+    public function Cadastrar_empresa($nome, $contato, $endereco, $perfis, $vagas){
         $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
-        $consulta = 'INSERT INTO concedentes VALUES (null,:nome,:contato,:endereco,:perfil,:numero_vagas)';
+        $consulta = 'INSERT INTO concedentes (nome, contato, endereco, perfis, numero_vagas) VALUES (:nome, :contato, :endereco, :perfis, :numero_vagas)';
         $query = $pdo->prepare($consulta);
         $query->bindValue(":nome", $nome);
         $query->bindValue(":contato", $contato);
         $query->bindValue(":endereco", $endereco);
-        $query->bindValue(":perfil", $perfil);
+        $query->bindValue(":perfis", $perfis);
         $query->bindValue(":numero_vagas", $vagas);
         $query->execute();
 
         if ($query->rowCount() > 0) {
             $dado = $query->fetch();
             $_SESSION['idEmp'] = $dado['id'];
-
-             return true;
-            // header("Location: ../views/paginainicial.php");
-            }else {
-             return false;
-            }
-     } 
+            return true;
+        } else {
+            return false;
+        }
+    } 
 
 
      public function Cadastrar_alunos($nome, $matricula, $contato, $curso, $email, $endereco, $senha){
@@ -98,10 +96,32 @@ Class Cadastro{
 
     public function excluir_empresa($id){
         $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
-        $consulta = 'delete from concedentes where id = :id;';
-        $query = $pdo->prepare($consulta);
-        $query->bindValue(":id", $id);
-        $query->execute();
+        
+        try {
+            // Inicia a transação
+            $pdo->beginTransaction();
+            
+            // Primeiro, exclui os registros relacionados na tabela selecao
+            $consulta_selecao = 'DELETE FROM selecao WHERE id_concedente = :id';
+            $query_selecao = $pdo->prepare($consulta_selecao);
+            $query_selecao->bindValue(":id", $id);
+            $query_selecao->execute();
+            
+            // Depois, exclui a empresa
+            $consulta = 'DELETE FROM concedentes WHERE id = :id';
+            $query = $pdo->prepare($consulta);
+            $query->bindValue(":id", $id);
+            $query->execute();
+            
+            // Confirma a transação
+            $pdo->commit();
+            return true;
+            
+        } catch (PDOException $e) {
+            // Em caso de erro, desfaz a transação
+            $pdo->rollBack();
+            throw $e;
+        }
     }
 
     public function excluir_aluno($id){
@@ -131,15 +151,15 @@ Class Cadastro{
         return $resultado ? $resultado : false;
     }
 
-    public function editar_empresa($id, $nome, $contato, $endereco, $perfil, $vagas){
+    public function editar_empresa($id, $nome, $contato, $endereco, $perfis, $vagas){
         $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
-        $consulta = "UPDATE concedentes SET nome = :nome, contato = :contato, endereco = :endereco, perfil = :perfil, numero_vagas = :numero_vagas WHERE id = :id;";
+        $consulta = "UPDATE concedentes SET nome = :nome, contato = :contato, endereco = :endereco, perfis = :perfis, numero_vagas = :numero_vagas WHERE id = :id;";
         $query = $pdo->prepare($consulta);
         $query->bindValue(":id", $id);
         $query->bindValue(":nome", $nome);
         $query->bindValue(":contato", $contato);
         $query->bindValue(":endereco", $endereco);
-        $query->bindValue(":perfil", $perfil);
+        $query->bindValue(":perfis", $perfis);
         $query->bindValue(":numero_vagas", $vagas);
         $query->execute();
         return $query->rowCount();
@@ -171,15 +191,12 @@ Class Cadastro{
 
     public function cadastrar_selecao($hora, $local, $id_concedente, $data_inscricao, $id_aluno, $id_vaga){
         $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
-        $consulta = 'INSERT INTO selecao VALUES (null,:hora,:local,:id_concedente,:data_inscricao,:id_aluno,:id_vaga)';
+        $consulta = 'INSERT INTO selecao (hora, local, id_concedente, status) VALUES (:hora, :local, :id_concedente, "pendente")';
         $query = $pdo->prepare($consulta);
         $query->bindValue(":hora", $hora);
         $query->bindValue(":local", $local);
         $query->bindValue(":id_concedente", $id_concedente);
-        $query->bindValue(":data_inscricao", $data_inscricao);
-        $query->bindValue(":id_aluno", $id_aluno);
-        $query->bindValue(":id_vaga", $id_vaga);
-        $query->execute();
+        return $query->execute();
     }
 
     public function excluir_formulario($id){
