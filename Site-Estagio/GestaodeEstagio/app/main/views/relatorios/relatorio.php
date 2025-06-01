@@ -2,165 +2,130 @@
 require('../../models/model-function.php');
 require('../../assets/fpdf/fpdf.php');
 
+// Definir fuso horário para Brasil/São Paulo
+date_default_timezone_set('America/Sao_Paulo');
+
+// Array com os cursos corretos
+$cursos = [
+    'enfermagem' => 'Enfermagem',
+    'informatica' => 'Informática',
+    'administracao' => 'Administração',
+    'edificacoes' => 'Edificações',
+    'meio_ambiente' => 'Meio Ambiente'
+];
+
 class PDF extends FPDF {
     // Page header
     function Header() {
-        // Set font for title
-        $this->SetFont('Arial', 'B', 14);
-        $this->SetTextColor(0, 90, 36); // Dark green
+        // Logo
+        $this->Image(__DIR__ . '/../../config/img/logo_Salaberga-removebg-preview.png', 10, 10, 30);
+        
         // Title
-        $this->Cell(0, 10, 'Relatorio de Empresas', 0, 1, 'C');
+        $this->SetFont('Arial', 'B', 16);
+        $this->SetTextColor(45, 71, 57); // Verde musgo
+        $this->Cell(0, 15, utf8_decode('Relatório de Empresas'), 0, 1, 'C');
         
         // Date
-        $this->SetFont('Arial', '', 10);
-        $this->SetTextColor(0, 0, 0);
-        $this->Cell(0, 8, 'Data: ' . date('d/m/Y H:i'), 0, 1, 'C');
+        $this->SetFont('Arial', 'I', 10);
+        $this->SetTextColor(100, 100, 100); // Cinza
+        $this->Cell(0, 8, utf8_decode('Data de geração: ' . date('d/m/Y H:i:s')), 0, 1, 'C');
         
         // Search term if exists
         if(isset($_GET['search']) && !empty($_GET['search'])) {
-            $this->SetFont('Arial', 'B', 10);
-            $this->SetTextColor(0, 90, 36);
-            $this->Cell(0, 8, 'Termo de busca: ' . htmlspecialchars($_GET['search']), 0, 1, 'C');
+            $this->SetFont('Arial', 'I', 10);
+            $this->Cell(0, 8, utf8_decode('Termo de busca: ' . htmlspecialchars($_GET['search'])), 0, 1, 'C');
         }
         
-        // Divider line
-        $this->SetDrawColor(0, 90, 36);
-        $this->SetLineWidth(0.3);
-        $this->Line(20, $this->GetY() + 5, $this->w - 20, $this->GetY() + 5);
-        
-        // Line break
-        $this->Ln(10);
+        // Linha decorativa
+        $this->SetDrawColor(45, 71, 57); // Verde musgo
+        $this->SetLineWidth(0.5);
+        $this->Line(10, $this->GetY() + 5, $this->GetPageWidth() - 10, $this->GetY() + 5);
+        $this->Ln(15);
     }
 
     // Page footer
     function Footer() {
         $this->SetY(-15);
         $this->SetFont('Arial', 'I', 8);
-        $this->SetTextColor(0, 0, 0);
-        $this->Cell(0, 10, 'Página ' . $this->PageNo() . '/{nb}', 0, 0, 'C');
+        $this->SetTextColor(100, 100, 100); // Cinza
+        $this->Cell(0, 10, utf8_decode('Página ' . $this->PageNo() . '/{nb}'), 0, 0, 'C');
     }
 
     // Table header
     function TableHeader() {
-        $this->SetFillColor(0, 90, 36); // Dark green
-        $this->SetTextColor(255);
-        $this->SetDrawColor(0, 90, 36);
-        $this->SetLineWidth(0.2);
+        $this->SetFillColor(45, 71, 57); // Verde musgo
+        $this->SetTextColor(255, 255, 255); // Branco
+        $this->SetDrawColor(45, 71, 57); // Verde musgo
+        $this->SetLineWidth(0.3);
         $this->SetFont('Arial', 'B', 10);
 
-        $header = array('Empresa', 'Contato', 'Endereco', 'Perfis', 'Vagas');
-        $w = array(35, 30, 45, 50, 20); // Adjusted widths for better profile display
-        for($i = 0; $i < count($header); $i++) {
-            $this->Cell($w[$i], 7, $header[$i], 1, 0, 'C', true);
-        }
-        $this->Ln();
+        // Ajustar larguras das colunas
+        $this->CellUTF8(80, 10, 'Empresa', 1, 0, 'C', true);
+        $this->CellUTF8(60, 10, 'Perfis', 1, 0, 'C', true);
+        $this->CellUTF8(30, 10, 'Vagas', 1, 0, 'C', true);
+        $this->CellUTF8(60, 10, 'Contato', 1, 0, 'C', true);
+        $this->CellUTF8(80, 10, 'Endereço', 1, 1, 'C', true);
     }
 
     // Table content
     function TableContent($data) {
-        $this->SetFillColor(200, 230, 200); // Light green
-        $this->SetTextColor(0);
-        $this->SetFont('Arial', '', 9);
-        $this->SetDrawColor(0, 90, 36);
-
-        $w = array(35, 30, 45, 50, 20);
+        global $cursos; // Adicionar referência global para o array $cursos
+        $this->SetFont('Arial', '', 10);
+        $this->SetTextColor(0, 0, 0); // Preto
         $fill = false;
+
         foreach($data as $row) {
             if($this->GetY() > 260) { // Check for page break
                 $this->AddPage();
                 $this->TableHeader();
             }
 
-            // Prepare texts
-            $empresa = utf8_decode($row['nome']);
-            $contato = utf8_decode($row['contato']);
-            $endereco = utf8_decode($row['endereco']);
-            
-            // Handle JSON profiles
-            $perfis = json_decode($row['perfis'], true);
-            if (is_array($perfis)) {
-                $perfil = utf8_decode(implode(', ', $perfis));
+            // Alternar cores das linhas
+            if ($fill) {
+                $this->SetFillColor(245, 245, 245); // Cinza muito claro
             } else {
-                $perfil = utf8_decode($row['perfis']);
+                $this->SetFillColor(255, 255, 255); // Branco
             }
+
+            // Processar perfis
+            $perfis = [];
+            if (!empty($row['perfis'])) {
+                $perfis_array = json_decode($row['perfis'], true);
+                if (is_array($perfis_array)) {
+                    foreach ($perfis_array as $p) {
+                        if (isset($cursos[$p])) {
+                            $perfis[] = $cursos[$p];
+                        } else {
+                            $perfis[] = ucfirst($p);
+                        }
+                    }
+                }
+            }
+            $perfis_text = !empty($perfis) ? implode(', ', $perfis) : 'Nenhum';
+
+            // Dados com UTF-8
+            $this->CellUTF8(80, 8, $row['nome'], 1, 0, 'L', $fill);
+            $this->CellUTF8(60, 8, $perfis_text, 1, 0, 'L', $fill);
+            $this->CellUTF8(30, 8, $row['numero_vagas'], 1, 0, 'C', $fill);
+            $this->CellUTF8(60, 8, $row['contato'], 1, 0, 'L', $fill);
+            $this->CellUTF8(80, 8, $row['endereco'], 1, 1, 'L', $fill);
             
-            $vagas = utf8_decode($row['numero_vagas']);
-
-            // Truncate long texts
-            $endereco = (strlen($endereco) > 30) ? substr($endereco, 0, 27) . '...' : $endereco;
-
-            // Calculate height for profile
-            $perfilAltura = $this->NbLines($w[3], $perfil) * 5;
-            $altura = max(7, $perfilAltura);
-
-            // Save position
-            $x = $this->GetX();
-            $y = $this->GetY();
-
-            // Draw cells
-            $this->Cell($w[0], $altura, $empresa, 1, 0, 'L', $fill);
-            $this->Cell($w[1], $altura, $contato, 1, 0, 'L', $fill);
-            $this->Cell($w[2], $altura, $endereco, 1, 0, 'L', $fill);
-            $this->SetXY($x + $w[0] + $w[1] + $w[2], $y);
-            $this->MultiCell($w[3], 5, $perfil, 1, 'L', $fill); // Left-aligned text, reduced line height
-            $this->SetXY($x + $w[0] + $w[1] + $w[2] + $w[3], $y);
-            $this->Cell($w[4], $altura, $vagas, 1, 0, 'C', $fill);
-            $this->Ln($altura);
             $fill = !$fill;
         }
     }
 
-    // Calculate number of lines for MultiCell
-    function NbLines($w, $txt) {
-        $cw = &$this->CurrentFont['cw'];
-        if($w == 0)
-            $w = $this->w - $this->rMargin - $this->x;
-        $wmax = ($w - 2 * $this->cMargin) * 1000 / $this->FontSize;
-        $s = str_replace("\r", '', $txt);
-        $nb = strlen($s);
-        if($nb > 0 && $s[$nb - 1] == "\n")
-            $nb--;
-        $sep = -1;
-        $i = 0;
-        $j = 0;
-        $l = 0;
-        $nl = 1;
-        while($i < $nb) {
-            $c = $s[$i];
-            if($c == "\n") {
-                $i++;
-                $sep = -1;
-                $j = $i;
-                $l = 0;
-                $nl++;
-                continue;
-            }
-            if($c == ' ')
-                $sep = $i;
-            $l += $cw[$c];
-            if($l > $wmax) {
-                if($sep == -1) {
-                    if($i == $j)
-                        $i++;
-                } else
-                    $i = $sep + 1;
-                $sep = -1;
-                $j = $i;
-                $l = 0;
-                $nl++;
-            } else
-                $i++;
-        }
-        return $nl;
+    // Função para célula com UTF-8
+    function CellUTF8($w, $h, $txt, $border, $ln, $align, $fill) {
+        $txt = utf8_decode($txt);
+        $this->Cell($w, $h, $txt, $border, $ln, $align, $fill);
     }
 }
 
 // Create PDF document
-$pdf = new PDF();
-$pdf->SetMargins(20, 20, 20); // Standard Word-like margins
+$pdf = new PDF('L'); // Landscape
+$pdf->SetMargins(10, 40, 10);
 $pdf->AliasNbPages();
-$pdf->AddPage(); // A4 portrait
-$pdf->SetFont('Arial', '', 12);
+$pdf->AddPage();
 
 // Database connection
 $pdo = new PDO("mysql:host=localhost;dbname=estagio", "root", "");
