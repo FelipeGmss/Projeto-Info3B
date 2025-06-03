@@ -80,7 +80,8 @@ if (!isset(
                 <p class="text-gray-600">Atualize os dados da empresa</p>
             </div>
 
-            <form action="../controllers/Controller-editar_empresa.php" method="POST" class="space-y-4">
+            <form action="../controllers/Controller-Edicoes.php" method="POST" class="space-y-4">
+                <input type="hidden" name="tipo" value="empresa">
                 <input type="hidden" name="id" value="<?php echo htmlspecialchars($dados_empresa['id']) ?>">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="input-group">

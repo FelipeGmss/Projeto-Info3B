@@ -454,7 +454,7 @@
             modal.classList.add('flex');
             
             // Buscar alunos inscritos neste processo específico
-            fetch(`../controllers/get_inscritos_processo.php?processo_id=${processoId}`)
+            fetch(`../controllers/Controller-Buscas.php?action=get_inscritos_processo&processo_id=${processoId}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.error) {
@@ -518,8 +518,9 @@
 
             const formData = new FormData();
             formData.append('id_selecao', idSelecao);
+            formData.append('tipo', 'inscrito');
 
-            fetch('../controllers/controller_excluir_inscrito.php', {
+            fetch('../controllers/Controller-Exclusoes.php', {
                 method: 'POST',
                 body: formData
             })
@@ -584,7 +585,7 @@
             document.getElementById('perfisContainer').innerHTML = '';
             
             // Buscar detalhes do processo e perfis da empresa
-            fetch(`../controllers/get_processo_details.php?id=${id}`)
+            fetch(`../controllers/Controller-Buscas.php?action=get_processo_details&id=${id}`)
                 .then(response => response.json())
                 .then(data => {
                     const empresaDetails = document.getElementById('empresaDetails');
@@ -627,7 +628,7 @@
                 return;
             }
 
-            fetch(`../controllers/get_alunos_suggestions.php?search=${encodeURIComponent(search)}`)
+            fetch(`../controllers/Controller-Buscas.php?action=get_alunos_suggestions&search=${encodeURIComponent(search)}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.length > 0) {
@@ -721,8 +722,9 @@
             const formData = new FormData();
             formData.append('id', id);
             formData.append('btn-excluir', true);
+            formData.append('tipo', 'formulario');
 
-            fetch('../controllers/Controller-excluir_formulario.php', {
+            fetch('../controllers/Controller-Exclusoes.php', {
                 method: 'POST',
                 body: formData
             })

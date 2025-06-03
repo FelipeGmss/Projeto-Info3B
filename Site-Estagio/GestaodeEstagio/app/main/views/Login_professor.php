@@ -94,7 +94,8 @@
                 <p class="text-gray-600">Acesse sua conta para continuar</p>
             </div>
 
-            <form action="../controllers/Controller-login_professor.php" method="POST" class="space-y-6">
+            <form action="../controllers/Controller-Login.php" method="POST" class="space-y-6">
+                <input type="hidden" name="tipo" value="professor">
                 <div class="input-group">
                     <label for="email" class="block text-sm font-medium text-gray-700 mb-1">E-mail Institucional</label>
                     <div class="relative">

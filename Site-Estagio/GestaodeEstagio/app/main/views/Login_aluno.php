@@ -85,28 +85,28 @@
                 <p class="text-gray-600">Acesse sua conta para continuar</p>
             </div>
 
-            <form method="POST" action="../controllers/Controller-login_alunos.php" class="space-y-4">
-                 <div>
-                     <label for="email" class="block text-sm font-medium text-gray-700 mb-1">E-mail Institucional</label>
-                     <input type="email" id="email" name="email" required
-                         class="w-full input-field px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#005A24] transition-all duration-300"
-                         placeholder="Digite seu email">
-                 </div>
-                 <div>
-                     <label for="senha" class="block text-sm font-medium text-gray-700 mb-1">Senha</label>
-                     <input type="password" id="senha" name="senha" required
-                         class="w-full input-field px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#005A24] transition-all duration-300"
-                         placeholder="Digite sua senha">
-                 </div>
-                 
-                 <input type="hidden" name="userType" value="student">
-                 <input type="submit" name="btn" value="Entrar"
-                     class="w-full bg-[#005A24] hover:bg-[#004A1D] text-white py-3 px-6 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#005A24] transition-all duration-300 font-semibold text-lg">
+            <form method="POST" action="../controllers/Controller-Login.php" class="space-y-4">
+                <input type="hidden" name="tipo" value="aluno">
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">E-mail Institucional</label>
+                    <input type="email" id="email" name="email" required
+                        class="w-full input-field px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#005A24] transition-all duration-300"
+                        placeholder="Digite seu email">
+                </div>
+                <div>
+                    <label for="senha" class="block text-sm font-medium text-gray-700 mb-1">Senha</label>
+                    <input type="password" id="senha" name="senha" required
+                        class="w-full input-field px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#005A24] transition-all duration-300"
+                        placeholder="Digite sua senha">
+                </div>
+                
+                <input type="submit" name="btn" value="Entrar"
+                    class="w-full bg-[#005A24] hover:bg-[#004A1D] text-white py-3 px-6 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#005A24] transition-all duration-300 font-semibold text-lg">
             </form>
 
             <div class="text-center mt-4">
                 <a href="recuperar_senha.php" class="text-sm text-green-600 hover:text-green-700">Esqueceu sua senha?</a>
-                </div>
+            </div>
 
         </div>
     </div>

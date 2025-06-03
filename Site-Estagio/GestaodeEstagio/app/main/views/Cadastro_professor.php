@@ -89,7 +89,7 @@
                 <p class="text-gray-600">Crie sua conta para começar</p>
             </div>
 
-            <form action="../controllers/Controller-cadastro_professor.php" method="POST" class="space-y-6">
+            <form action="../controllers/Controller-Cadastros.php" method="POST" class="space-y-6">
                 <div class="input-group">
                     <label for="email" class="block text-sm font-medium text-gray-700 mb-1">E-mail Institucional</label>
                     <div class="relative">

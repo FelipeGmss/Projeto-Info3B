@@ -232,7 +232,8 @@ if (!isset($dados_aluno) || empty($dados_aluno)) {
             <p>Atualize os dados do aluno</p>
         </div>
 
-        <form action="../controllers/Controller-editar_alunos.php" method="POST" autocomplete="off" id="alunoForm" aria-label="Formulário de edição de aluno">
+        <form action="../controllers/Controller-Edicoes.php" method="POST" autocomplete="off" id="alunoForm" aria-label="Formulário de edição de aluno">
+            <input type="hidden" name="tipo" value="aluno">
             <input type="hidden" name="id" value="<?php echo $dados_aluno['id'] ?>">
             <div class="form-grid">
                 <div class="form-group">

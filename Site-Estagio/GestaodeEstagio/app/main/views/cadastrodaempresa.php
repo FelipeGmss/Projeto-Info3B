@@ -73,7 +73,7 @@
                 <p class="text-gray-600">Preencha os dados da sua empresa para começar</p>
             </div>
 
-            <form action="../controllers/Controller-cadastro_empresa.php" method="POST" class="space-y-4">
+            <form action="../controllers/Controller-Cadastros.php" method="POST" class="space-y-4">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="input-group">
                         <label for="nome" class="block text-sm font-medium text-gray-700 mb-1">Nome da Empresa</label>
