@@ -46,9 +46,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btn-editar'])) {
             $resultado = $cadastro->editar_empresa($id, $nome, $contato, $endereco, $perfis, $vagas);
             
             if ($resultado) {
-                header('Location: Controller-listar_empresa.php?resultado=editar');
+                header('Location: ../views/dadosempresa.php?resultado=editar');
             } else {
-                header('Location: Controller-listar_empresa.php?resultado=erro');
+                header('Location: ../views/dadosempresa.php?resultado=erro');
             }
             exit;
         }
@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btn-editar'])) {
     if ($tipo === 'aluno') {
         header("Location: ../views/editar_aluno.php?error=dados_invalidos");
     } else if ($tipo === 'empresa') {
-        header('Location: Controller-listar_empresa.php?resultado=erro');
+        header('Location: ../views/dadosempresa.php?resultado=erro');
     }
     exit;
 }
@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btn-editar'])) {
 if (isset($_POST['tipo']) && $_POST['tipo'] === 'aluno') {
     header("Location: ../views/editar_aluno.php");
 } else {
-    header('Location: Controller-listar_empresa.php');
+    header('Location: ../views/dadosempresa.php');
 }
 exit;
 ?> 

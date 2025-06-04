@@ -15,7 +15,7 @@ if(isset($_GET['btn-editar'])){
         include '../views/editar_aluno.php';
     } else {
         // Redirecionar para a lista com mensagem de erro
-        header('Location: Controller-listar_alunos.php?error=aluno_nao_encontrado');
+        header('Location: ../views/perfildoaluno.php?error=aluno_nao_encontrado');
         exit;
     }
 } else if(isset($_GET['btn-editar_empresa'])) {
@@ -26,12 +26,12 @@ if(isset($_GET['btn-editar'])){
     if($dados_empresa) {
         include '../views/editar_empresa.php';
     } else {
-        header('Location: Controller-listar_empresa.php?error=empresa_nao_encontrada');
+        header('Location: ../views/dadosempresa.php?error=empresa_nao_encontrada');
         exit;
     }
 } else {
     // Se não houver ID, redirecionar para a lista
-    header('Location: Controller-listar_alunos.php');
+    header('Location: ../views/perfildoaluno.php');
     exit;
 }
 

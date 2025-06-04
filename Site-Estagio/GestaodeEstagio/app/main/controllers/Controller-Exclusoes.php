@@ -9,9 +9,9 @@ if (isset($_POST['btn-excluir']) && isset($_POST['tipo']) && $_POST['tipo'] === 
         $resultado = $x->excluir_empresa($id);
         
         if($resultado){
-            header('location:Controller-listar_empresa.php?resultado=excluir');
+            header('location: ../views/dadosempresa.php?resultado=excluir');
         } else {
-            header('location:Controller-listar_empresa.php?resultado=erro');
+            header('location: ../views/dadosempresa.php?resultado=erro');
         }
     } catch (PDOException $e) {
         // Log do erro para debug
@@ -19,9 +19,9 @@ if (isset($_POST['btn-excluir']) && isset($_POST['tipo']) && $_POST['tipo'] === 
         
         // Redireciona com mensagem de erro apropriada
         if($e->getCode() == 23000) {
-            header('location:Controller-listar_empresa.php?resultado=erro_fk');
+            header('location: ../views/dadosempresa.php?resultado=erro_fk');
         } else {
-            header('location:Controller-listar_empresa.php?resultado=erro');
+            header('location: ../views/dadosempresa.php?resultado=erro');
         }
     }
 }

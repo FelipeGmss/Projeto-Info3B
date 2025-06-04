@@ -1,7 +1,7 @@
 <?php
 if (!isset(
     $dados_empresa) || empty($dados_empresa)) {
-    header('Location: ../controllers/Controller-listar_empresa.php?error=dados_nao_encontrados');
+    header('Location: dadosempresa.php?error=dados_nao_encontrados');
     exit;
 }
 ?>
