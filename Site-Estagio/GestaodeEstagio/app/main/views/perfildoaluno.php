@@ -277,6 +277,7 @@ if (isset($_GET['resultado'])) {
                     echo "<p class='text-lg font-semibold text-gray-800'>" . htmlspecialchars($value['nome']) . "</p>";
                     echo "<p class='text-sm text-gray-600'>" . htmlspecialchars($value['matricula']) . "</p>";
                     echo "</div>";
+
                     echo "</div>";
                     echo "<p class='text-sm text-gray-600'><i class='fas fa-phone mr-2'></i>" . htmlspecialchars($value['contato']) . "</p>";
                     echo "<p class='text-sm text-gray-600'><i class='fas fa-graduation-cap mr-2'></i>" . htmlspecialchars($value['curso']) . "</p>";

@@ -60,7 +60,9 @@ class PDF extends FPDF {
 
 try {
     // Conexão com o banco de dados
-    $conn = getConnection();
+    $pdo = new PDO("mysql:host=localhost;dbname=estagio", "root", "");
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo->exec("set names utf8");
 
     // Processar filtros
     $filtro = $_POST['filtro_concedente'] ?? 'todos';
@@ -69,28 +71,34 @@ try {
 
     // Construir a query base
     $sql = "SELECT c.*, 
-            GROUP_CONCAT(DISTINCT s.perfis_selecionados) as perfis_selecionados
-            FROM concedentes c 
-            LEFT JOIN selecao s ON c.id = s.id_concedente
-            GROUP BY c.id
-            ORDER BY c.nome ASC";
+            (SELECT GROUP_CONCAT(DISTINCT s2.perfis_selecionados) 
+             FROM selecao s2 
+             WHERE s2.id_concedente = c.id) as perfis_selecionados
+            FROM concedentes c";
     
+    $params = [];
     if ($filtro === 'perfil' && !empty($perfil)) {
-        $sql .= " HAVING perfis_selecionados LIKE ?";
-        $perfil = "%$perfil%";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("s", $perfil);
+        $sql .= " WHERE EXISTS (
+                    SELECT 1 
+                    FROM selecao s 
+                    WHERE s.id_concedente = c.id 
+                    AND s.perfis_selecionados LIKE ?
+                )";
+        $params[] = "%$perfil%";
     } elseif ($filtro === 'endereco' && !empty($endereco)) {
         $sql .= " WHERE c.endereco LIKE ?";
-        $endereco = "%$endereco%";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("s", $endereco);
-    } else {
-        $stmt = $conn->prepare($sql);
+        $params[] = "%$endereco%";
     }
 
-    $stmt->execute();
-    $result = $stmt->get_result();
+    $sql .= " ORDER BY c.nome ASC";
+
+    $stmt = $pdo->prepare($sql);
+    if (!empty($params)) {
+        $stmt->execute($params);
+    } else {
+        $stmt->execute();
+    }
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     // Criar PDF
     $pdf = new PDF('L'); // Landscape
@@ -130,7 +138,7 @@ try {
     $pdf->SetTextColor(0, 0, 0); // Preto
     $fill = false;
 
-    while ($row = $result->fetch_assoc()) {
+    foreach ($result as $row) {
         // Processar perfis selecionados
         $perfis = [];
         if (!empty($row['perfis_selecionados'])) {

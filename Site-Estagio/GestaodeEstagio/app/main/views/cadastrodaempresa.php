@@ -14,138 +14,287 @@
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #F5F5F5;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            margin: 0;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 800px;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin: 1rem;
         }
 
         .input-group {
             position: relative;
             margin-bottom: 1.5rem;
-        }
-
-        .input-group input {
-            transition: all 0.3s ease;
-        }
-
-        .input-group input:focus {
-            box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.1);
+            width: 100%;
         }
 
         .input-group label {
-            transition: all 0.3s ease;
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            transition: all 0.2s ease;
+            background: white;
+            box-sizing: border-box;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #005A24;
+            box-shadow: 0 0 0 3px rgba(0, 90, 36, 0.1);
         }
 
         .error-message {
             display: none;
-            color: #ff4444;
-            font-size: 0.8rem;
-            margin-top: 0.25rem;
-        }
-
-        .input-group.error .error-message {
-            display: block;
-        }
-
-        .input-group.error input {
-            border-color: #ff4444;
-        }
-
-        .input-group.error label {
-            color: #ff4444;
+            color: #dc2626;
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+            line-height: 1.4;
         }
 
         .help-text {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: #6B7280;
-            margin-top: 0.25rem;
+            margin-top: 0.5rem;
+            line-height: 1.4;
+            display: block;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+
+        .radio-label {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+            min-width: 100px;
+            justify-content: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .radio-label input[type="radio"] {
+            margin-right: 0.5rem;
+            width: 16px;
+            height: 16px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-title {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .form-title h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
+
+        .form-title p {
+            color: #6B7280;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #4B5563;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            padding: 0.5rem 0;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 1rem;
+            background: #005A24;
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 2rem;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 0;
+                background: white;
+            }
+
+            .form-container {
+                border-radius: 0;
+                box-shadow: none;
+                padding: 1.5rem 1rem;
+                margin: 0;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .input-group {
+                margin-bottom: 1.25rem;
+            }
+
+            .input-group input {
+                padding: 0.75rem;
+                font-size: 1rem;
+            }
+
+            .radio-group {
+                gap: 0.5rem;
+            }
+
+            .radio-label {
+                padding: 0.5rem;
+                font-size: 0.875rem;
+                min-width: 80px;
+            }
+
+            .form-title {
+                margin-bottom: 2rem;
+            }
+
+            .form-title h2 {
+                font-size: 1.25rem;
+            }
+
+            .back-link {
+                margin-bottom: 1.5rem;
+            }
+
+            .submit-button {
+                margin-top: 1.5rem;
+                padding: 0.875rem;
+            }
         }
     </style>
 </head>
 
-<body class="min-h-screen flex items-center justify-center p-4">
-    <div class="w-full max-w-6xl flex bg-white rounded-3xl shadow-xl overflow-hidden">
-        <!-- Right Side: Registration Form -->
-        <div class="w-full p-8">
-            <a href="javascript:history.back()" class="inline-flex items-center gap-2 text-gray-600 hover:text-gray-800 mb-4">
-                <i class="fas fa-arrow-left"></i>
-                <span>Voltar</span>
-            </a>
-            <div class="text-center mb-8">
-                <h2 class="text-2xl font-bold text-gray-800 mb-2">Cadastro de Empresa</h2>
-                <p class="text-gray-600">Preencha os dados da sua empresa para começar</p>
-            </div>
+<body>
+    <div class="form-container">
+        <a href="javascript:history.back()" class="back-link">
+            <i class="fas fa-arrow-left"></i>
+            <span>Voltar</span>
+        </a>
 
-            <form action="../controllers/Controller-Cadastros.php" method="POST" class="space-y-4">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="input-group">
-                        <label for="nome" class="block text-sm font-medium text-gray-700 mb-1">Nome da Empresa</label>
-                        <input type="text" id="nome" name="nome" required
-                            class="w-full input-field px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#005A24] transition-all duration-300"
-                            placeholder="Digite o nome da empresa">
-                        <span class="error-message" id="nomeError">Por favor, insira um nome válido</span>
-                    </div>
+        <div class="form-title">
+            <h2>Cadastro de Empresa</h2>
+            <p>Preencha os dados da sua empresa para começar</p>
+        </div>
 
-                    <div class="input-group">
-                        <label for="contato" class="block text-sm font-medium text-gray-700 mb-1">Contato</label>
-                        <input type="tel" id="contato" name="contato" required
-                            class="w-full input-field px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#005A24] transition-all duration-300"
-                            placeholder="Digite o contato">
-                        <span class="help-text">Digite apenas números (DDD + número)</span>
-                        <span class="error-message" id="contatoError">Por favor, insira um número válido</span>
-                    </div>
-
-                    <div class="input-group">
-                        <label for="endereco" class="block text-sm font-medium text-gray-700 mb-1">Endereço</label>
-                        <input type="text" id="endereco" name="endereco" required
-                            class="w-full input-field px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#005A24] transition-all duration-300"
-                            placeholder="Digite o endereço">
-                        <span class="error-message" id="enderecoError">Por favor, insira um endereço válido</span>
-                    </div>
-
-                    <div class="input-group">
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Quantidade de Tipos de Perfil</label>
-                        <div class="flex gap-4">
-                            <label class="inline-flex items-center">
-                                <input type="radio" name="quantidade_perfis" value="1" class="form-radio" checked>
-                                <span class="ml-2">1</span>
-                            </label>
-                            <label class="inline-flex items-center">
-                                <input type="radio" name="quantidade_perfis" value="2" class="form-radio">
-                                <span class="ml-2">2</span>
-                            </label>
-                            <label class="inline-flex items-center">
-                                <input type="radio" name="quantidade_perfis" value="3" class="form-radio">
-                                <span class="ml-2">3</span>
-                            </label>
-                            <label class="inline-flex items-center">
-                                <input type="radio" name="quantidade_perfis" value="4" class="form-radio">
-                                <span class="ml-2">4</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div id="perfis-container" class="col-span-2">
-                        <div class="input-group">
-                            <label for="perfil1" class="block text-sm font-medium text-gray-700 mb-1">Perfil 1</label>
-                            <input type="text" id="perfil1" name="perfis[]" required
-                                class="w-full input-field px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#005A24] transition-all duration-300"
-                                placeholder="Digite o primeiro perfil">
-                            <span class="error-message" id="perfil1Error">Por favor, insira um perfil válido</span>
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <label for="vagas" class="block text-sm font-medium text-gray-700 mb-1">Número de Vagas</label>
-                        <input type="number" id="vagas" name="numero_vagas" required
-                            class="w-full input-field px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#005A24] transition-all duration-300"
-                            placeholder="Quantidade de vagas disponíveis"
-                            min="1" max="100">
-                        <span class="error-message" id="vagasError">Por favor, insira um número válido de vagas</span>
-                    </div>
+        <form action="../controllers/Controller-Cadastros.php" method="POST">
+            <div class="form-grid">
+                <div class="input-group">
+                    <label for="nome">Nome da Empresa</label>
+                    <input type="text" id="nome" name="nome" required
+                        placeholder="Digite o nome da empresa">
+                    <span class="error-message" id="nomeError">Por favor, insira um nome válido</span>
                 </div>
 
-                <input type="submit" name="btn" value="Cadastrar Empresa"
-                    class="w-full bg-[#005A24] hover:bg-[#004A1D] text-white py-3 px-6 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#005A24] transition-all duration-300 font-semibold text-lg">
-            </form>
-        </div>
+                <div class="input-group">
+                    <label for="contato">Contato</label>
+                    <input type="tel" id="contato" name="contato" required
+                        placeholder="Digite o contato">
+                    <span class="help-text">Digite apenas números (DDD + número)</span>
+                    <span class="error-message" id="contatoError">Por favor, insira um número válido</span>
+                </div>
+
+                <div class="input-group">
+                    <label for="endereco">Endereço</label>
+                    <input type="text" id="endereco" name="endereco" required
+                        placeholder="Digite o endereço">
+                    <span class="error-message" id="enderecoError">Por favor, insira um endereço válido</span>
+                </div>
+
+                <div class="input-group">
+                    <label for="vagas">Número de Vagas</label>
+                    <input type="number" id="vagas" name="numero_vagas" required
+                        placeholder="Quantidade de vagas disponíveis"
+                        min="1" max="100">
+                    <span class="error-message" id="vagasError">Por favor, insira um número válido de vagas</span>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Quantidade de Tipos de Perfil</label>
+                <div class="radio-group">
+                    <label class="radio-label">
+                        <input type="radio" name="quantidade_perfis" value="1" checked>
+                        <span>1 Perfil</span>
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="quantidade_perfis" value="2">
+                        <span>2 Perfis</span>
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="quantidade_perfis" value="3">
+                        <span>3 Perfis</span>
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="quantidade_perfis" value="4">
+                        <span>4 Perfis</span>
+                    </label>
+                </div>
+            </div>
+
+            <div id="perfis-container" class="input-group">
+                <label for="perfil1">Perfil 1</label>
+                <input type="text" id="perfil1" name="perfis[]" required
+                    placeholder="Digite o primeiro perfil">
+                <span class="error-message" id="perfil1Error">Por favor, insira um perfil válido</span>
+            </div>
+
+            <button type="submit" name="btn" value="Cadastrar Empresa" class="submit-button">
+                Cadastrar Empresa
+            </button>
+        </form>
     </div>
 
     <script>
