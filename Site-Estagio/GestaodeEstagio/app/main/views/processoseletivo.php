@@ -15,7 +15,7 @@
                         'ceara-green': '#008C45',
                         'ceara-orange': '#FFA500',
                         'ceara-white': '#FFFFFF',
-                        'ceara-moss': '#2d4739', // Verde musgo
+                        'ceara-moss': '#2d4739',
                         primary: '#008C45',
                         secondary: '#FFA500',
                     }
@@ -62,7 +62,7 @@
 
         .header {
             background: #2d4739;
-            padding: 0.5rem 0;
+            padding: 1rem 0;
         }
 
         .header * {
@@ -72,13 +72,22 @@
         .transparent-button {
             background: none;
             transition: all 0.3s ease;
-            padding: 0.4rem 0.8rem;
-            font-size: 0.9rem;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.875rem;
             color: #ffffff;
+            border-radius: 0.375rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+            text-decoration: none;
+            border: 1px solid transparent;
         }
 
         .transparent-button:hover {
             color: #FFA500;
+            background: rgba(255, 165, 0, 0.1);
+            border-color: rgba(255, 165, 0, 0.3);
             transform: translateY(-1px);
         }
 
@@ -93,9 +102,10 @@
             background: #ffffff;
             border: none;
             border-radius: 0.5rem;
-            padding: 0.5rem 1rem 0.5rem 2.5rem;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
             width: 100%;
             transition: all 0.3s ease;
+            font-size: 1rem;
         }
 
         .search-input:focus {
@@ -123,63 +133,64 @@
         }
 
         .action-button {
-            padding: 0.4rem;
-            border-radius: 0.4rem;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
             transition: all 0.2s ease;
             border: none;
             background: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 2.5rem;
+            min-height: 2.5rem;
         }
 
         .action-button:hover {
-            transform: scale(1.1);
+            transform: scale(1.05);
         }
 
         .card {
             display: none;
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            margin-bottom: 1rem;
+            padding: 1.25rem;
+            transition: all 0.2s ease;
         }
 
-        @media (max-width: 768px) {
-            .table-container {
-                display: none;
-            }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
 
-            .card {
-                display: block;
-                background: white;
-                border-radius: 0.75rem;
-                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-                margin-bottom: 1rem;
-                padding: 1rem;
-            }
+        .card-content {
+            padding: 0;
+        }
 
-            .card:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            }
-
-            .card-content {
-                padding: 0.5rem;
-            }
-
-            .card-actions {
-                display: flex;
-                justify-content: flex-end;
-                gap: 0.5rem;
-                margin-top: 0.75rem;
-            }
+        .card-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e5e7eb;
         }
 
         .modal-button {
             background: none;
             border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 0.4rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
             transition: all 0.2s ease;
             font-weight: 500;
+            cursor: pointer;
         }
 
         .modal-button.cancel {
             color: #6B7280;
+            border: 1px solid #d1d5db;
         }
 
         .modal-button.cancel:hover {
@@ -195,21 +206,274 @@
             opacity: 0.9;
             transform: translateY(-1px);
         }
+
+        /* HEADER MOBILE COMPLETAMENTE REDESENHADO */
+        @media (max-width: 768px) {
+            .header {
+                padding: 0.75rem 0;
+            }
+            
+            /* Container principal do header */
+            .header-container {
+                display: flex;
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+            
+            /* Primeira linha: Voltar + Logo + Info da escola */
+            .header-top-row {
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                width: 100%;
+            }
+            
+            /* Botão voltar compacto */
+            .back-button-mobile {
+                background: rgba(255, 165, 0, 0.1);
+                border: 1px solid rgba(255, 165, 0, 0.3);
+                border-radius: 0.5rem;
+                padding: 0.5rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-width: 2.5rem;
+                min-height: 2.5rem;
+                flex-shrink: 0;
+            }
+            
+            /* Logo otimizado */
+            .logo-mobile {
+                width: 2.5rem;
+                height: 2.5rem;
+                flex-shrink: 0;
+                border-radius: 0.25rem;
+                background: rgba(255, 255, 255, 0.1);
+                padding: 0.125rem;
+            }
+            
+            /* Info da escola responsiva */
+            .school-info-mobile {
+                flex: 1;
+                min-width: 0;
+                display: flex;
+                flex-direction: column;
+                gap: 0.125rem;
+            }
+            
+            .school-name-mobile {
+                font-size: 0.75rem;
+                font-weight: 500;
+                opacity: 0.9;
+                line-height: 1;
+            }
+            
+            .page-title-mobile {
+                font-size: 0.9rem;
+                font-weight: 700;
+                line-height: 1.1;
+                margin: 0;
+            }
+            
+            /* Segunda linha: Botões de ação */
+            .header-actions-row {
+                display: flex;
+                gap: 0.5rem;
+                width: 100%;
+            }
+            
+            /* Botões de ação otimizados */
+            .action-button-mobile {
+                flex: 1;
+                background: rgba(255, 255, 255, 0.1);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                border-radius: 0.5rem;
+                padding: 0.625rem 0.75rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+                font-size: 0.8rem;
+                font-weight: 500;
+                transition: all 0.2s ease;
+                text-decoration: none;
+                min-height: 2.75rem;
+            }
+            
+            .action-button-mobile:hover {
+                background: rgba(255, 165, 0, 0.2);
+                border-color: rgba(255, 165, 0, 0.4);
+                transform: translateY(-1px);
+            }
+            
+            .action-button-mobile i {
+                font-size: 0.875rem;
+                flex-shrink: 0;
+            }
+            
+            .action-button-mobile span {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            
+            /* Esconder elementos desnecessários no mobile */
+            .transparent-button {
+                display: none;
+            }
+            
+            /* Mostrar versões mobile */
+            .back-button-mobile,
+            .action-button-mobile {
+                display: flex;
+            }
+            
+            /* Esconder tabela e mostrar cards */
+            .table-container {
+                display: none;
+            }
+
+            .card {
+                display: block;
+            }
+            
+            /* Melhorar cards mobile */
+            .card h3 {
+                font-size: 1.1rem;
+                margin-bottom: 0.75rem;
+            }
+            
+            .card .space-y-1 {
+                gap: 0.5rem;
+            }
+            
+            .card .space-y-1 p {
+                display: flex;
+                align-items: center;
+                font-size: 0.9rem;
+            }
+            
+            .card .space-y-1 i {
+                width: 1rem;
+                margin-right: 0.75rem;
+                text-align: center;
+            }
+            
+            .action-button {
+                min-width: 2.25rem;
+                min-height: 2.25rem;
+                padding: 0.4rem;
+            }
+            
+            /* Melhorar busca mobile */
+            .search-input {
+                font-size: 1rem;
+                padding: 0.875rem 1rem 0.875rem 2.75rem;
+            }
+            
+            /* Container mobile */
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            
+            /* Modal mobile */
+            .modal-content {
+                margin: 1rem;
+                max-height: calc(100vh - 2rem);
+                overflow-y: auto;
+            }
+        }
+
+        /* Mobile muito pequeno (< 480px) */
+        @media (max-width: 480px) {
+            .header {
+                padding: 0.5rem 0;
+            }
+            
+            .header-container {
+                gap: 0.5rem;
+            }
+            
+            .header-top-row {
+                gap: 0.5rem;
+            }
+            
+            .back-button-mobile {
+                min-width: 2.25rem;
+                min-height: 2.25rem;
+                padding: 0.375rem;
+            }
+            
+            .logo-mobile {
+                width: 2.25rem;
+                height: 2.25rem;
+            }
+            
+            .school-name-mobile {
+                font-size: 0.7rem;
+            }
+            
+            .page-title-mobile {
+                font-size: 0.8rem;
+            }
+            
+            .action-button-mobile {
+                padding: 0.5rem 0.625rem;
+                font-size: 0.75rem;
+                min-height: 2.5rem;
+            }
+            
+            .action-button-mobile i {
+                font-size: 0.8rem;
+            }
+            
+            /* Esconder texto em telas muito pequenas, manter só ícones */
+            .action-button-mobile span {
+                display: none;
+            }
+            
+            .action-button-mobile {
+                justify-content: center;
+                min-width: 2.5rem;
+            }
+        }
+
+        /* Desktop - manter layout original */
+        @media (min-width: 769px) {
+            .back-button-mobile,
+            .action-button-mobile {
+                display: none;
+            }
+            
+            .transparent-button {
+                display: flex;
+            }
+            
+            .card {
+                display: none;
+            }
+            
+            .table-container {
+                display: block;
+            }
+        }
     </style>
 </head>
 <body class="min-h-screen font-['Roboto'] select-none">
-    <!-- Cabeçalho -->
+    <!-- Cabeçalho Completamente Redesenhado para Mobile -->
     <header class="header w-full mb-4">
         <div class="container mx-auto px-4">
-            <!-- Main header content -->
-            <div class="flex items-center justify-between">
+            <!-- Layout Desktop (mantido original) -->
+            <div class="hidden md:flex items-center justify-between flex-wrap gap-3">
                 <!-- Left section with back button, logo and school name -->
                 <div class="flex items-center gap-3">
                     <a href="javascript:history.back()" class="transparent-button">
-                        <i class="fas fa-arrow-left"></i> Voltar
+                        <i class="fas fa-arrow-left"></i> 
+                        <span>Voltar</span>
                     </a>
                     <img src="../config/img/logo_Salaberga-removebg-preview.png" alt="Logo EEEP Salaberga" class="w-10 h-10 object-contain">
-                    <div class="flex flex-col">
+                    <div class="flex flex-col py-1">
                         <span class="text-sm font-medium">EEEP Salaberga</span>
                         <h1 class="text-lg font-bold">Formulários de Seleção</h1>
                     </div>
@@ -217,13 +481,42 @@
 
                 <!-- Right section with action buttons -->
                 <div class="flex gap-2">
-                    <a href="novo_formulario.php" class="transparent-button flex items-center gap-1">
+                    <a href="novo_formulario.php" class="transparent-button">
                         <i class="fas fa-plus"></i>
-                        Novo
+                        <span>Novo</span>
                     </a>
-                    <a href="alunos_alocados.php" class="transparent-button flex items-center gap-1">
+                    <a href="alunos_alocados.php" class="transparent-button">
                         <i class="fas fa-user-graduate"></i>
-                        Alunos Alocados
+                        <span>Alunos Alocados</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Layout Mobile (completamente novo) -->
+            <div class="md:hidden header-container">
+                <!-- Primeira linha: Voltar + Logo + Info -->
+                <div class="header-top-row">
+                    <a href="javascript:history.back()" class="back-button-mobile" title="Voltar">
+                        <i class="fas fa-arrow-left"></i>
+                    </a>
+                    <img src="../config/img/logo_Salaberga-removebg-preview.png" 
+                         alt="Logo EEEP Salaberga" 
+                         class="logo-mobile object-contain">
+                    <div class="school-info-mobile">
+                        <span class="school-name-mobile">EEEP Salaberga</span>
+                        <h1 class="page-title-mobile">Formulários de Seleção</h1>
+                    </div>
+                </div>
+
+                <!-- Segunda linha: Botões de ação -->
+                <div class="header-actions-row">
+                    <a href="novo_formulario.php" class="action-button-mobile" title="Novo Formulário">
+                        <i class="fas fa-plus"></i>
+                        <span>Novo</span>
+                    </a>
+                    <a href="alunos_alocados.php" class="action-button-mobile" title="Ver Alunos Alocados">
+                        <i class="fas fa-user-graduate"></i>
+                        <span>Alunos</span>
                     </a>
                 </div>
             </div>
@@ -299,7 +592,6 @@
                             echo "<td class='px-4 py-3 text-sm text-center'>" . $form['total_inscritos'] . "</td>";
                             echo "<td class='px-4 py-3 text-center'>";
                             echo "<div class='flex justify-center gap-2'>";
-                                // Botão Inscrever-se
                                 echo "<button onclick='showInscricaoModal(" . $form['primeiro_id'] . ")' 
                                       class='text-green-600 hover:text-green-800 bg-green-50 rounded-full p-2 transition-colors' 
                                       title='Inscrever aluno no processo seletivo'
@@ -307,7 +599,6 @@
                                 echo "<i class='fas fa-user-plus'></i>";
                                 echo "</button>";
                                 
-                                // Botão Ver Inscritos
                                 echo "<button onclick='showInscritosModal(" . $form['primeiro_id'] . ")' 
                                       class='text-blue-600 hover:text-blue-800 bg-blue-50 rounded-full p-2 transition-colors' 
                                       title='Ver alunos inscritos'
@@ -315,7 +606,6 @@
                                 echo "<i class='fas fa-users'></i>";
                                 echo "</button>";
                                 
-                                // Botão Excluir Formulário
                                 echo "<button onclick='excluirFormulario(" . $form['primeiro_id'] . ")' 
                                       class='text-red-600 hover:text-red-800 bg-red-50 rounded-full p-2 transition-colors' 
                                       title='Excluir formulário'
@@ -337,6 +627,8 @@
         <!-- Card View (Mobile) -->
         <div class="md:hidden">
             <?php
+            // Reexecutar a query para os cards mobile
+            $query->execute();
             if ($result > 0) {
                 foreach ($query as $form) {
                     echo '<div class="card">';
