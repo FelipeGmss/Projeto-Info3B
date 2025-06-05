@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="shortcut icon" href="../../config/img/logo_Salaberga-removebg-preview.png" type="image/x-icon">
     <script>
         tailwind.config = {
             theme: {
@@ -226,8 +227,8 @@
                             </select>
 
                             <div id="curso_select_selecao" class="mb-3">
-                                <label class="block text-gray-700 text-sm font-medium mb-2">Curso:</label>
-                                <select name="curso_selecao" id="curso_selecao" class="form-select">
+                                <label class="block text-gray-700 text-sm font-medium mb-2">Filtrar por Curso:</label>
+                                <select name="curso_selecao" class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-ceara-orange focus:border-transparent">
                                     <option value="todos">Todos os Cursos</option>
                                     <option value="enfermagem">Enfermagem</option>
                                     <option value="informatica">Informática</option>

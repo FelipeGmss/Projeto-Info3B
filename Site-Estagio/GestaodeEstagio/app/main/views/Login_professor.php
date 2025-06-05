@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Professor | Gestão de Estágio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="shortcut icon" href="../../assets/img/Design sem nome.svg" type="image/x-icon">
+    <link rel="shortcut icon" href="../config/img/logo_Salaberga-removebg-preview.png" type="image/x-icon">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
@@ -40,7 +40,7 @@
         }
 
         .toggle-password:hover {
-            color: #4CAF50;
+            color: #005A24;
         }
 
         .error-message {
@@ -75,7 +75,7 @@
 <body class="min-h-screen flex items-center justify-center p-4">
     <div class="w-full max-w-2xl flex bg-white rounded-3xl shadow-xl overflow-hidden">
         <!-- Left Side: Image and Welcome Message -->
-        <div class="hidden md:block w-1/2 bg-gradient-to-br from-green-600 to-orange-500 p-8 text-white">
+        <div class="hidden md:block w-1/2 bg-gradient-to-br from-[#005A24] to-[#4CAF50] p-8 text-white">
             <div class="h-full flex flex-col justify-center">
                 <img src="https://i.postimg.cc/ryxHRNkj/lavosier-nas-2.png" alt="Logo EEEP Salaberga" class="w-40 mb-8">
                 <h1 class="text-3xl font-bold mb-4">EEEP Salaberga</h1>
@@ -85,7 +85,7 @@
 
         <!-- Right Side: Login Form -->
         <div class="w-full md:w-1/2 p-8">
-            <a href="javascript:history.back()" class="inline-flex items-center gap-2 text-gray-600 hover:text-gray-800 mb-4">
+            <a href="javascript:history.back()" class="inline-flex items-center gap-2 text-gray-600 hover:text-[#005A24] mb-4">
                 <i class="fas fa-arrow-left"></i>
                 <span>Voltar</span>
             </a>
@@ -100,7 +100,7 @@
                     <label for="email" class="block text-sm font-medium text-gray-700 mb-1">E-mail Institucional</label>
                     <div class="relative">
                         <input type="email" name="email" id="email" 
-                               class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-green-500"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-[#005A24]"
                                placeholder="seu.email@escola.edu.br" required>
                         <i class="fas fa-user absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                     </div>
@@ -111,7 +111,7 @@
                     <label for="senha" class="block text-sm font-medium text-gray-700 mb-1">Senha</label>
                     <div class="relative">
                         <input type="password" name="senha" id="senha" 
-                               class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-green-500"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-[#005A24]"
                                placeholder="Digite sua senha" required>
                         <i class="fas fa-eye toggle-password absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400"
                            role="button" tabindex="0" aria-label="Mostrar senha"></i>
@@ -120,12 +120,13 @@
                 </div>
 
                 <input type="submit" name="btn" value="Entrar" 
-                       class="w-full bg-gradient-to-r from-green-600 to-green-500 text-white py-3 px-4 rounded-xl font-semibold hover:from-green-700 hover:to-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all duration-300 btn-submit">
-                       <div>
-                       <a href="#" class="text-sm text-green-600 hover:text-green-700">Esqueceu a senha?</a><br>
-                       <p class="block text-sm font-medium text-gray-700 mb-1">Não tem uma conta? <a href="../views/Cadastro_professor.php" class="text-sm text-green-600 hover:text-green-700">Cadastrar-se</a></p>
-                 </div>
+                       class="w-full bg-[#005A24] hover:bg-[#004A1D] text-white py-3 px-4 rounded-xl font-semibold focus:outline-none focus:ring-2 focus:ring-[#005A24] focus:ring-offset-2 transition-all duration-300 btn-submit">
             </form>
+
+            <div class="text-center mt-4 space-y-2">
+                <a href="#" class="text-sm text-[#005A24] hover:text-[#004A1D]">Esqueceu a senha?</a>
+                <p class="block text-sm font-medium text-gray-700">Não tem uma conta? <a href="../views/Cadastro_professor.php" class="text-sm text-[#005A24] hover:text-[#004A1D]">Cadastrar-se</a></p>
+            </div>
         </div>
     </div>
 

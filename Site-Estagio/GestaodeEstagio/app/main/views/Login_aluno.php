@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Aluno | Gestão de Estágio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="shortcut icon" href="../../assets/img/Design sem nome.svg" type="image/x-icon">
+    <link rel="shortcut icon" href="../config/img/logo_Salaberga-removebg-preview.png" type="image/x-icon">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
@@ -39,7 +39,7 @@
         }
 
         .toggle-password:hover {
-            color: #4CAF50;
+            color: #005A24;
         }
 
         .error-message {
@@ -66,7 +66,7 @@
 <body class="min-h-screen flex items-center justify-center p-4">
     <div class="w-full max-w-2xl flex bg-white rounded-3xl shadow-xl overflow-hidden">
         <!-- Left Side: Image and Welcome Message -->
-        <div class="hidden md:block w-1/2 bg-gradient-to-br from-green-600 to-orange-500 p-8 text-white">
+        <div class="hidden md:block w-1/2 bg-gradient-to-br from-[#005A24] to-[#4CAF50] p-8 text-white">
             <div class="h-full flex flex-col justify-center">
                 <img src="https://i.postimg.cc/ryxHRNkj/lavosier-nas-2.png" alt="Logo EEEP Salaberga" class="w-40 mb-8">
                 <h1 class="text-3xl font-bold mb-4">EEEP Salaberga</h1>
@@ -76,7 +76,7 @@
 
         <!-- Right Side: Login Form -->
         <div class="w-full md:w-1/2 p-8">
-            <a href="javascript:history.back()" class="inline-flex items-center gap-2 text-gray-600 hover:text-gray-800 mb-4">
+            <a href="javascript:history.back()" class="inline-flex items-center gap-2 text-gray-600 hover:text-[#005A24] mb-4">
                 <i class="fas fa-arrow-left"></i>
                 <span>Voltar</span>
             </a>
@@ -105,7 +105,7 @@
             </form>
 
             <div class="text-center mt-4">
-                <a href="recuperar_senha.php" class="text-sm text-green-600 hover:text-green-700">Esqueceu sua senha?</a>
+                <a href="recuperar_senha.php" class="text-sm text-[#005A24] hover:text-[#004A1D]">Esqueceu sua senha?</a>
             </div>
 
         </div>

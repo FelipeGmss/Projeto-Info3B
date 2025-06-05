@@ -75,19 +75,21 @@ try {
     $local = $_POST['local_aluno'] ?? '';
 
     // Construir a query base
-    $sql = "SELECT * FROM aluno WHERE 1=1";
+    $sql = "SELECT a.*, 
+            COALESCE((SELECT status FROM selecao WHERE id_aluno = a.id ORDER BY id DESC LIMIT 1), 'nao_alocado') as status_atual
+            FROM aluno a WHERE 1=1";
     
     if ($filtro === 'curso' && !empty($curso)) {
-        $sql .= " AND curso = ?";
+        $sql .= " AND a.curso = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("s", $curso);
     } elseif ($filtro === 'nome' && !empty($nome)) {
-        $sql .= " AND nome LIKE ?";
+        $sql .= " AND a.nome LIKE ?";
         $nome = "%$nome%";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("s", $nome);
     } elseif ($filtro === 'local' && !empty($local)) {
-        $sql .= " AND endereco LIKE ?";
+        $sql .= " AND a.endereco LIKE ?";
         $local = "%$local%";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("s", $local);
@@ -132,6 +134,7 @@ try {
     $pdf->CellUTF8(45, 10, 'Curso', 1, 0, 'C', true);
     $pdf->CellUTF8(75, 10, 'Email', 1, 0, 'C', true);
     $pdf->CellUTF8(30, 10, 'Contato', 1, 0, 'C', true);
+    $pdf->CellUTF8(40, 10, 'Status', 1, 0, 'C', true);
     $pdf->CellUTF8(80, 10, 'Endereço', 1, 1, 'C', true);
 
     // Dados da tabela
@@ -142,6 +145,10 @@ try {
     while ($row = $result->fetch_assoc()) {
         // Formatar nome do curso
         $curso_formatado = isset($cursos[$row['curso']]) ? $cursos[$row['curso']] : ucfirst($row['curso']);
+        
+        // Formatar status
+        $status = $row['status_atual'];
+        $status_formatado = $status === 'alocado' ? 'Alocado' : ($status === 'pendente' ? 'Em Espera' : 'Não Alocado');
 
         // Alternar cores das linhas
         if ($fill) {
@@ -156,6 +163,7 @@ try {
         $pdf->CellUTF8(45, 8, $curso_formatado, 1, 0, 'C', $fill);
         $pdf->CellUTF8(75, 8, $row['email'], 1, 0, 'L', $fill);
         $pdf->CellUTF8(30, 8, $row['contato'], 1, 0, 'C', $fill);
+        $pdf->CellUTF8(40, 8, $status_formatado, 1, 0, 'C', $fill);
         $pdf->CellUTF8(80, 8, $row['endereco'], 1, 1, 'L', $fill);
         
         $fill = !$fill;
