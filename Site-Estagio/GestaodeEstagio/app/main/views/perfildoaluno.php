@@ -594,7 +594,7 @@
                 </thead>
                 <tbody class="divide-y divide-gray-200">
                     <?php
-                    $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
+                    $pdo = new PDO("mysql:host=localhost;dbname=u750204740_gestaoestagio","root","");
                     $search = isset($_GET['search']) ? $_GET['search'] : '';
                     if (!empty($search)) {
                         $consulta = 'SELECT * FROM aluno WHERE 
@@ -636,7 +636,7 @@
                             echo "<div class='flex justify-center gap-2'>";
                             echo "<form action='../controllers/Controller-botao_acao.php' method='GET' style='display: inline;'>";
                             echo "<input type='hidden' name='btn-editar' value='" . htmlspecialchars($value['id']) . "'>";
-                            echo "<button type='submit' class='text-ceara-orange hover:text-ceara-green' aria-label='Editar aluno " . htmlspecialchars($value['nome']) . "'>";
+                            echo "<button type='submit' class='text-ceara-orange hover:text-ceara-green bg-orange-50 rounded-full p-2 transition-colors' aria-label='Editar aluno " . htmlspecialchars($value['nome']) . "'>";
                             echo "<i class='fas fa-edit'></i>";
                             echo "</button>";
                             echo "</form>";
@@ -689,13 +689,13 @@
                     echo "<div class='card-actions'>";
                     echo "<form action='../controllers/Controller-botao_acao.php' method='GET' style='display: inline;'>";
                     echo "<input type='hidden' name='btn-editar' value='" . htmlspecialchars($value['id']) . "'>";
-                    echo "<button type='submit' class='bg-gradient-to-r from-ceara-orange to-ceara-green hover:from-ceara-green hover:to-ceara-orange text-white px-4 py-2 rounded-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 text-sm font-medium' aria-label='Editar aluno " . htmlspecialchars($value['nome']) . "'>";
-                    echo "<i class='fas fa-edit'></i> Editar";
+                    echo "<button type='submit' class='text-ceara-orange hover:text-ceara-green bg-orange-50 rounded-full p-2 transition-colors' aria-label='Editar aluno " . htmlspecialchars($value['nome']) . "'>";
+                    echo "<i class='fas fa-edit'></i>";
                     echo "</button>";
                     echo "</form>";
                     echo "<form action='../controllers/Controller-Exclusoes.php' method='POST' style='display: inline;' onsubmit='return confirm(\"Tem certeza que deseja excluir este aluno?\");'>";
                     echo "<input type='hidden' name='tipo' value='aluno'>";
-                    echo "<button type='submit' name='btn-excluir' value='" . htmlspecialchars($value['id']) . "' class='action-button text-red-600 hover:text-red-800 bg-red-50 hover:bg-red-100' title='Excluir aluno' aria-label='Excluir aluno'><i class='fas fa-trash'></i></button>";
+                    echo "<button type='submit' name='btn-excluir' value='" . htmlspecialchars($value['id']) . "' class='text-red-600 hover:text-red-800 bg-red-50 rounded-full p-2 transition-colors' title='Excluir aluno' aria-label='Excluir aluno'><i class='fas fa-trash'></i></button>";
                     echo "</form>";
                     echo "</div>";
                     echo "</div>";

@@ -15,7 +15,7 @@ if (isset($_POST['btn'])) {
         exit;
     }
 
-    $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
+    $pdo = new PDO("mysql:host=localhost;dbname=u750204740_gestaoestagio","root","");
     
     // Verifica se a vaga ainda está disponível
     $consulta = "SELECT numero_vagas FROM concedentes WHERE id = :vaga_id";

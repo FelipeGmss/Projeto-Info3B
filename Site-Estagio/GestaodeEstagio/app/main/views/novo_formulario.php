@@ -1,7 +1,7 @@
 <?php
 // Adicionar busca de concedente via AJAX
 if (isset($_GET['buscar_concedente']) && isset($_GET['nome_concedente'])) {
-    $pdo = new PDO('mysql:host=localhost;dbname=estagio', 'root', '');
+    $pdo = new PDO('mysql:host=localhost;dbname=u750204740_gestaoestagio', 'root', '');
     $nome = trim($_GET['nome_concedente']);
     $stmt = $pdo->prepare('SELECT id, nome, numero_vagas, perfis, endereco FROM concedentes WHERE nome LIKE :nome LIMIT 1');
     $stmt->bindValue(':nome', '%' . $nome . '%');

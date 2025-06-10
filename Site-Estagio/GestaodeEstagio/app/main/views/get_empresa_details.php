@@ -7,7 +7,7 @@ if (!isset($_GET['id'])) {
     exit;
 }
 
-$pdo = new PDO('mysql:host=localhost;dbname=estagio', 'root', '');
+$pdo = new PDO('mysql:host=localhost;dbname=u750204740_gestaoestagio', 'root', '');
 
 // Get form details
 $stmt = $pdo->prepare('SELECT id_concedente FROM selecao WHERE id = ?');

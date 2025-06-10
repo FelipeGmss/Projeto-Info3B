@@ -124,7 +124,6 @@
             </form>
 
             <div class="text-center mt-4 space-y-2">
-                <a href="#" class="text-sm text-[#005A24] hover:text-[#004A1D]">Esqueceu a senha?</a>
                 <p class="block text-sm font-medium text-gray-700">Não tem uma conta? <a href="../views/Cadastro_professor.php" class="text-sm text-[#005A24] hover:text-[#004A1D]">Cadastrar-se</a></p>
             </div>
         </div>

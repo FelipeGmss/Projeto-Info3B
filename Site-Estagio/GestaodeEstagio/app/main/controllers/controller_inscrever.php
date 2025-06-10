@@ -25,7 +25,7 @@ try {
         exit;
     }
 
-    $pdo = new PDO('mysql:host=localhost;dbname=estagio', 'root', '');
+    $pdo = new PDO('mysql:host=localhost;dbname=u750204740_gestaoestagio', 'root', '');
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Iniciar transação

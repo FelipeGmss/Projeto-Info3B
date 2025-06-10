@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['tipo']) && $_POST['ti
     if (isset($_POST['id_selecao'])) {
         try {
             $id_selecao = $_POST['id_selecao'];
-            $pdo = new PDO('mysql:host=localhost;dbname=estagio', 'root', '');
+            $pdo = new PDO('mysql:host=localhost;dbname=u750204740_gestaoestagio', 'root', '');
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             
             // Update the selecao table to remove the student enrollment

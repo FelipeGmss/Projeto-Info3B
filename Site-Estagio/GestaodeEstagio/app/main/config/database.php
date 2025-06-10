@@ -1,7 +1,7 @@
 <?php
 function getConnection() {
     $host = 'localhost';
-    $dbname = 'estagio';
+    $dbname = 'u750204740_gestaoestagio';
     $username = 'root';
     $password = '';
 

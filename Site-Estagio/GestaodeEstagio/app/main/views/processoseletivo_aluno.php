@@ -326,7 +326,7 @@ session_start();
                     ini_set('display_errors', 1);
                     
                     try {
-                        $pdo = new PDO('mysql:host=localhost;dbname=estagio', 'root', '');
+                        $pdo = new PDO('mysql:host=localhost;dbname=u750204740_gestaoestagio', 'root', '');
                         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                         
                         $search = isset($_GET['search']) ? $_GET['search'] : '';
@@ -398,7 +398,7 @@ session_start();
             ini_set('display_errors', 1);
             
             try {
-                $pdo = new PDO('mysql:host=localhost;dbname=estagio', 'root', '');
+                $pdo = new PDO('mysql:host=localhost;dbname=u750204740_gestaoestagio', 'root', '');
                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 
                 $search = isset($_GET['search']) ? $_GET['search'] : '';

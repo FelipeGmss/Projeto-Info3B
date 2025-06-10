@@ -128,7 +128,7 @@ $pdf->AliasNbPages();
 $pdf->AddPage();
 
 // Database connection
-$pdo = new PDO("mysql:host=localhost;dbname=estagio", "root", "");
+$pdo = new PDO("mysql:host=localhost;dbname=u750204740_gestaoestagio", "root", "");
 
 // Get search term
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';

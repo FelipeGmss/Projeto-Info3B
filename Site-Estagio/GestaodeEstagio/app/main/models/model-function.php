@@ -3,7 +3,7 @@
 
 Class Usuarios {
     public function Login_aluno($email, $senha) {
-        $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
+        $pdo = new PDO("mysql:host=localhost;dbname=u750204740_gestaoestagio","root","");
         $consulta = 'SELECT * FROM aluno WHERE email = :email AND senha = :senha';
         $query = $pdo->prepare($consulta);
         $query->bindValue(":email", $email);
@@ -25,7 +25,7 @@ Class Usuarios {
     // Professores
 
     public function Login_professor($email, $senha) {
-        $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
+        $pdo = new PDO("mysql:host=localhost;dbname=u750204740_gestaoestagio","root","");
         $consulta = 'SELECT * FROM usuario WHERE email = :email AND senha = :senha';
         $query = $pdo->prepare($consulta);
         $query->bindValue(":email", $email);
@@ -49,7 +49,7 @@ Class Usuarios {
 Class Cadastro{
 
     public function Cadastrar_empresa($nome, $contato, $endereco, $perfis, $vagas){
-        $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
+        $pdo = new PDO("mysql:host=localhost;dbname=u750204740_gestaoestagio","root","");
         $consulta = 'INSERT INTO concedentes (nome, contato, endereco, perfis, numero_vagas) VALUES (:nome, :contato, :endereco, :perfis, :numero_vagas)';
         $query = $pdo->prepare($consulta);
         $query->bindValue(":nome", $nome);
@@ -70,7 +70,7 @@ Class Cadastro{
 
 
      public function Cadastrar_alunos($nome, $matricula, $contato, $curso, $email, $endereco, $senha){
-        $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
+        $pdo = new PDO("mysql:host=localhost;dbname=u750204740_gestaoestagio","root","");
         $consulta = 'INSERT INTO aluno VALUES (null,:nome,:matricula,:contato,:curso,:email,:endereco,:senha)';
         $query = $pdo->prepare($consulta);
         $query->bindValue(":nome", $nome);
@@ -95,7 +95,7 @@ Class Cadastro{
 
 
     public function excluir_empresa($id){
-        $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
+        $pdo = new PDO("mysql:host=localhost;dbname=u750204740_gestaoestagio","root","");
         
         try {
             // Inicia a transação
@@ -125,7 +125,7 @@ Class Cadastro{
     }
 
     public function excluir_aluno($id){
-        $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
+        $pdo = new PDO("mysql:host=localhost;dbname=u750204740_gestaoestagio","root","");
         $consulta = 'delete from aluno where id = :id;';
         $query = $pdo->prepare($consulta);
         $query->bindValue(":id", $id);
@@ -133,7 +133,7 @@ Class Cadastro{
     }
 
     public function editar_empresaById($id){
-        $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
+        $pdo = new PDO("mysql:host=localhost;dbname=u750204740_gestaoestagio","root","");
         $consulta = 'select * from concedentes where id = :id;';
         $query = $pdo->prepare($consulta);
         $query->bindValue(":id", $id);
@@ -142,7 +142,7 @@ Class Cadastro{
     }
 
     public function editar_alunoById($id){
-        $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
+        $pdo = new PDO("mysql:host=localhost;dbname=u750204740_gestaoestagio","root","");
         $consulta = 'SELECT * FROM aluno WHERE id = :id';
         $query = $pdo->prepare($consulta);
         $query->bindValue(":id", $id);
@@ -152,7 +152,7 @@ Class Cadastro{
     }
 
     public function editar_empresa($id, $nome, $contato, $endereco, $perfis, $vagas){
-        $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
+        $pdo = new PDO("mysql:host=localhost;dbname=u750204740_gestaoestagio","root","");
         $consulta = "UPDATE concedentes SET nome = :nome, contato = :contato, endereco = :endereco, perfis = :perfis, numero_vagas = :numero_vagas WHERE id = :id;";
         $query = $pdo->prepare($consulta);
         $query->bindValue(":id", $id);
@@ -166,7 +166,7 @@ Class Cadastro{
     }
 
     public function editar_aluno_sem_senha($id, $nome, $matricula, $contato, $curso, $email, $endereco){
-        $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
+        $pdo = new PDO("mysql:host=localhost;dbname=u750204740_gestaoestagio","root","");
         $consulta = "UPDATE aluno SET nome = :nome, matricula = :matricula, contato = :contato, curso = :curso, email = :email, endereco = :endereco WHERE id = :id;";
         $query = $pdo->prepare($consulta);
         $query->bindValue(":id", $id);
@@ -181,7 +181,7 @@ Class Cadastro{
     }
 
     public function cadastrar_professor($email, $senha){
-        $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
+        $pdo = new PDO("mysql:host=localhost;dbname=u750204740_gestaoestagio","root","");
         $consulta = 'INSERT INTO usuario VALUES (null,:email,:senha)';
         $query = $pdo->prepare($consulta);
         $query->bindValue(":email", $email);
@@ -190,7 +190,7 @@ Class Cadastro{
     }
 
     public function cadastrar_selecao($hora, $local, $id_concedente, $data_inscricao, $id_aluno, $id_vaga){
-        $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
+        $pdo = new PDO("mysql:host=localhost;dbname=u750204740_gestaoestagio","root","");
         $consulta = 'INSERT INTO selecao (hora, local, id_concedente, status) VALUES (:hora, :local, :id_concedente, "pendente")';
         $query = $pdo->prepare($consulta);
         $query->bindValue(":hora", $hora);
@@ -200,7 +200,7 @@ Class Cadastro{
     }
 
     public function excluir_formulario($id){
-        $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
+        $pdo = new PDO("mysql:host=localhost;dbname=u750204740_gestaoestagio","root","");
         $consulta = 'delete from selecao where id = :id;';
         $query = $pdo->prepare($consulta);
         $query->bindValue(":id", $id);

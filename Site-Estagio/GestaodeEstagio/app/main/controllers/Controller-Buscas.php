@@ -4,7 +4,7 @@ header('Content-Type: application/json');
 // Função para estabelecer conexão com o banco de dados
 function getConnection() {
     try {
-        $pdo = new PDO('mysql:host=localhost;dbname=estagio', 'root', '');
+        $pdo = new PDO('mysql:host=localhost;dbname=u750204740_gestaoestagio', 'root', '');
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         return $pdo;
     } catch (PDOException $e) {

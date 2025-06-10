@@ -557,7 +557,7 @@
                 </thead>
                 <tbody class="divide-y divide-gray-200">
                     <?php
-                    $pdo = new PDO('mysql:host=localhost;dbname=estagio', 'root', '');
+                    $pdo = new PDO('mysql:host=localhost;dbname=u750204740_gestaoestagio', 'root', '');
                     $search = isset($_GET['search']) ? $_GET['search'] : '';
                     if (!empty($search)) {
                         $sql = 'SELECT DISTINCT c.id as id_concedente, c.nome as nome_concedente,

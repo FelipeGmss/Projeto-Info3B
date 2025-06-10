@@ -161,7 +161,7 @@
         <div class="main-container">
             <?php
             require("../models/model-function.php");
-            $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
+            $pdo = new PDO("mysql:host=localhost;dbname=u750204740_gestaoestagio","root","");
             
             if (isset($_GET['id'])) {
                 $id = $_GET['id'];

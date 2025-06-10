@@ -606,7 +606,7 @@
                 </thead>
                 <tbody class="divide-y divide-gray-200">
                     <?php
-                    $pdo = new PDO("mysql:host=localhost;dbname=estagio","root","");
+                    $pdo = new PDO("mysql:host=localhost;dbname=u750204740_gestaoestagio","root","");
                     $search = isset($_GET['search']) ? $_GET['search'] : '';
                     if (!empty($search)) {
                         $consulta = 'SELECT * FROM concedentes WHERE nome LIKE :search OR contato LIKE :search OR endereco LIKE :search OR perfil LIKE :search';
