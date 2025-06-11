@@ -636,11 +636,25 @@
                             echo "<td class='px-4 py-3 text-sm text-gray-900'>" . htmlspecialchars($value['contato']) . "</td>";
                             echo "<td class='px-4 py-3 text-sm text-gray-900'>" . htmlspecialchars($value['endereco']) . "</td>";
                             echo "<td class='px-4 py-3 text-sm text-gray-900'>";
-                            $perfis = json_decode($value['perfis'], true);
-                            if (is_array($perfis)) {
-                                echo implode(', ', array_map('htmlspecialchars', $perfis));
+                            $perfis_raw = $value['perfis'];
+                            $perfis = [];
+
+                            $decoded_perfis = json_decode($perfis_raw, true);
+
+                            if (is_array($decoded_perfis)) {
+                                $perfis = $decoded_perfis;
+                            } else if (!empty($perfis_raw)) {
+                                $perfis = array_filter(array_map('trim', explode(',', $perfis_raw)));
+                            }
+
+                            if (count($perfis) > 0) {
+                                echo "<ul class='list-disc list-inside'>";
+                                foreach ($perfis as $perfil) {
+                                    echo "<li>" . htmlspecialchars($perfil) . "</li>";
+                                }
+                                echo "</ul>";
                             } else {
-                                echo htmlspecialchars($value['perfis']);
+                                echo "Nenhum perfil cadastrado";
                             }
                             echo "</td>";
                             echo "<td class='px-4 py-3 text-sm text-gray-900'>" . htmlspecialchars($value['numero_vagas']) . "</td>";
@@ -684,15 +698,25 @@
                     echo "<div>";
                     echo "<h3 class='company-name'>" . htmlspecialchars($value['nome']) . "</h3>";
                     echo "<div class='company-profile'>";
-                    $perfis = json_decode($value['perfis'], true);
-                    if (is_array($perfis) && count($perfis) > 0) {
-                        echo "<div class='profile-tags'>";
+                    $perfis_raw = $value['perfis'];
+                    $perfis = [];
+
+                    $decoded_perfis = json_decode($perfis_raw, true);
+
+                    if (is_array($decoded_perfis)) {
+                        $perfis = $decoded_perfis;
+                    } else if (!empty($perfis_raw)) {
+                        $perfis = array_filter(array_map('trim', explode(',', $perfis_raw)));
+                    }
+
+                    if (count($perfis) > 0) {
+                        echo "<ul class='list-disc list-inside text-sm text-gray-700'>";
                         foreach ($perfis as $perfil) {
-                            echo "<span class='profile-tag'>" . htmlspecialchars($perfil) . "</span>";
+                            echo "<li>" . htmlspecialchars($perfil) . "</li>";
                         }
-                        echo "</div>";
+                        echo "</ul>";
                     } else {
-                        echo "<p class='company-profile'>" . htmlspecialchars($value['perfis']) . "</p>";
+                        echo "<p class='company-profile text-sm text-gray-500'>Nenhum perfil cadastrado</p>";
                     }
                     echo "</div>";
                     echo "</div>";

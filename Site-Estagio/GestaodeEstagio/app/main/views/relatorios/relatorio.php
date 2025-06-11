@@ -15,79 +15,105 @@ $cursos = [
 ];
 
 class PDF extends FPDF {
+    // Cores personalizadas
+    private $headerColor = array(45, 71, 57); // Verde musgo
+    private $headerTextColor = array(255, 255, 255); // Branco
+    private $alternateColor = array(240, 248, 255); // Azul muito claro
+    private $borderColor = array(200, 200, 200); // Cinza claro
+    private $textColor = array(50, 50, 50); // Cinza escuro
+    private $highlightColor = array(220, 237, 200); // Verde claro
+
     // Page header
     function Header() {
         // Logo
-        $this->Image(__DIR__ . '/../../config/img/logo_Salaberga-removebg-preview.png', 10, 10, 30);
+        $this->Image(__DIR__ . '/../../config/img/logo_Salaberga-removebg-preview.png', 10, 10, 35);
+        
+        // Retângulo de fundo para o título
+        $this->SetFillColor($this->headerColor[0], $this->headerColor[1], $this->headerColor[2]);
+        $this->Rect(50, 10, $this->GetPageWidth() - 60, 25, 'F');
         
         // Title
-        $this->SetFont('Arial', 'B', 16);
-        $this->SetTextColor(45, 71, 57); // Verde musgo
-        $this->Cell(0, 15, utf8_decode('Relatório de Empresas'), 0, 1, 'C');
+        $this->SetFont('Arial', 'B', 18);
+        $this->SetTextColor($this->headerTextColor[0], $this->headerTextColor[1], $this->headerTextColor[2]);
+        $this->SetXY(50, 15);
+        $this->Cell($this->GetPageWidth() - 60, 10, utf8_decode('Relatório de Empresas Concedentes'), 0, 1, 'C');
         
-        // Date
-        $this->SetFont('Arial', 'I', 10);
-        $this->SetTextColor(100, 100, 100); // Cinza
-        $this->Cell(0, 8, utf8_decode('Data de geração: ' . date('d/m/Y H:i:s')), 0, 1, 'C');
+        // Subtitle
+        $this->SetFont('Arial', 'I', 11);
+        $this->SetXY(50, 25);
+        $this->Cell($this->GetPageWidth() - 60, 5, utf8_decode('Sistema de Gestão de Estágios'), 0, 1, 'C');
         
-        // Search term if exists
+        // Date and search info
+        $this->SetFont('Arial', '', 9);
+        $this->SetTextColor($this->textColor[0], $this->textColor[1], $this->textColor[2]);
+        $this->SetXY(10, 40);
+        $this->Cell(0, 5, utf8_decode('Data de geração: ' . date('d/m/Y H:i:s')), 0, 1, 'L');
+        
         if(isset($_GET['search']) && !empty($_GET['search'])) {
-            $this->SetFont('Arial', 'I', 10);
-            $this->Cell(0, 8, utf8_decode('Termo de busca: ' . htmlspecialchars($_GET['search'])), 0, 1, 'C');
+            $this->SetFont('Arial', 'I', 9);
+            $this->Cell(0, 5, utf8_decode('Termo de busca: "' . htmlspecialchars($_GET['search']) . '"'), 0, 1, 'L');
         }
         
         // Linha decorativa
-        $this->SetDrawColor(45, 71, 57); // Verde musgo
+        $this->SetDrawColor($this->headerColor[0], $this->headerColor[1], $this->headerColor[2]);
         $this->SetLineWidth(0.5);
         $this->Line(10, $this->GetY() + 5, $this->GetPageWidth() - 10, $this->GetY() + 5);
-        $this->Ln(15);
+        $this->Ln(10);
     }
 
     // Page footer
     function Footer() {
         $this->SetY(-15);
         $this->SetFont('Arial', 'I', 8);
-        $this->SetTextColor(100, 100, 100); // Cinza
+        $this->SetTextColor($this->textColor[0], $this->textColor[1], $this->textColor[2]);
+        
+        // Linha decorativa
+        $this->SetDrawColor($this->borderColor[0], $this->borderColor[1], $this->borderColor[2]);
+        $this->Line(10, $this->GetY() - 5, $this->GetPageWidth() - 10, $this->GetY() - 5);
+        
+        // Texto do rodapé
         $this->Cell(0, 10, utf8_decode('Página ' . $this->PageNo() . '/{nb}'), 0, 0, 'C');
+        $this->SetXY(10, $this->GetY());
+        $this->Cell(0, 10, utf8_decode('Sistema de Gestão de Estágios - ' . date('Y')), 0, 0, 'L');
     }
 
     // Table header
     function TableHeader() {
-        $this->SetFillColor(45, 71, 57); // Verde musgo
-        $this->SetTextColor(255, 255, 255); // Branco
-        $this->SetDrawColor(45, 71, 57); // Verde musgo
+        $this->SetFillColor($this->headerColor[0], $this->headerColor[1], $this->headerColor[2]);
+        $this->SetTextColor($this->headerTextColor[0], $this->headerTextColor[1], $this->headerTextColor[2]);
+        $this->SetDrawColor($this->borderColor[0], $this->borderColor[1], $this->borderColor[2]);
         $this->SetLineWidth(0.3);
-        $this->SetFont('Arial', 'B', 10);
+        $this->SetFont('Arial', 'B', 11);
 
-        // Ajustar larguras das colunas
-        $this->CellUTF8(80, 10, 'Empresa', 1, 0, 'C', true);
-        $this->CellUTF8(60, 10, 'Perfis', 1, 0, 'C', true);
-        $this->CellUTF8(30, 10, 'Vagas', 1, 0, 'C', true);
-        $this->CellUTF8(60, 10, 'Contato', 1, 0, 'C', true);
-        $this->CellUTF8(80, 10, 'Endereço', 1, 1, 'C', true);
+        // Ajustar larguras das colunas para melhor visualização
+        $this->CellUTF8(70, 12, 'Empresa', 1, 0, 'C', true);
+        $this->CellUTF8(60, 12, 'Perfis', 1, 0, 'C', true);
+        $this->CellUTF8(25, 12, 'Vagas', 1, 0, 'C', true);
+        $this->CellUTF8(50, 12, 'Contato', 1, 0, 'C', true);
+        $this->CellUTF8(70, 12, 'Endereço', 1, 1, 'C', true);
     }
 
     // Table content
     function TableContent($data) {
-        global $cursos; // Adicionar referência global para o array $cursos
+        global $cursos;
         $this->SetFont('Arial', '', 10);
-        $this->SetTextColor(0, 0, 0); // Preto
+        $this->SetTextColor($this->textColor[0], $this->textColor[1], $this->textColor[2]);
         $fill = false;
 
         foreach($data as $row) {
-            if($this->GetY() > 260) { // Check for page break
+            if($this->GetY() > 260) {
                 $this->AddPage();
                 $this->TableHeader();
             }
 
             // Alternar cores das linhas
             if ($fill) {
-                $this->SetFillColor(245, 245, 245); // Cinza muito claro
+                $this->SetFillColor($this->alternateColor[0], $this->alternateColor[1], $this->alternateColor[2]);
             } else {
-                $this->SetFillColor(255, 255, 255); // Branco
+                $this->SetFillColor(255, 255, 255);
             }
 
-            // Processar perfis
+            // Processar perfis com destaque
             $perfis = [];
             if (!empty($row['perfis'])) {
                 $perfis_array = json_decode($row['perfis'], true);
@@ -103,12 +129,17 @@ class PDF extends FPDF {
             }
             $perfis_text = !empty($perfis) ? implode(', ', $perfis) : 'Nenhum';
 
-            // Dados com UTF-8
-            $this->CellUTF8(80, 8, $row['nome'], 1, 0, 'L', $fill);
-            $this->CellUTF8(60, 8, $perfis_text, 1, 0, 'L', $fill);
-            $this->CellUTF8(30, 8, $row['numero_vagas'], 1, 0, 'C', $fill);
-            $this->CellUTF8(60, 8, $row['contato'], 1, 0, 'L', $fill);
-            $this->CellUTF8(80, 8, $row['endereco'], 1, 1, 'L', $fill);
+            // Destacar número de vagas se for maior que 0
+            if ($row['numero_vagas'] > 0) {
+                $this->SetFillColor($this->highlightColor[0], $this->highlightColor[1], $this->highlightColor[2]);
+            }
+
+            // Dados com UTF-8 e melhor espaçamento
+            $this->CellUTF8(70, 10, $row['nome'], 1, 0, 'L', $fill);
+            $this->CellUTF8(60, 10, $perfis_text, 1, 0, 'L', $fill);
+            $this->CellUTF8(25, 10, $row['numero_vagas'], 1, 0, 'C', $fill);
+            $this->CellUTF8(50, 10, $row['contato'], 1, 0, 'L', $fill);
+            $this->CellUTF8(70, 10, $row['endereco'], 1, 1, 'L', $fill);
             
             $fill = !$fill;
         }
