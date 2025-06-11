@@ -12,10 +12,7 @@ Class Usuarios {
 
             if ($query->rowCount() > 0) {
             $dado = $query->fetch();
-            $_SESSION['idUser'] = $dado['id'];
-
-             return true;
-            // header("Location: ../views/paginainicial.php");
+            return true;
             }else {
              return false;
             }
@@ -34,10 +31,7 @@ Class Usuarios {
 
             if ($query->rowCount() > 0) {
             $dado = $query->fetch();
-            $_SESSION['idUser'] = $dado['id'];
-
-             return true;
-            // header("Location: ../views/paginainicial.php");
+            return true;
             }else {
              return false;
             }
