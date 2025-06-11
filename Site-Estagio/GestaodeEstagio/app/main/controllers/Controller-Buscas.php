@@ -143,12 +143,13 @@ switch ($action) {
                 exit;
             }
 
-            // Converter a string de perfis em array
+            // Converter a string de perfis em array e limpar espaços
             if (!empty($processo['perfis'])) {
-                $processo['perfis'] = explode(',', $processo['perfis']);
+                $processo['perfis'] = array_map('trim', explode(',', $processo['perfis']));
             } else {
                 $processo['perfis'] = [];
             }
+
             echo json_encode($processo);
         } catch (PDOException $e) {
             echo json_encode(['error' => 'Erro ao buscar detalhes do processo: ' . $e->getMessage()]);

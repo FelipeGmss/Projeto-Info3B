@@ -525,7 +525,62 @@ session_start();
         </div>
     </div>
 
+    <!-- Adicionar o contêiner para as mensagens toast no final do corpo (body) do HTML -->
+    <div id="toast-container" class="fixed bottom-4 right-4 z-50 flex flex-col-reverse space-y-2"></div>
+
     <script>
+        // Adicionar esta função para exibir mensagens toast
+        function showToast(message, type = 'info') {
+            const toastContainer = document.getElementById('toast-container');
+            if (!toastContainer) {
+                console.error('Toast container not found!');
+                alert(message); // Fallback para alert se o contêiner não for encontrado
+                return;
+            }
+
+            const toast = document.createElement('div');
+            toast.className = `p-4 rounded-lg shadow-lg text-white flex items-center space-x-2 opacity-0 transition-all duration-300 transform translate-y-full`;
+
+            let bgColor = '';
+            let icon = '';
+
+            switch (type) {
+                case 'success':
+                    bgColor = 'bg-green-500';
+                    icon = '<i class="fas fa-check-circle"></i>';
+                    break;
+                case 'error':
+                    bgColor = 'bg-red-500';
+                    icon = '<i class="fas fa-exclamation-circle"></i>';
+                    break;
+                case 'warning':
+                    bgColor = 'bg-yellow-500';
+                    icon = '<i class="fas fa-exclamation-triangle"></i>';
+                    break;
+                default:
+                    bgColor = 'bg-blue-500';
+                    icon = '<i class="fas fa-info-circle"></i>';
+                    break;
+            }
+
+            toast.classList.add(bgColor);
+            toast.innerHTML = `${icon}<span>${message}</span>`;
+            toastContainer.appendChild(toast);
+
+            // Animar entrada
+            setTimeout(() => {
+                toast.classList.remove('opacity-0', 'translate-y-full');
+                toast.classList.add('opacity-100', 'translate-y-0');
+            }, 100);
+
+            // Animar saída e remover após 5 segundos
+            setTimeout(() => {
+                toast.classList.remove('opacity-100', 'translate-y-0');
+                toast.classList.add('opacity-0', 'translate-y-full');
+                toast.addEventListener('transitionend', () => toast.remove(), { once: true });
+            }, 5000);
+        }
+
         function showInscritosModal(processoId) {
             const modal = document.getElementById('inscritosModal');
             const inscritosList = document.getElementById('inscritosList');
@@ -541,6 +596,7 @@ session_start();
                 .then(data => {
                     if (data.error) {
                         inscritosList.innerHTML = `<p class="text-center text-red-500">${data.error}</p>`;
+                        showToast(data.error, 'error');
                         return;
                     }
                     
@@ -579,6 +635,7 @@ session_start();
                 .catch(error => {
                     console.error('Error:', error);
                     inscritosList.innerHTML = '<p class="text-center text-red-500">Erro ao carregar inscritos.</p>';
+                    showToast('Erro ao carregar inscritos.', 'error');
                 });
         }
 
@@ -607,40 +664,38 @@ session_start();
                     `;
 
                     // Preencher os perfis disponíveis
-                    if (data.perfis) {
-                        const perfis = JSON.parse(data.perfis);
-                        const perfisContainer = document.getElementById('perfisContainer');
-                        perfisContainer.innerHTML = perfis.map((perfil, index) => `
-                            <div class="flex items-center">
+                    const perfisContainer = document.getElementById('perfisContainer');
+                    perfisContainer.className = 'space-y-2 bg-gray-50 p-4 rounded-lg';
+
+                    if (data.perfis && data.perfis.length > 0) {
+                        // Limpar os perfis removendo aspas e colchetes
+                        const perfisLimpos = data.perfis.map(perfil => perfil.replace(/[\[\]"]/g, '').trim());
+                        perfisContainer.innerHTML = perfisLimpos.map(perfil => `
+                            <label class="block">
                                 <input type="checkbox" 
-                                       id="perfil_${index}" 
                                        name="perfis[]" 
                                        value="${perfil}"
-                                       class="h-4 w-4 text-ceara-green focus:ring-ceara-green border-gray-300 rounded">
-                                <label for="perfil_${index}" class="ml-2 text-sm text-gray-700">${perfil}</label>
-                            </div>
+                                       class="h-4 w-4 text-blue-600 border border-gray-300 align-top">
+                                <span class="text-gray-700 align-top ml-1">${perfil}</span>
+                            </label>
                         `).join('');
+                    } else {
+                        perfisContainer.innerHTML = '<p class="text-gray-500 p-2">Nenhum perfil disponível</p>';
                     }
                 })
                 .catch(error => {
-                    console.error('Erro:', error);
-                    const empresaDetails = document.getElementById('empresaDetails');
-                    empresaDetails.innerHTML = `
-                        <div class="text-center text-red-500 py-4">
-                            <i class="fas fa-exclamation-circle text-xl mb-2"></i>
-                            <p>Erro ao carregar detalhes da empresa</p>
-                        </div>
-                    `;
+                    console.error('Error ao carregar detalhes do processo:', error);
+                    showToast('Erro ao carregar detalhes do processo.', 'error');
                 });
 
             modal.classList.remove('hidden');
             modal.classList.add('flex');
         }
 
-        // Buscar sugestões de alunos
+        // Event listeners para o campo de busca de alunos
         const nomeAlunoInput = document.getElementById('nome_aluno');
-        const alunoSuggestions = document.getElementById('alunoSuggestions');
         const idAlunoInput = document.getElementById('id_aluno');
+        const alunoSuggestions = document.getElementById('alunoSuggestions');
 
         nomeAlunoInput.addEventListener('input', function() {
             const search = this.value.trim();
@@ -656,9 +711,7 @@ session_start();
                         alunoSuggestions.innerHTML = data.map(aluno => `
                             <div class="suggestion-item p-2 hover:bg-gray-100 cursor-pointer" 
                                  data-id="${aluno.id}" 
-                                 data-nome="${aluno.nome}"
-                                 data-curso="${aluno.curso}"
-                                 data-matricula="${aluno.matricula}">
+                                 data-nome="${aluno.nome.replace(/'/g, "\\'")}">
                                 <div class="font-medium">${aluno.nome}</div>
                                 <div class="text-sm text-gray-600">${aluno.curso} - ${aluno.matricula}</div>
                             </div>
@@ -673,7 +726,32 @@ session_start();
                     console.error('Error:', error);
                     alunoSuggestions.innerHTML = '<div class="p-2 text-red-500">Erro ao buscar alunos</div>';
                     alunoSuggestions.classList.remove('hidden');
+                    showToast('Erro ao buscar alunos.', 'error');
                 });
+        });
+
+        // Adicionar um listener de evento delegado para as sugestões de alunos
+        alunoSuggestions.addEventListener('click', function(e) {
+            const suggestionItem = e.target.closest('.suggestion-item');
+            if (suggestionItem) {
+                const id = suggestionItem.dataset.id;
+                const nome = suggestionItem.dataset.nome;
+                selectAluno(id, nome);
+            }
+        });
+
+        // Função para selecionar um aluno
+        function selectAluno(id, nome) {
+            idAlunoInput.value = id;
+            nomeAlunoInput.value = nome;
+            alunoSuggestions.classList.add('hidden');
+        }
+
+        // Fechar sugestões ao clicar fora
+        document.addEventListener('click', function(e) {
+            if (!nomeAlunoInput.contains(e.target) && !alunoSuggestions.contains(e.target)) {
+                alunoSuggestions.classList.add('hidden');
+            }
         });
 
         // Form submission
@@ -681,13 +759,13 @@ session_start();
             e.preventDefault();
             
             if (!idAlunoInput.value) {
-                alert('Por favor, selecione um aluno da lista');
+                showToast('Por favor, selecione um aluno da lista', 'warning');
                 return;
             }
 
             const perfisSelecionados = document.querySelectorAll('input[name="perfis[]"]:checked');
             if (perfisSelecionados.length === 0) {
-                alert('Por favor, selecione pelo menos um perfil');
+                showToast('Por favor, selecione pelo menos um perfil', 'warning');
                 return;
             }
 
@@ -707,16 +785,16 @@ session_start();
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert('Inscrição realizada com sucesso!');
+                    showToast('Inscrição realizada com sucesso!', 'success');
                     closeModal('inscricaoModal');
                     window.location.reload();
                 } else {
-                    alert(data.message || 'Erro ao realizar inscrição');
+                    showToast(data.message || 'Erro ao realizar inscrição', 'error');
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('Erro ao realizar inscrição');
+                showToast('Erro ao realizar inscrição.', 'error');
             })
             .finally(() => {
                 submitButton.disabled = false;

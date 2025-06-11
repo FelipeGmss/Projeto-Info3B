@@ -1,5 +1,4 @@
 <?php 
-session_start();
 require("../models/model-function.php");
 
 // Verifica se a requisição é POST e se tem os campos necessários
@@ -13,21 +12,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' &&
     $tipo = $_POST['tipo'];
 
     $usuarios = new Usuarios();
-    $login_sucesso = false;
+    $user_data = false;
 
     // Tenta fazer login baseado no tipo
     if ($tipo === 'professor') {
-        $login_sucesso = $usuarios->Login_professor($email, $senha);
+        $user_data = $usuarios->Login_professor($email, $senha);
         $redirect_sucesso = "../views/paginainicial.php";
         $redirect_erro = "../views/Login_professor.php";
     } else {
-        $login_sucesso = $usuarios->Login_aluno($email, $senha);
-        $redirect_sucesso = "../views/detalhes_aluno.php?id=" . $_SESSION['idUser'];
+        $user_data = $usuarios->Login_aluno($email, $senha);
+        $redirect_sucesso = "../views/detalhes_aluno.php?id=" . $user_data['id'];
         $redirect_erro = "../views/Login_aluno.php";
     }
 
     // Redireciona baseado no resultado do login
-    if ($login_sucesso && isset($_SESSION['idUser'])) {
+    if ($user_data) {
         header("Location: " . $redirect_sucesso);
     } else {
         header("Location: " . $redirect_erro);

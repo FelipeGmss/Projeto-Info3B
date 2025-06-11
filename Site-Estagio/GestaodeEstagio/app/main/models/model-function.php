@@ -10,12 +10,10 @@ Class Usuarios {
         $query->bindValue(":senha", $senha);
         $query->execute();
 
-            if ($query->rowCount() > 0) {
-            $dado = $query->fetch();
-            return true;
-            }else {
-             return false;
-            }
+        if ($query->rowCount() > 0) {
+            return $query->fetch(PDO::FETCH_ASSOC);
+        }
+        return false;
     }
 
 
@@ -29,12 +27,10 @@ Class Usuarios {
         $query->bindValue(":senha", $senha);
         $query->execute();
 
-            if ($query->rowCount() > 0) {
-            $dado = $query->fetch();
-            return true;
-            }else {
-             return false;
-            }
+        if ($query->rowCount() > 0) {
+            return $query->fetch(PDO::FETCH_ASSOC);
+        }
+        return false;
     }
    
 
